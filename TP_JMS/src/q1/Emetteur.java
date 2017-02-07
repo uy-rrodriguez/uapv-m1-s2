@@ -1,7 +1,6 @@
 package q1;
 
 import javax.jms.JMSException;
-import javax.jms.QueueReceiver;
 import javax.jms.QueueSender;
 import javax.jms.TextMessage;
 import javax.naming.NamingException;
