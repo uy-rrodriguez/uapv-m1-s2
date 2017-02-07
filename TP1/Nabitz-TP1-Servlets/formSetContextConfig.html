@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Form pour changer la cconfiguration du contexte</title>
+<style>
+	#container {
+		margin: 0 auto;
+		padding: 40px 20px;
+		width: 400px;
+		background: #CECECE;
+		border: 1px solid #434343;
+	}
+	
+	#container div {
+		text-align: center;
+	}
+	
+	#container input {
+		width: 200px;
+		height: 30px;
+	}
+</style>
+</head>
+<body>
+
+	<form action="ServletSetContextConfig" method="post">
+		<div id="container">
+			<div>
+				<input type="text" name="utilisateur" placeholder="Nom de l'utilisateur par défaut" />
+			</div>
+			<div>
+				<input type="submit" value="Envoyer" />
+			</div>
+		</div>
+	</form>
+
+</body>
+</html>

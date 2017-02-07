@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:web="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  
+  <!-- Partie 1 --> 
+  <servlet>
+    <servlet-name>MonServlet</servlet-name>
+    <servlet-class>partie1.MonServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ServletEx6</servlet-name>
+    <servlet-class>partie1.ServletEx6</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ServletConfigDefault</servlet-name>
+    <servlet-class>partie1.ServletConfigDefault</servlet-class>
+    <init-param>
+      <param-name>DefaultUserName</param-name>
+      <param-value>Utilisateur-par-défaut</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <servlet-name>ServletSetContextConfig</servlet-name>
+    <servlet-class>partie1.ServletSetContextConfig</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ServletGetContextConfig</servlet-name>
+    <servlet-class>partie1.ServletGetContextConfig</servlet-class>
+  </servlet>
+  
+  <!-- Partie 2 -->
+  <servlet>
+    <servlet-name>Partie2Pas1_v1</servlet-name>
+    <servlet-class>partie2.Partie2Pas1_v1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie2Pas2_v1</servlet-name>
+    <servlet-class>partie2.Partie2Pas2_v1</servlet-class>
+    <init-param>
+      <param-name>DefaultUserName</param-name>
+      <param-value>Utilisateur-par-défaut</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie2Pas1_v2</servlet-name>
+    <servlet-class>partie2.Partie2Pas1_v2</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie2Pas2_v2</servlet-name>
+    <servlet-class>partie2.Partie2Pas2_v2</servlet-class>
+    <init-param>
+      <param-name>DefaultUserName</param-name>
+      <param-value>Utilisateur-par-défaut</param-value>
+    </init-param>
+  </servlet>
+  
+  
+  <!-- Partie 1 -->
+  <servlet-mapping>
+    <servlet-name>MonServlet</servlet-name>
+    <url-pattern>/MonServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ServletEx6</servlet-name>
+    <url-pattern>/Ex6</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ServletConfigDefault</servlet-name>
+    <url-pattern>/ServletConfigDefault</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ServletSetContextConfig</servlet-name>
+    <url-pattern>/ServletSetContextConfig</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ServletGetContextConfig</servlet-name>
+    <url-pattern>/ServletGetContextConfig</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Partie 2 -->
+  <servlet-mapping>
+    <servlet-name>Partie2Pas1_v1</servlet-name>
+    <url-pattern>/Partie2Pas1_v1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie2Pas2_v1</servlet-name>
+    <url-pattern>/Partie2Pas2_v1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie2Pas1_v2</servlet-name>
+    <url-pattern>/Partie2Pas1_v2</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie2Pas2_v2</servlet-name>
+    <url-pattern>/Partie2Pas2_v2</url-pattern>
+  </servlet-mapping>
+</web-app>
