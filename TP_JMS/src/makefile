@@ -81,6 +81,72 @@ q4-receiver:
 
 
 #################################################################
+#  QUESTION 5                                                   #
+#################################################################
+
+q5-compile:
+	javac q5/*.java -classpath "$(LIB)"
+
+q5-sender:
+	java -classpath "$(LIB)" q5.Emetteur "Message de test" $(NOMS)
+
+q5-receiver:
+	java -classpath "$(LIB)" q5.Recepteur $(NOMS)
+
+
+#################################################################
+#  QUESTION 6                                                   #
+#################################################################
+
+q6-compile:
+	javac q6/*.java -classpath "$(LIB)"
+
+q6-sender:
+	java -classpath "$(LIB)" q6.Emetteur "Message de test" $(NOMS)
+
+q6-receiver:
+	java -classpath "$(LIB)" q6.Recepteur $(NOMS)
+
+
+#################################################################
+#  QUESTION 7                                                   #
+#################################################################
+
+q7-compile:
+	javac q7/*.java -classpath "$(LIB)"
+
+q7-sender:
+	java -classpath "$(LIB)" q7.Emetteur "Message de test"
+
+q7-receiver: q7-receiver-build q7-receiver-deploy
+
+q7-receiver-build:
+	jar cvf q7/q7_recepteur.jar q7/Recepteur.class
+
+q7-receiver-deploy:
+	asadmin deploy --force q7/q7_recepteur.jar
+
+
+#################################################################
+#  QUESTION 8                                                   #
+#################################################################
+
+q8-compile:
+	javac q8/*.java -classpath "$(LIB)"
+
+q8-sender:
+	java -classpath "$(LIB)" q8.Emetteur "Message de test" $(NOMS)
+
+q8-receiver: q8-receiver-build q8-receiver-deploy
+
+q8-receiver-build:
+	jar cvf q8/q8_recepteur.jar q8/Recepteur.class
+
+q8-receiver-deploy:
+	asadmin deploy --force q8/q8_recepteur.jar
+
+
+#################################################################
 #  CLEAN                                                        #
 #################################################################
 
