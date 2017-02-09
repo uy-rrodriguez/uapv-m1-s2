@@ -14,8 +14,8 @@ all: compile build deploy
 
 compile:
 	javac -d WEB-INF/classes java/partie1/*.java -classpath "$(LIB)"
-	javac -d WEB-INF/classes java/partie2/*.java -classpath "$(LIB)"
-	#javac -d WEB-INF/classes java/partie3/*.java -classpath "$(LIB)"
+	javac -d WEB-INF/classes java/partie2/*/*.java -classpath "$(LIB)"
+	javac -d WEB-INF/classes java/partie3/*/*.java -classpath "$(LIB)"
 
 build:
 	jar cvf dist/$(WAR) WEB-INF css *.html

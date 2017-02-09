@@ -32,11 +32,11 @@
   <!-- Partie 2 -->
   <servlet>
     <servlet-name>Partie2Pas1_v1</servlet-name>
-    <servlet-class>partie2.Partie2Pas1_v1</servlet-class>
+    <servlet-class>partie2.v1.Partie2Pas1</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Partie2Pas2_v1</servlet-name>
-    <servlet-class>partie2.Partie2Pas2_v1</servlet-class>
+    <servlet-class>partie2.v1.Partie2Pas2</servlet-class>
     <init-param>
       <param-name>DefaultUserName</param-name>
       <param-value>Utilisateur-par-défaut</param-value>
@@ -44,15 +44,78 @@
   </servlet>
   <servlet>
     <servlet-name>Partie2Pas1_v2</servlet-name>
-    <servlet-class>partie2.Partie2Pas1_v2</servlet-class>
+    <servlet-class>partie2.v2.Partie2Pas1</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Partie2Pas2_v2</servlet-name>
-    <servlet-class>partie2.Partie2Pas2_v2</servlet-class>
+    <servlet-class>partie2.v2.Partie2Pas2</servlet-class>
     <init-param>
       <param-name>DefaultUserName</param-name>
       <param-value>Utilisateur-par-défaut</param-value>
     </init-param>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie2Pas1_v3</servlet-name>
+    <servlet-class>partie2.v3.Partie2Pas1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie2Pas2_v3</servlet-name>
+    <servlet-class>partie2.v3.Partie2Pas2</servlet-class>
+    <init-param>
+      <param-name>DefaultUserName</param-name>
+      <param-value>Utilisateur-par-défaut</param-value>
+    </init-param>
+  </servlet>
+  
+  <!-- Partie 3 -->
+  <servlet>
+    <servlet-name>Partie3Pas1</servlet-name>
+    <servlet-class>partie3.v1.Partie3Pas1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Pas2</servlet-name>
+    <servlet-class>partie3.v1.Partie3Pas2</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Pas3</servlet-name>
+    <servlet-class>partie3.v1.Partie3Pas3</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Pas4</servlet-name>
+    <servlet-class>partie3.v1.Partie3Pas4</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Page1</servlet-name>
+    <servlet-class>partie3.v1.Partie3Page1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Page2</servlet-name>
+    <servlet-class>partie3.v1.Partie3Page2</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>Partie3Pas1_v2</servlet-name>
+    <servlet-class>partie3.v2.Partie3Pas1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Pas2_v2</servlet-name>
+    <servlet-class>partie3.v2.Partie3Pas2</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Pas3_v2</servlet-name>
+    <servlet-class>partie3.v2.Partie3Pas3</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Pas4_v2</servlet-name>
+    <servlet-class>partie3.v2.Partie3Pas4</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Page1_v2</servlet-name>
+    <servlet-class>partie3.v2.Partie3Page1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Page2_v2</servlet-name>
+    <servlet-class>partie3.v2.Partie3Page2</servlet-class>
   </servlet>
   
   
@@ -81,18 +144,78 @@
   <!-- Partie 2 -->
   <servlet-mapping>
     <servlet-name>Partie2Pas1_v1</servlet-name>
-    <url-pattern>/Partie2Pas1_v1</url-pattern>
+    <url-pattern>/v1/Partie2Pas1</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Partie2Pas2_v1</servlet-name>
-    <url-pattern>/Partie2Pas2_v1</url-pattern>
+    <url-pattern>/v1/Partie2Pas2</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Partie2Pas1_v2</servlet-name>
-    <url-pattern>/Partie2Pas1_v2</url-pattern>
+    <url-pattern>/v2/Partie2Pas1</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Partie2Pas2_v2</servlet-name>
-    <url-pattern>/Partie2Pas2_v2</url-pattern>
+    <url-pattern>/v2/Partie2Pas2</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie2Pas1_v3</servlet-name>
+    <url-pattern>/v3/Partie2Pas1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie2Pas2_v3</servlet-name>
+    <url-pattern>/v3/Partie2Pas2</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Partie 3 -->
+  <servlet-mapping>
+    <servlet-name>Partie3Pas1</servlet-name>
+    <url-pattern>/Partie3Pas1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Pas2</servlet-name>
+    <url-pattern>/Partie3Pas2</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Pas3</servlet-name>
+    <url-pattern>/Partie3Pas3</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Pas4</servlet-name>
+    <url-pattern>/Partie3Pas4</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Page1</servlet-name>
+    <url-pattern>/Partie3Page1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Page2</servlet-name>
+    <url-pattern>/Partie3Page2</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Partie3Pas1_v2</servlet-name>
+    <url-pattern>/v2/Partie3Pas1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Pas2_v2</servlet-name>
+    <url-pattern>/v2/Partie3Pas2</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Pas3_v2</servlet-name>
+    <url-pattern>/v2/Partie3Pas3</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Pas4_v2</servlet-name>
+    <url-pattern>/v2/Partie3Pas4</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Page1_v2</servlet-name>
+    <url-pattern>/v2/Partie3Page1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Page2_v2</servlet-name>
+    <url-pattern>/v2/Partie3Page2</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

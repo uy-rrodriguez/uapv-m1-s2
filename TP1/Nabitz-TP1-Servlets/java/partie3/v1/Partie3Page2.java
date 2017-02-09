@@ -1,30 +1,28 @@
-package partie2;
+package partie3.v1;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class Partie2Pas1_v1 extends HttpServlet {
+public class Partie3Page2 extends HttpServlet {
 
 	private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String style = "<link rel='stylesheet' type='text/css' href='css/style.css'>";
-		String header = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Form utilisateur</title>" + style + "</head><body>";
+		String header = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Partie 3, Page bidon 2</title>" + style + "</head><body>";
 		String footer = "</body></html>";
+				
+		String contenu = "<div id='container'>"
+						+ "		<h3>Page bidon 2</h3>"
+						+ "		<a href='Partie3Page1'>Page précédente</a>"
+						+ "		<a href='Partie3Pas3'>Voir les informations dans la session</a>"
+						+ "</div>";
 		
-		String form = "<form action='Partie2Pas2_v1' method='post'>"
-						+ "	<div id='container'>"
-						+ "		<div>"
-						+ "			<input type='text' name='utilisateur' placeholder=\"Nom de l'utilisateur\" />"
-						+ "		</div>"
-						+ "		<div>"
-						+ "			<input type='submit' value='Envoyer' />"
-						+ "		</div>"
-						+ "	</div>"
-						+ "</form>";
-		
-		resp.getOutputStream().println(header + form + footer);
+		resp.setContentType("text/html; charset=UTF-8");
+		resp.getOutputStream().println(header + contenu + footer);
 	}
 	
 	@Override
