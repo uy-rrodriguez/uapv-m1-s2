@@ -1,28 +1,27 @@
-package q1;
+package q2;
 
 import javax.jms.JMSException;
-import javax.jms.QueueSender;
+import javax.jms.QueueReceiver;
 import javax.jms.TextMessage;
 import javax.naming.NamingException;
 
-public class Emetteur {
+public class Recepteur {
+
 	private void run() throws NamingException, JMSException {
 		ConnectionJMS jms = new ConnectionJMS();
 		jms.connecter();
 		
 		System.out.println("Connection créée");
 		
-		QueueSender sender = jms.getSession().createSender(jms.getQueue());
-		TextMessage msg = jms.getSession().createTextMessage();
-		msg.setText("Hola Mundo!");
-		sender.send(msg);
-		System.out.println("Message envoyé !");
+		QueueReceiver receiver = jms.getSession().createReceiver(jms.getQueue());
+		TextMessage msg = (TextMessage) receiver.receive();
+		System.out.println(msg.getText());
 	}
 	
 	public static void main(String[] args) {
 		try {
-			Emetteur e = new Emetteur();
-			e.run();
+			Recepteur r = new Recepteur();
+			r.run();
 			System.exit(0);
 		}
 		catch (Exception e) {
@@ -30,4 +29,5 @@ public class Emetteur {
 			System.exit(-1);
 		}
 	}
+
 }

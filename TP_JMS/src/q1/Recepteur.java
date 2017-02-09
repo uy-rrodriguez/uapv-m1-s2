@@ -11,6 +11,8 @@ public class Recepteur {
 		ConnectionJMS jms = new ConnectionJMS();
 		jms.connecter();
 		
+		System.out.println("Connection créée");
+		
 		QueueReceiver receiver = jms.getSession().createReceiver(jms.getQueue());
 		TextMessage msg = (TextMessage) receiver.receive();
 		System.out.println(msg.getText());

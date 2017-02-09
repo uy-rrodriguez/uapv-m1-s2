@@ -23,10 +23,21 @@ LIB=.$(SEP)$(SERVER)/lib/appserv-rt.jar
 #	asadmin deploy --force dist/$(WAR)
 #
 
-run-q1:
+q1-run:
 	javac q1/*.java -classpath "$(LIB)"
-	java -cp "q1" Emetteur
-	java -cp "q1" Recepteur
+	java -classpath "$(LIB)" q1.Emetteur
+	java -classpath "$(LIB)" q1.Recepteur
 
+q2-run: q2-compile q2-sender q2-receiver
+
+q2-compile:
+	javac q2/*.java -classpath "$(LIB)"
+
+q2-sender:
+	java -classpath "$(LIB)" q2.Emetteur "Message de test"
+
+q2-receiver:
+	java -classpath "$(LIB)" q2.Recepteur
+	
 clean:
 	rm -R q1/*.class
