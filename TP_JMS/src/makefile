@@ -239,7 +239,7 @@ q13-receiver:
 
 
 #################################################################
-#  QUESTION 14                                                   #
+#  QUESTION 14                                                  #
 #################################################################
 
 q14-compile:
@@ -256,6 +256,26 @@ q14-inscrire:
 
 q14-desinscrire:
 	java -classpath "$(LIB)" q14.Desinscription $(NOM)
+
+
+#################################################################
+#  QUESTION 15                                                  #
+#################################################################
+
+q15-compile:
+	javac q15/*.java -classpath "$(LIB)"
+
+q15-sender:
+	java -classpath "$(LIB)" q15.Emetteur "Message de test" $(FILTRES)
+
+q15-receiver:
+	java -classpath "$(LIB)" q15.Recepteur $(NOM) $(FILTRES)
+
+q15-inscrire:
+	java -classpath "$(LIB)" q15.Inscription $(NOM)
+
+q15-desinscrire:
+	java -classpath "$(LIB)" q15.Desinscription $(NOM)
 
 
 #################################################################
