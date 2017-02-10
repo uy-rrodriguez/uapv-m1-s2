@@ -74,10 +74,10 @@ q4-compile:
 	javac q4/*.java -classpath "$(LIB)"
 
 q4-sender:
-	java -classpath "$(LIB)" q4.Emetteur "Message de test" $(NOMS)
+	java -classpath "$(LIB)" q4.Emetteur "Message de test" $(FILTRES)
 
 q4-receiver:
-	java -classpath "$(LIB)" q4.Recepteur $(NOMS)
+	java -classpath "$(LIB)" q4.Recepteur $(FILTRES)
 
 
 #################################################################
@@ -88,10 +88,10 @@ q5-compile:
 	javac q5/*.java -classpath "$(LIB)"
 
 q5-sender:
-	java -classpath "$(LIB)" q5.Emetteur "Message de test" $(NOMS)
+	java -classpath "$(LIB)" q5.Emetteur "Message de test" $(FILTRES)
 
 q5-receiver:
-	java -classpath "$(LIB)" q5.Recepteur $(NOMS)
+	java -classpath "$(LIB)" q5.Recepteur $(FILTRES)
 
 
 #################################################################
@@ -102,10 +102,10 @@ q6-compile:
 	javac q6/*.java -classpath "$(LIB)"
 
 q6-sender:
-	java -classpath "$(LIB)" q6.Emetteur "Message de test" $(NOMS)
+	java -classpath "$(LIB)" q6.Emetteur "Message de test" $(FILTRES)
 
 q6-receiver:
-	java -classpath "$(LIB)" q6.Recepteur $(NOMS)
+	java -classpath "$(LIB)" q6.Recepteur $(FILTRES)
 
 
 #################################################################
@@ -135,7 +135,7 @@ q8-compile:
 	javac q8/*.java -classpath "$(LIB)"
 
 q8-sender:
-	java -classpath "$(LIB)" q8.Emetteur "Message de test" $(NOMS)
+	java -classpath "$(LIB)" q8.Emetteur "Message de test" $(FILTRES)
 
 q8-receiver: q8-receiver-build q8-receiver-deploy
 
@@ -204,10 +204,10 @@ q11-compile:
 	javac q11/*.java -classpath "$(LIB)"
 
 q11-sender:
-	java -classpath "$(LIB)" q11.Emetteur "Message de test" $(NOMS)
+	java -classpath "$(LIB)" q11.Emetteur "Message de test" $(FILTRES)
 
 q11-receiver:
-	java -classpath "$(LIB)" q11.Recepteur $(NOMS)
+	java -classpath "$(LIB)" q11.Recepteur $(FILTRES)
 
 
 #################################################################
@@ -218,10 +218,10 @@ q12-compile:
 	javac q12/*.java -classpath "$(LIB)"
 
 q12-sender:
-	java -classpath "$(LIB)" q12.Emetteur "Message de test" $(NOMS)
+	java -classpath "$(LIB)" q12.Emetteur "Message de test" $(FILTRES)
 
 q12-receiver:
-	java -classpath "$(LIB)" q12.Recepteur $(NOMS)
+	java -classpath "$(LIB)" q12.Recepteur $(FILTRES)
 
 
 #################################################################
@@ -232,10 +232,30 @@ q13-compile:
 	javac q13/*.java -classpath "$(LIB)"
 
 q13-sender:
-	java -classpath "$(LIB)" q13.Emetteur "Message de test" $(NOMS)
+	java -classpath "$(LIB)" q13.Emetteur "Message de test" $(FILTRES)
 
 q13-receiver:
-	java -classpath "$(LIB)" q13.Recepteur $(NOMS)
+	java -classpath "$(LIB)" q13.Recepteur $(FILTRES)
+
+
+#################################################################
+#  QUESTION 14                                                   #
+#################################################################
+
+q14-compile:
+	javac q14/*.java -classpath "$(LIB)"
+
+q14-sender:
+	java -classpath "$(LIB)" q14.Emetteur "Message de test" $(FILTRES)
+
+q14-receiver:
+	java -classpath "$(LIB)" q14.Recepteur $(NOM) $(FILTRES)
+
+q14-inscrire:
+	java -classpath "$(LIB)" q14.Inscription $(NOM)
+
+q14-desinscrire:
+	java -classpath "$(LIB)" q14.Desinscription $(NOM)
 
 
 #################################################################
