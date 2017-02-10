@@ -147,8 +147,119 @@ q8-receiver-deploy:
 
 
 #################################################################
+#  QUESTION 9                                                   #
+#################################################################
+
+q9-all: q9-compile q9-build q9-deploy q9-clean
+
+q9-compile:
+	javac q9/*.java -classpath "$(LIB)"
+
+q9-build:
+	mkdir -p "WEB-INF/classes/q9"
+	cp q9/*.class "WEB-INF/classes/q9"
+	cp "q9/index.html" "."
+	cp "q9/web.xml" "WEB-INF"
+	jar cvf q9.war WEB-INF *.html
+
+q9-deploy:
+	asadmin deploy --force q9.war 
+ 
+q9-clean: 
+	rm -R "WEB-INF"
+	rm "index.html"
+	rm "q9.war"
+
+
+#################################################################
+#  QUESTION 10                                                  #
+#################################################################
+
+q10-all: q10-compile q10-build q10-deploy q10-clean
+
+q10-compile:
+	javac q10/*.java -classpath "$(LIB)"
+
+q10-build:
+	mkdir -p "WEB-INF/classes/q10"
+	cp q10/*.class "WEB-INF/classes/q10"
+	cp "q10/index.html" "."
+	cp "q10/web.xml" "WEB-INF"
+	jar cvf q10.war WEB-INF *.html
+
+q10-deploy:
+	asadmin deploy --force q10.war 
+ 
+q10-clean: 
+	rm -R "WEB-INF"
+	rm "index.html"
+	rm "q10.war"
+
+
+#################################################################
+#  QUESTION 11                                                   #
+#################################################################
+
+q11-compile:
+	javac q11/*.java -classpath "$(LIB)"
+
+q11-sender:
+	java -classpath "$(LIB)" q11.Emetteur "Message de test" $(NOMS)
+
+q11-receiver:
+	java -classpath "$(LIB)" q11.Recepteur $(NOMS)
+
+
+#################################################################
+#  QUESTION 12                                                   #
+#################################################################
+
+q12-compile:
+	javac q12/*.java -classpath "$(LIB)"
+
+q12-sender:
+	java -classpath "$(LIB)" q12.Emetteur "Message de test" $(NOMS)
+
+q12-receiver:
+	java -classpath "$(LIB)" q12.Recepteur $(NOMS)
+
+
+#################################################################
+#  QUESTION 13                                                   #
+#################################################################
+
+q13-compile:
+	javac q13/*.java -classpath "$(LIB)"
+
+q13-sender:
+	java -classpath "$(LIB)" q13.Emetteur "Message de test" $(NOMS)
+
+q13-receiver:
+	java -classpath "$(LIB)" q13.Recepteur $(NOMS)
+
+
+#################################################################
 #  CLEAN                                                        #
 #################################################################
 
 clean:
 	rm -R ./*/*.class
+
+
+
+#################################################################
+#  EXTRA : Configuration GlassFish                              #
+#################################################################
+
+# Création des ressources jms en ligne de commande
+QueueConnectionFactory:
+	asadmin create-jms-resource --restype javax.jms.QueueConnectionFactory jms/tpJMSConnFactory
+
+Queue:
+	asadmin create-jms-resource --restype javax.jms.Queue --property Name=tpJMSConnFactory jms/tpJMSDestination
+
+TopicConnectionFactory:
+	asadmin create-jms-resource --restype javax.jms.TopicConnectionFactory jms/tpJMSTopicConnFactory
+
+Topic:
+	asadmin create-jms-resource --restype javax.jms.Topic --property Name=tpJMSTopicConnFactory jms/tpJMSTopicDestination
