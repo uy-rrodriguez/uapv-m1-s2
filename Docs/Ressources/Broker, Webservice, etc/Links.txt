@@ -1,0 +1,13 @@
+JMS et Broker de Message URL
+http://www.jmdoudoux.fr/java/dej/chap-jms.htm
+
+Web service - Java URL
+http://www.jmdoudoux.fr/java/dej/chap-service-web.htm
+
+Web service - C++ - Serveur URL
+https://msdn.microsoft.com/fr-fr/library/a86z84tw(v=vs.80).aspx
+
+Web service - C++ - Client URL
+https://msdn.microsoft.com/fr-fr/library/aa290758(v=vs.71).aspx
+
+FTP : Speeral Ice (à récupérer avant le premier mars 2016)
