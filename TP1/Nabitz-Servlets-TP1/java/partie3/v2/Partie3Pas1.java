@@ -12,11 +12,11 @@ public class Partie3Pas1 extends HttpServlet {
 
 	private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Récupération des valeurs depuis la session
-		HttpSession session = req.getSession();
+		/*HttpSession session = req.getSession();
 		String utilisateur = "";
 		if (session.getAttribute("utilisateur") != null)
 			utilisateur = (String) session.getAttribute("utilisateur");
-
+*/
 		
 		// Réponse
 		String style = "<link rel='stylesheet' type='text/css' href='../css/style.css'>";
@@ -26,7 +26,7 @@ public class Partie3Pas1 extends HttpServlet {
 		String form = "<form action='" + resp.encodeURL("Partie3Pas2") +"' method='post'>"
 						+ "	<div id='container'>"
 						+ "		<div>"
-						+ "			<input type='text' name='utilisateur' value='" + utilisateur + "' placeholder=\"Nom de l'utilisateur\" />"
+						+ "			<input type='text' name='utilisateur' value='' placeholder=\"Nom de l'utilisateur\" />"
 						+ "		</div>"
 						+ "		<div>"
 						+ "			<input type='submit' value='Envoyer' />"
