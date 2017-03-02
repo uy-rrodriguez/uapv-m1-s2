@@ -118,6 +118,31 @@
     <servlet-class>partie3.v2.Partie3Page2</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>Partie3Pas1_v3</servlet-name>
+    <servlet-class>partie3.v3.Partie3Pas1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Pas2_v3</servlet-name>
+    <servlet-class>partie3.v3.Partie3Pas2</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Pas3_v3</servlet-name>
+    <servlet-class>partie3.v3.Partie3Pas3</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Pas4_v3</servlet-name>
+    <servlet-class>partie3.v3.Partie3Pas4</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Page1_v3</servlet-name>
+    <servlet-class>partie3.v3.Partie3Page1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie3Page2_v3</servlet-name>
+    <servlet-class>partie3.v3.Partie3Page2</servlet-class>
+  </servlet>
+  
   
   <!-- Partie 1 -->
   <servlet-mapping>
@@ -218,4 +243,39 @@
     <url-pattern>/v2/Partie3Page2</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>Partie3Pas1_v3</servlet-name>
+    <url-pattern>/partie3_v3/Partie3Pas1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Pas2_v3</servlet-name>
+    <url-pattern>/partie3_v3/Partie3Pas2</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Pas3_v3</servlet-name>
+    <url-pattern>/partie3_v3/Partie3Pas3</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Pas4_v3</servlet-name>
+    <url-pattern>/partie3_v3/Partie3Pas4</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Page1_v3</servlet-name>
+    <url-pattern>/partie3_v3/Partie3Page1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie3Page2_v3</servlet-name>
+    <url-pattern>/partie3_v3/Partie3Page2</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Filtre pour la question 3 de la partie 3 -->
+  <filter>
+      <filter-name>LoginFilter</filter-name>
+      <filter-class>partie3.v3.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>LoginFilter</filter-name>
+      <url-pattern>/partie3_v3/*</url-pattern>
+  </filter-mapping>
+    
 </web-app>
