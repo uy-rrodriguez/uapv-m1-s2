@@ -1,2 +1,10 @@
 
 TP1/
+
+*.pyc
+
+Serveur/src/AppMP3Player/
+
+Serveur/src/Manager_ice\.py
+
+Serveur/src/Metaserveur_ice\.py
