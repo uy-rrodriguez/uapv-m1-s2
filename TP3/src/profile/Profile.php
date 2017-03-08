@@ -81,25 +81,26 @@ class Profile {
 		$durations = array();
 
         // Utilisation de mémoire
-        $memoryUsages = array();
-        $memoryPeaks = array();
+        // Mémoire avant la boucle
+        $memoryStart = memory_get_usage();
 
 		for($i = 0; $i < $invocations; $i++) {
-            // Mémoire avant la méthode
-            $memoryStart = memory_get_usage(true);
-
 			$start = microtime(true);
             $method->invokeArgs($instance, $methodargs);
 			$durations[] = microtime(true) - $start;
 
-            // Mémoire maximale après la méthode
-            $memoryPeak = memory_get_peak_usage(true);
-
+            /*
             // Différence de mémoire avant et après l'exécution
             $memoryUsages[] = $memoryPeak - $memoryStart;
             $memoryPeaks[] = $memoryPeak;
+            */
 		}
 
+        // Mémoire maximale après la boucle
+        $memoryPeak = memory_get_peak_usage();
+
+
+        // ----------- Calculs sur la durée -----------
 		$duration['total'] = round(array_sum($durations), 4);
 		$duration['average'] = round($duration['total'] / count($durations), 4);
 		$duration['worst'] = round(max($durations), 4);
@@ -108,16 +109,22 @@ class Profile {
         $duration['standard_deviation'] = $this->ecarttype($durations, 6);
 
 
-        // Calculs sur la mémoire
+        // ----------- Calculs sur la mémoire -----------
+        $memory['start'] = round($memoryStart, 4);
+        $memory['peak'] = round($memoryPeak, 4);
+        $memory['difference'] = round($memoryPeak - $memoryStart, 4);
+
+        /*
         $memory['total'] = round(array_sum($memoryUsages), 4);
 		$memory['average'] = round($memory['total'] / count($memoryUsages), 4);
 		$memory['worst'] = round(max($memoryUsages), 4);
-		
+
 		$peaksTotal = round(array_sum($memoryPeaks), 4);
 		$memory['average_peak'] = round($peaksTotal / count($memoryPeaks), 4);
 
         // Ecart-type
         $memory['standard_deviation'] = $this->ecarttype($memoryUsages, 6);
+        */
 
 
 
@@ -159,12 +166,17 @@ class Profile {
             echo "Standard deviation:   {$this->details['duration']['standard_deviation']}s\n";
 
             echo "\nMEMORY:\n";
-			echo "Total memory:   {$this->details['memory']['total']}\n";
+			echo "Memory on start:   {$this->details['memory']['start']} b\n";
+			echo "Memory peak:       {$this->details['memory']['peak']} b\n";
+			echo "Memory difference: {$this->details['memory']['difference']} b\n";
+
+            /*
 			echo "Average memory: {$this->details['memory']['average']}\n";
             echo "Average memory peak:   {$this->details['memory']['average_peak']}\n";
 			echo "Worst memory:   {$this->details['memory']['worst']}\n";
             echo "Standard deviation memory:   {$this->details['memory']['standard_deviation']}\n";
-            
+            */
+
             echo "\n";
 		}
 	}

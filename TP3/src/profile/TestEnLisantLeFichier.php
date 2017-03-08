@@ -2,11 +2,11 @@
 error_reporting(E_ALL ^ E_WARNING);
 ini_set('display_errors', 1);
 
-include("CompteDansFichier.php");
-include ("Profile.php");
+require_once("compte/CompteDansFichier.php");
+require_once("Profile.php");
 
 
-class TestEnUtilisantLeShellUnix {
+class TestEnLisantLeFichier {
 
     /* @var $profiler Profile */
     private $profiler;
@@ -17,9 +17,9 @@ class TestEnUtilisantLeShellUnix {
         $this->fileName = $fileName;
     }
 
-    public function testEnUtilisantLeShellUnix() {
+    public function testEnLisantLeFichier() {
         $this->profiler->profile("CompteDansFichier",
-                                 "enUtilisantLeShellUnix",
+                                 "enLisantLeFichier",
                                  [18, $this->fileName],
                                  10);
     }
@@ -32,8 +32,8 @@ class TestEnUtilisantLeShellUnix {
 
 $fichier = $argv[1];
 
-$test = new TestEnUtilisantLeShellUnix($fichier);
-$test->testEnUtilisantLeShellUnix();
+$test = new TestEnLisantLeFichier($fichier);
+$test->testEnLisantLeFichier();
 $test->printDetails();
 
 ?>

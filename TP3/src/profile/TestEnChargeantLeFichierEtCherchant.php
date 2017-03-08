@@ -2,11 +2,11 @@
 error_reporting(E_ALL ^ E_WARNING);
 ini_set('display_errors', 1);
 
-require_once("CompteDansFichier.php");
-require_once("Profile.php");
+include("compte/CompteDansFichier.php");
+include ("Profile.php");
 
 
-class TestEnLisantLeFichier {
+class TestEnChargeantLeFichierEtCherchant {
 
     /* @var $profiler Profile */
     private $profiler;
@@ -17,9 +17,9 @@ class TestEnLisantLeFichier {
         $this->fileName = $fileName;
     }
 
-    public function testEnLisantLeFichier() {
+    public function testEnChargeantLeFichierEtCherchant() {
         $this->profiler->profile("CompteDansFichier",
-                                 "enLisantLeFichier",
+                                 "enChargeantLeFichierEtCherchant",
                                  [18, $this->fileName],
                                  10);
     }
@@ -32,8 +32,8 @@ class TestEnLisantLeFichier {
 
 $fichier = $argv[1];
 
-$test = new TestEnLisantLeFichier($fichier);
-$test->testEnLisantLeFichier();
+$test = new TestEnChargeantLeFichierEtCherchant($fichier);
+$test->testEnChargeantLeFichierEtCherchant();
 $test->printDetails();
 
 ?>

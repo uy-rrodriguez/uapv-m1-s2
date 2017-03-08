@@ -1,6 +1,6 @@
 <?php
 
-include("../CompteDansFichier.php");
+include("../compte/CompteDansFichier.php");
 include ("Profile.php");
 
 class TestCompteDansUnFichier {
