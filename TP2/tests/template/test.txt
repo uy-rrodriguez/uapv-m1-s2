@@ -1,0 +1,7 @@
+    function test[!NOM_TEST!]() {
+        // Exécution
+        $res = queFaireAujourdhui([!METEO!], [!MER!], [!REQUINS!]);
+
+        // Assert du résultat
+        $this->assertTrue($res == "[!RESULTAT!]");
+    }
