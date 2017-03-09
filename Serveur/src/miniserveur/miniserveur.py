@@ -1,3 +1,5 @@
+# coding: utf8
+
 import sys, traceback, Ice
 import AppMP3Player
 import CLI

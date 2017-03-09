@@ -80,8 +80,7 @@ class CommandeManuelle:
                 # Création de l'objet Commande
                 c = AppMP3Player.Commande()
                 c.commande = commande
-                c.chanson = chanson
-
+                c.params = [chanson]
                 return ManagerProxy.proxy.commandeManuelle(c)
 
             else:

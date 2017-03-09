@@ -1,3 +1,5 @@
+# coding: utf8
+
 import sys, traceback, time
 import Ice
 import AppMP3Player
@@ -26,6 +28,7 @@ class ManagerI(AppMP3Player.Manager):
         t = traitement.Traitement()
         commande = t.traiterCommande("localhost", commande)
 
+        print "ManagerI->return\n"
         return commande
 
 
@@ -39,6 +42,7 @@ class ManagerI(AppMP3Player.Manager):
         t = traitement.Traitement()
         commande = t.traiterCommande("localhost", commande)
 
+        print "ManagerI->return\n"
         return commande
 
 

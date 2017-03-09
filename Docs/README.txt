@@ -13,3 +13,10 @@ Webservices RESTful avec Python :
     pas installé dans le serveur pedago.
 
 
+Struct Commande :
+    - Pendant le développement je me suis rendu compte qu'il fallait ajouter un attribut pour indiquer
+    le retour des commandes. Par exemple, pour obtenir la liste de chansons disponibles.
+    - Le retour est implemente comme un string, dans le cas d'objets complexes on va retourner sa representation JSON.
+    - Pour permettre la gestion de commandes plus variées, j'ai supprimé l'attribut chanson et ajouté
+    une liste de parametres pour la commande à exécuter. en faisant ainsi, une commande peut recevoir
+    un nombre indefini de paramètres.

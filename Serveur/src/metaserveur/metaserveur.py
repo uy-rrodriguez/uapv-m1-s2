@@ -1,3 +1,5 @@
+# coding: utf8
+
 import sys, traceback, time
 import Ice
 import AppMP3Player
