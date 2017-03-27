@@ -176,6 +176,10 @@ __name__ = 'AppMP3Player'
 if 'Metaserveur' not in _M_AppMP3Player.__dict__:
     _M_AppMP3Player.Metaserveur = Ice.createTempClass()
     class Metaserveur(Ice.Object):
+        """
+        Cette interface représente les méthodes fournies par le méta-serveur, qui sont accesibles par
+        le module de traitement de commandes et les mini-serveurs.
+        """
         def __init__(self):
             if Ice.getType(self) == _M_AppMP3Player.Metaserveur:
                 raise RuntimeError('AppMP3Player.Metaserveur is an abstract class')

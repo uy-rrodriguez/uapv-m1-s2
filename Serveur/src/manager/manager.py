@@ -3,7 +3,7 @@
 import sys, traceback, time
 import Ice
 import AppMP3Player
-import reconnaissance, parsing, traitement
+import config, reconnaissance, parsing, traitement
 
 
 class ManagerI(AppMP3Player.Manager):
@@ -60,7 +60,7 @@ def main():
 
         # Initialisation du serveur et Ice
         ic = Ice.initialize(iniData)
-        adapter = ic.createObjectAdapterWithEndpoints("Manager", "default -p 10000")
+        adapter = ic.createObjectAdapterWithEndpoints("Manager", "default -p " + str(config.PORT_ICE))
         manager = ManagerI()
         adapter.add(manager, ic.stringToIdentity("Manager"))
         adapter.activate()

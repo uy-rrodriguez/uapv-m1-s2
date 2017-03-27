@@ -8,6 +8,7 @@ build-py:
 	# Interfaces utilisees en Python
 	slice2py --all ../../Interfaces/Manager.ice
 	slice2py --all ../../Interfaces/Metaserveur.ice
+	slice2py --all ../../Interfaces/Messagerie.ice
 
 run:
 	python ClientMP3.py
@@ -16,13 +17,21 @@ run-manager:
 	@echo "---------------- Run manager start ----------------"
 	python -m manager.manager
 
+run-ws:
+	@echo "---------------- Run webservice ----------------"
+	python -m ws.ws
+
 run-meta:
 	@echo "---------------- Run metaserveur start ----------------"
 	python -m metaserveur.metaserveur
 
-run-ws:
-	@echo "---------------- Run webservice ----------------"
-	python -m ws.ws
+run-mini:
+	@echo "---------------- Run miniserveur start ----------------"
+	python -m miniserveur.miniserveur
+
+run-icebox:
+	@echo "---------------- Run icebox start ----------------"
+	icebox --Ice.Config=config.icebox
 
 
 run-pyglet:

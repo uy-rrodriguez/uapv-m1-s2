@@ -3,6 +3,7 @@
 import sys, traceback, Ice
 import AppMP3Player
 import web
+import config
 
 
 # ############################################################### #
@@ -10,7 +11,6 @@ import web
 #                                                                 #
 # ############################################################### #
 
-SERVER_IP = "localhost"
 
 
 # Formats d'URLs acceptés
@@ -118,7 +118,7 @@ def main():
 
         # Initialisation du serveur et Ice
         ic = Ice.initialize(iniData)
-        base = ic.stringToProxy("Manager:default -h " + SERVER_IP + " -p 10000")
+        base = ic.stringToProxy("Manager:default -h " + config.IP_MANAGER + " -p " + str(config.PORT_ICE))
         manager = AppMP3Player.ManagerPrx.checkedCast(base)
         if not manager:
             raise RuntimeError("Invalid proxy")
