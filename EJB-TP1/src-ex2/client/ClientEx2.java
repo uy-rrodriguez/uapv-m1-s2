@@ -6,7 +6,7 @@ import javax.naming.NamingException;
 import serveur.GestionLivre;
 
 
-public class Client {
+public class ClientEx2 {
 	public static void main(String[] args) {
 		try {
 			InitialContext ic = new InitialContext();
