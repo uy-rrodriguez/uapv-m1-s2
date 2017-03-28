@@ -23,7 +23,7 @@ serveur-compile:
 	javac serveur/*.java -classpath "$(LIB)"
 
 serveur-build:
-	jar cvf dist/ejb-tp1-ex1-serveur.jar serveur/*.class META-INF/*
+	jar cvf dist/ejb-tp1-ex1-serveur.jar serveur/*.class
 
 serveur-deploy:
 	asadmin deploy --force dist/ejb-tp1-ex1-serveur.jar

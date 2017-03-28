@@ -38,7 +38,7 @@ client-build:
 	jar cvf dist/ejb-tp1-ex2-client.jar serveur/*.class
 
 client-run:
-	java -cp "$(LIB)$(SEP)dist/ejb-tp1-ex2-client.jar" ClientEx2
+	java -cp "$(LIB)$(SEP)dist/ejb-tp1-ex2-client.jar" client.ClientEx2
 
 
 #################################################################
