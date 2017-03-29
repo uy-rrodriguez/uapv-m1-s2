@@ -35,7 +35,7 @@ client-compile:
 	javac client/*.java -classpath "$(LIB)"
 
 client-build:
-	jar cvf dist/ejb-tp1-ex1-client.jar serveur/*.class
+	jar cvf dist/ejb-tp1-ex1-client.jar client/*.class
 
 client-run:
 	java -cp "$(LIB)$(SEP)dist/ejb-tp1-ex1-client.jar" client.ClientEx1

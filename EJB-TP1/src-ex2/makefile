@@ -7,7 +7,7 @@ else
 endif
 
 SERVER=G:/Dev/glassfish4/glassfish
-LIB=.$(SEP)$(SERVER)/lib/appserv-rt.jar
+LIB=.$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/domains/domain1/lib/postgresql-9.1-902.jdbc4.jar
 
 
 #################################################################
@@ -35,7 +35,7 @@ client-compile:
 	javac client/*.java -classpath "$(LIB)"
 
 client-build:
-	jar cvf dist/ejb-tp1-ex2-client.jar serveur/*.class
+	jar cvf dist/ejb-tp1-ex2-client.jar client/*.class
 
 client-run:
 	java -cp "$(LIB)$(SEP)dist/ejb-tp1-ex2-client.jar" client.ClientEx2
@@ -46,6 +46,7 @@ client-run:
 #################################################################
 
 clean:
+	rm -R "./serveur/Livre_.java"
 	rm -R ./*/*.class
 	rm -R ./dist/*.jar
 

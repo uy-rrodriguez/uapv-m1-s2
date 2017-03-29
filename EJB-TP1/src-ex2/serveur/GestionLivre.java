@@ -4,6 +4,6 @@ import javax.ejb.Remote;
 
 @Remote
 public interface GestionLivre {
-	public void nouveauLivre(String isbn, String titre);
-	public void supprimerLivre(String isbn);
+	public Livre nouveauLivre(String isbn, String titre) throws Exception;
+	public boolean supprimerLivre(String isbn) throws Exception;
 }
