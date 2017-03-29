@@ -12,5 +12,6 @@ class TestGenere extends UnitTestCase {
     }
 
     function tearDown() {
-        echo \"<div style='margin-top: 20px; border-top: 2px solid #CCC;'>&nbsp;</div>\";
+        echo "<div style='margin-top: 20px; border-top: 2px solid #CCC;'>&nbsp;</div>";
     }
+

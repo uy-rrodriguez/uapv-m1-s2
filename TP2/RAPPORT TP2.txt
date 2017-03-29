@@ -1,0 +1,72 @@
+Rapport techniques de tests - TP2
+RODRIGUEZ, Ricardo
+M1 ILSEN
+
+=================================================================
+
+------------
+  Partie A  
+------------
+
+A.1
+-------------------------------------------------
+Dans une première partie j'ai créé le fichier tests/testA.php qui va vérifier la fonction queFaireAujourdhui dans deux cas :
+    1)  météo belle : true
+        mer chaude : true
+        présence requins : true
+    2)  météo belle : false
+        mer chaude : false
+        présence requins : false
+
+La fonction renvoie le mauvais résultat pour le test 1, elle aurait dû renvoyer "Plage:Bronze".
+Le deuxième test passe sans problèmes.
+
+
+A.2
+-------------------------------------------------
+Dans un deuxième temps, j'a créé le fichier tests/generateur.php qui va recevoir comme entrée un fichier CSV représentant la table de décision associée à la fonction et qui va générer un fichier PHP avec le test de toutes les combinaisons.
+
+Générateur pour tout type de fonction
+-------------------------------------
+En ce qui concerne la question sur si ce type d'automatisation (un générateur de tests) peut être utilisé dans n'importe quelle fonction, la réponse est NON. En fait, nous sommes en train de tester une fonction très spécifique qui reçoit des booléens et qui renvoie un string avec un format précis. Déjà mon générateur est un peu complexe parce que j'ai éssayé de gérer un fichier d'entrée qui pourrait avoir une quantité illimitée de conditions et de résultats possibles. mais par exemple mon code est restrient à avoir un résultat du type "résultat1:résultat2".
+
+Ce serait impossible de gérer tout type de retour pour n'importe quelle fonction. Un exemple serait le retour d'objets. Il faudrait changer beaucoup le générateur afin qu'il puisse tester le retour d'objets. Ensuite, si on veut tester le déclenchement d'exceptions il faudrait un autre type de test. Si on veut gérer les performances d'une fonction il faudrait encore d'autres types de tests. Enfin, si la fonction n'est pas dépendante que d'une table de décision (par exemple dans le cas de fonctions aléatoires ou qui utilisent la date actuelle dans leurs calculs) ce ne serait pas possible d'écrire un générateur. Ou le générateur à écrire serait trop complexe et donc trop coûteux.
+
+Exécution du rapporteur
+-----------------------
+Pour exécuter le générateur par console il faut faire :
+    cd tests
+    php generateur.php data/table_decision.csv fichier_sortie.php
+
+Pour exécuter le générateur depuis un navigateur web :
+    URL : localhost/.../generateur.php?data=data/table_decision.csv&out=fichier_sortie.php
+
+Le fichier généré utilise mon rapporteur HTML personnalisé.
+
+Erreur dans la fonction
+-----------------------
+La fonction a une erreur dans la ligne 6, lors de l'évaluation du paramètre $presence_requins. Le code corrigé de la fonction est :
+
+function queFaireAujourdhui($meteo_belle,$mer_chaude,$presence_requins) {
+  if ($meteo_belle) {
+    if ($mer_chaude) {
+      if ($presence_requins) {
+        return('Plage:Bronze');
+      } else {
+        return('Plage:Nage');
+      }
+    } else {
+      return('Plage:Bronze');
+    }
+  } else {
+     return 'Lit:?';
+  }
+}
+
+
+=================================================================
+
+------------
+  Partie B  
+------------
+
