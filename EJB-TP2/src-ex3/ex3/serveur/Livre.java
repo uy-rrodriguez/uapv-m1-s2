@@ -1,13 +1,19 @@
-package serveur;
+package ex3.serveur;
 
 import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="livre")
+@NamedQueries({
+	@NamedQuery(name="getByISBN", query="SELECT l FROM Livre l WHERE l.isbn = :isbn"),
+	@NamedQuery(name="getDisponibles", query="SELECT l FROM Livre l WHERE l.dispo = 1")
+})
 public class Livre implements Serializable {
 	/**
 	 * 
