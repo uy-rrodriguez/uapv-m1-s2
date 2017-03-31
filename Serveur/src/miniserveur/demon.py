@@ -1,9 +1,9 @@
 # coding: utf8
 
-import sys, traceback, time, socket
+import sys, traceback, time
 import Ice, IceStorm
 import AppMP3Player
-import config
+import config, icestormutils
 
 '''
     Le démon va lire constamment le répertoire configuré pour les chansons afin de
@@ -11,56 +11,39 @@ import config
     Il est aussi un Publisher IceStorm. Il enverra un message au topic TopicChansons
     pour notifier chaque modification du catalogue de musiques.
 '''
-class DemonChansons:
+class DemonChansons(icestormutils.Publisher):
     managerChansons = None
 
     def __init__(self, ic):
-        # Récupération du topic et un publisher associé
-        obj = ic.stringToProxy("MP3_IceStorm/TopicManager:tcp -p " + str(config.PORT_ICESTORM))
-        topicManager = IceStorm.TopicManagerPrx.checkedCast(obj)
-
-        topic = None;
-        while (topic == None):
-            try:
-                topic = topicManager.retrieve("TopicChansons")
-            except IceStorm.NoSuchTopic as nst:
-                try:
-                    topic = topicManager.create("TopicChansons")
-                except IceStorm.TopicExists as te:
-                    # Créé par un autre publisher
-                    pass
-
-        pub = topic.getPublisher().ice_oneway()
-        self.managerChansons = AppMP3Player.TopicChansonsManagerPrx.uncheckedCast(pub);
-
-        print "DemonChansons->Publisher TopicChansons obtenu"
+        super(DemonChansons, self).__init__(ic, "TopicChansons")
+        self.manager = AppMP3Player.TopicChansonsManagerPrx.uncheckedCast(self.publisher);
 
 
     def ajouter_chanson(self, nom, artiste, categorie, path):
         try:
-            print "DemonChansons->Ajouter chanson"
+            print "DemonChansons->ajouter_chanson"
             c = AppMP3Player.Chanson()
             c.nom = nom
             c.artiste = artiste
             c.categorie = categorie
             c.path = path
-            self.managerChansons.ajouterChanson(c)
+            self.manager.ajouterChanson(c)
         except:
             traceback.print_exc()
 
     def supprimer_chanson(self, nom):
         try:
-            print "DemonChansons->Supprimer chanson"
+            print "DemonChansons->supprimer_chanson"
             c = AppMP3Player.Chanson()
             c.nom = nom
-            self.managerChansons.supprimerChanson(c)
+            self.manager.supprimerChanson(c)
         except:
             traceback.print_exc()
 
 
     def run(self):
         try:
-            print "DemonChansons->Run start"
+            print "DemonChansons->run"
 
             while True:
                 self.ajouter_chanson("Hotel California", "The Eagles",
@@ -70,7 +53,9 @@ class DemonChansons:
                 time.sleep(1)
 
         except:
-            print "DemonChansons->Run end"
+            traceback.print_exc()
+
+        print "DemonChansons->end"
 
 
 

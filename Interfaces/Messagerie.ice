@@ -39,4 +39,16 @@ module AppMP3Player {
         void pauseChanson(Chanson c);
         void arreterChanson(Chanson c);
     };
+
+
+    /**
+     * Cette interface permet la notification du démarrage ou arrêt des miniserveurs.
+     * Les méthodes de l'interface sont les différents messages possibles. Pour l'instant :
+     *     - indiquer le démarrage d'un nouveau miniserveur
+     *     - indiquer l'arrêt d'un miniserveur existant
+     */
+    interface TopicMiniserveursManager {
+        void enregistrerServeur(string ip);
+        void supprimerServeur(string ip);
+    };
 };

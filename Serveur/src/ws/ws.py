@@ -20,8 +20,8 @@ urls = (
     "/commande_manuelle/(.*)/(.*)",  "CommandeManuelle"
 )
 
-# Application qui attendra les requêtes
-app = web.application(urls, globals())
+# Variable qui va stocker l'instance du WS (sera de type MonWebservice)
+instanceWS = None
 
 
 
@@ -34,8 +34,7 @@ app = web.application(urls, globals())
 class ManagerProxy:
     proxy = None
 
-    @staticmethod
-    def set_proxy(proxy):
+    def __init__(self, proxy):
         ManagerProxy.proxy = proxy
 
 
@@ -44,6 +43,23 @@ class ManagerProxy:
 #    Classes pour traiter les requêtes                            #
 #                                                                 #
 # ############################################################### #
+
+
+# -- MonWebservice ---------------------------------------------- #
+'''
+    Hérite de web.application pour étendre ses fonctionnalités
+'''
+class MonWebservice(web.application, object):
+    instance = None
+
+    def __init__(self, urls, vars_globals):
+        super(MonWebservice, self).__init__(urls, vars_globals)
+        MonWebservice.instance = self
+
+    def run(self, port=8080, *middleware):
+        func = self.wsgifunc(*middleware)
+        return web.httpserver.runsimple(func, ('0.0.0.0', port))
+
 
 
 # -- CommandeVocale --------------------------------------------- #
@@ -98,7 +114,7 @@ class CommandeManuelle:
 '''
 class Suicide:
     def GET(self):
-        app.stop()
+        MonWebservice.instance.stop()
 
 
 
@@ -124,11 +140,12 @@ def main():
             raise RuntimeError("Invalid proxy")
 
 
-        # On stocke le proxy
-        ManagerProxy.set_proxy(manager)
+        # On stocke le proxy dans une instance de ManagerProxy
+        ManagerProxy(manager)
 
         # Démarrage du webservice
-        app.run()
+        instanceWS = MonWebservice(urls, globals())
+        instanceWS.run(port=config.PORT_WS)
 
 
     except:

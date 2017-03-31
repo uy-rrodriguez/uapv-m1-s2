@@ -1,0 +1,6 @@
+# Configuration pour administrer IceStorm
+# icestormadmin.exe
+
+IceStormAdmin.Host=localhost
+IceStormAdmin.Port=20000
+IceStormAdmin.TopicManager.Proxy=MP3_IceStorm/TopicManager:tcp -p 20000

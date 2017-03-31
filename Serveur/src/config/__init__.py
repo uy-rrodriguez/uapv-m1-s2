@@ -18,8 +18,9 @@ COM_SHUTDOWN_X   = "shutdown_x"
 IP_MANAGER = "127.0.0.1"
 IP_METASERVEUR = "127.0.0.1"
 
-# Configuration IceStorm
-PORT_ICE                 = 10000
+# Configuration de ports
 PORT_ICEBOX              = 9996
+PORT_ICE                 = 10000
 PORT_ICESTORM            = 20000
 PORT_ICESTORM_PUBLISHER  = 20001
+PORT_WS                  = 30000

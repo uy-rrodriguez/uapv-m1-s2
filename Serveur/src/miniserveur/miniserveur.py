@@ -3,25 +3,25 @@
 import sys, traceback, time
 import Ice, IceStorm
 import AppMP3Player
-import config, proxy_metaserveur, demon, subscriber_commandes
+import config
+from publisher_mini import PublisherMiniserveurs
+from demon import DemonChansons
+from subscriber_commandes import SubscriberCommandes
+
 #import CLI
 
 
 class Miniserveur:
-    def __init__(self, metaserveur, demon, subscriber):
-        self.metaserveur = metaserveur
+    def __init__(self, publisherMini, demon, subscriberCommandes):
+        self.publisherMini = publisherMini
         self.demon = demon
-        self.subscriber = subscriber
+        self.subscriberCommandes = subscriberCommandes
 
     def mainloop(self):
         self.demon.run()
 
 
 def main():
-    metaserveur = None
-    publisher = None
-    subscriber = None
-
     status = 0
     ic = None
     try:
@@ -31,14 +31,14 @@ def main():
         iniData.properties = props
         ic = Ice.initialize(iniData)
 
-        # Récupération du métaserveur
-        metaserveur = proxy_metaserveur.ProxyMetaserveur(ic)
+        # Création du publisher pour envoyer les mises-à-jour des chansons
+        demonChansons = DemonChansons(ic)
 
-        # Récupération du publisher pour les chansons
-        demonChansons = demon.DemonChansons(ic)
+        # Création du publisher pour indiquer au Métaserveur le démarrage ou arrêt du miniserveur
+        publisherMiniserveurs = None#PublisherMiniserveur(ic)
 
-        # Récupération du subscriber pour recevoir les commandes
-        subscriber = None#subscriber_commandes.SubscriberCommandes(ic)
+        # Création du subscriber pour recevoir les commandes provenantes du Métaserveur
+        subscriberCommandes = None#SubscriberCommandes(ic)
 
 
         # Client
@@ -47,7 +47,7 @@ def main():
         # Boucle principale
         #client.mainloop()
 
-        miniserveur = Miniserveur(metaserveur, demonChansons, subscriber)
+        miniserveur = Miniserveur(publisherMiniserveurs, demonChansons, subscriberCommandes)
         miniserveur.mainloop()
 
 

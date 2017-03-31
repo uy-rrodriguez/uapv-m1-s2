@@ -4,26 +4,15 @@ import sys, traceback, time
 import Ice, IceStorm
 import AppMP3Player
 import config
-
-
-'''
-    Cette classe implémente l'interface qui va gérer le TopicCommandes.
-    À chaque fois que le subscriber IceStorm associé au topic reçoit
-    un nouveau message, on fera automatiquement appel aux méthodes de
-    cette classe.
-'''
-class TopicChansonsManagerI(AppMP3Player.TopicChansonsManager):
-    def ajouterChanson(self, chanson, current=None):
-        print "SubscriberCommandes->ajouterChanson :", chanson.nom, chanson.path
-
-    def supprimerChanson(self, chanson, current=None):
-        print "SubscriberCommandes->supprimerChanson :", chanson.nom
+from publisher_commandes import PublisherCommandes
+from subscriber_chansons import SubscriberChansons
+from subscriber_mini import SubscriberMiniserveurs
 
 
 '''
     Cette classe implémente le servant su Metaserveur.
-    Il va recevoir et traiter les demandes provenant du serveur Manager et des
-    mini-serveurs.
+    Il va recevoir et traiter les demandes provenant du serveur Manager et les envoyer
+    aux miniserveurs si nécessaire.
 '''
 class MetaserveurI(AppMP3Player.Metaserveur):
     def __init__(self):
@@ -33,57 +22,11 @@ class MetaserveurI(AppMP3Player.Metaserveur):
         print "MetaserveurI->traiterCommande"
         return commande #Commande
 
-    def enregistrerServeur(self, ipServeur, current=None):
-        print "MetaserveurI->enregistrerServeur"
-        return 0 #int isServeur
 
-    def supprimerServeur(self, idServeur, current=None):
-        print "MetaserveurI->supprimerServeur"
-        return #void
-
-
-def creer_souscripteur(ic):
-    obj = ic.stringToProxy("MP3_IceStorm/TopicManager:tcp -p " + str(config.PORT_ICESTORM))
-    topicManager = IceStorm.TopicManagerPrx.checkedCast(obj)
-
-    # On récupère le topic
-    try:
-        topic = topicManager.retrieve("TopicChansons")
-    except IceStorm.NoSuchTopic as nst:
-        try:
-            topic = topicManager.create("TopicChansons")
-        except IceStorm.TopicExists as te:
-            # Créé par un autre publisher
-            pass
-
-    # On crée un adapter qui va rester à l'écoute des messages
-    adapter = ic.createObjectAdapterWithEndpoints("TopicChansonsSubscriber", "tcp:udp")
-
-    # On ajoute une instance de la classe qui va traiter les messages.
-    # L'identifiant de cet objet sera généré automatiquement.
-    subId = Ice.Identity()
-    subId.name = Ice.generateUUID()
-    subscriber = adapter.add(TopicChansonsManagerI(), subId)
-
-    # Activation de l'adapter
-    adapter.activate()
-
-    # Suouscription
-    subscriber = subscriber.ice_oneway()
-    try:
-        qos = {}
-        topic.subscribeAndGetPublisher(qos, subscriber)
-    except IceStorm.AlreadySubscribed as ex:
-        print("SubscriberCommandes->Reactivation d'un souscripteur existant")
-
-
-def creer_servant(ic):
-    adapter = ic.createObjectAdapterWithEndpoints("Metaserveur", "default -p " + str(config.PORT_ICE))
-    meta = MetaserveurI()
-    adapter.add(meta, ic.stringToIdentity("Metaserveur"))
-    adapter.activate()
-
-
+'''
+    Main
+    Création d'un souscripteur au TopicChansons et du servant pour le Metaserveur
+'''
 def main():
     status = 0
     ic = None
@@ -96,11 +39,20 @@ def main():
         iniData.properties = props
         ic = Ice.initialize(iniData)
 
-        # D'abord, on crée un souscripteur au TopicChansons
-        creer_souscripteur(ic)
+        # Création du publisher qui enverra les commandes aux miniserveurs
+        #publisherCommandes = PublisherCommandes(ic)
 
-        # Puis on crée le servant pour le Metserveur
-        creer_servant(ic)
+        # Création du souscripteur au TopicChansons
+        subscriberChansons = SubscriberChansons(ic)
+
+        # Création du souscripteur au TopicMiniserveurs
+        #subscriberMini = SubscriberMiniserveurs(ic)
+
+        # Création du servant pour le Métaserveur
+        #adapter = ic.createObjectAdapterWithEndpoints("Metaserveur", "default -p " + str(config.PORT_ICE))
+        #meta = MetaserveurI()
+        #adapter.add(meta, ic.stringToIdentity("Metaserveur"))
+        #adapter.activate()
 
         # Finalement on reste à l'écoute de messages entrant
         ic.waitForShutdown()

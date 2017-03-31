@@ -333,4 +333,85 @@ if 'TopicCommandesManager' not in _M_AppMP3Player.__dict__:
     _M_AppMP3Player.TopicCommandesManagerPrx = TopicCommandesManagerPrx
     del TopicCommandesManagerPrx
 
+if 'TopicMiniserveursManager' not in _M_AppMP3Player.__dict__:
+    _M_AppMP3Player.TopicMiniserveursManager = Ice.createTempClass()
+    class TopicMiniserveursManager(Ice.Object):
+        """
+        Cette interface permet la notification du démarrage ou arrêt des miniserveurs.
+        Les méthodes de l'interface sont les différents messages possibles. Pour l'instant :
+        - indiquer le démarrage d'un nouveau miniserveur
+        - indiquer l'arrêt d'un miniserveur existant
+        """
+        def __init__(self):
+            if Ice.getType(self) == _M_AppMP3Player.TopicMiniserveursManager:
+                raise RuntimeError('AppMP3Player.TopicMiniserveursManager is an abstract class')
+
+        def ice_ids(self, current=None):
+            return ('::AppMP3Player::TopicMiniserveursManager', '::Ice::Object')
+
+        def ice_id(self, current=None):
+            return '::AppMP3Player::TopicMiniserveursManager'
+
+        def ice_staticId():
+            return '::AppMP3Player::TopicMiniserveursManager'
+        ice_staticId = staticmethod(ice_staticId)
+
+        def enregistrerServeur(self, ip, current=None):
+            pass
+
+        def supprimerServeur(self, ip, current=None):
+            pass
+
+        def __str__(self):
+            return IcePy.stringify(self, _M_AppMP3Player._t_TopicMiniserveursManager)
+
+        __repr__ = __str__
+
+    _M_AppMP3Player.TopicMiniserveursManagerPrx = Ice.createTempClass()
+    class TopicMiniserveursManagerPrx(Ice.ObjectPrx):
+
+        def enregistrerServeur(self, ip, _ctx=None):
+            return _M_AppMP3Player.TopicMiniserveursManager._op_enregistrerServeur.invoke(self, ((ip, ), _ctx))
+
+        def begin_enregistrerServeur(self, ip, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_AppMP3Player.TopicMiniserveursManager._op_enregistrerServeur.begin(self, ((ip, ), _response, _ex, _sent, _ctx))
+
+        def end_enregistrerServeur(self, _r):
+            return _M_AppMP3Player.TopicMiniserveursManager._op_enregistrerServeur.end(self, _r)
+
+        def supprimerServeur(self, ip, _ctx=None):
+            return _M_AppMP3Player.TopicMiniserveursManager._op_supprimerServeur.invoke(self, ((ip, ), _ctx))
+
+        def begin_supprimerServeur(self, ip, _response=None, _ex=None, _sent=None, _ctx=None):
+            return _M_AppMP3Player.TopicMiniserveursManager._op_supprimerServeur.begin(self, ((ip, ), _response, _ex, _sent, _ctx))
+
+        def end_supprimerServeur(self, _r):
+            return _M_AppMP3Player.TopicMiniserveursManager._op_supprimerServeur.end(self, _r)
+
+        def checkedCast(proxy, facetOrCtx=None, _ctx=None):
+            return _M_AppMP3Player.TopicMiniserveursManagerPrx.ice_checkedCast(proxy, '::AppMP3Player::TopicMiniserveursManager', facetOrCtx, _ctx)
+        checkedCast = staticmethod(checkedCast)
+
+        def uncheckedCast(proxy, facet=None):
+            return _M_AppMP3Player.TopicMiniserveursManagerPrx.ice_uncheckedCast(proxy, facet)
+        uncheckedCast = staticmethod(uncheckedCast)
+
+        def ice_staticId():
+            return '::AppMP3Player::TopicMiniserveursManager'
+        ice_staticId = staticmethod(ice_staticId)
+
+    _M_AppMP3Player._t_TopicMiniserveursManagerPrx = IcePy.defineProxy('::AppMP3Player::TopicMiniserveursManager', TopicMiniserveursManagerPrx)
+
+    _M_AppMP3Player._t_TopicMiniserveursManager = IcePy.defineClass('::AppMP3Player::TopicMiniserveursManager', TopicMiniserveursManager, -1, (), True, False, None, (), ())
+    TopicMiniserveursManager._ice_type = _M_AppMP3Player._t_TopicMiniserveursManager
+
+    TopicMiniserveursManager._op_enregistrerServeur = IcePy.Operation('enregistrerServeur', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_string, False, 0),), (), None, ())
+    TopicMiniserveursManager._op_supprimerServeur = IcePy.Operation('supprimerServeur', Ice.OperationMode.Normal, Ice.OperationMode.Normal, False, None, (), (((), IcePy._t_string, False, 0),), (), None, ())
+
+    _M_AppMP3Player.TopicMiniserveursManager = TopicMiniserveursManager
+    del TopicMiniserveursManager
+
+    _M_AppMP3Player.TopicMiniserveursManagerPrx = TopicMiniserveursManagerPrx
+    del TopicMiniserveursManagerPrx
+
 # End of module AppMP3Player

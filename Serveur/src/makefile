@@ -1,7 +1,7 @@
 
 all: build deploy
 
-build: build-py build-php
+build: build-py
 
 build-py:
 	@echo "---------------- Build Python start ----------------"
