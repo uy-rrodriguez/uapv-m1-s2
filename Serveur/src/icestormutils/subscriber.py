@@ -9,6 +9,8 @@ import config
     Classe Subscriber qui sera étendue par tout subscriber IceStorm.
 '''
 class Subscriber(object):
+    topic = None
+    subscriber = None
 
     def __init__(self, ic, topicName, subscriberName, topicManagerInstance):
         obj = ic.stringToProxy("MP3_IceStorm/TopicManager:tcp -p " + str(config.PORT_ICESTORM))
@@ -16,10 +18,10 @@ class Subscriber(object):
 
         # On récupère le topic
         try:
-            topic = topicManager.retrieve(topicName)
+            self.topic = topicManager.retrieve(topicName)
         except IceStorm.NoSuchTopic as nst:
             try:
-                topic = topicManager.create(topicName)
+                self.topic = topicManager.create(topicName)
             except IceStorm.TopicExists as te:
                 # Créé par un autre subscriber
                 pass
@@ -31,19 +33,19 @@ class Subscriber(object):
         # L'identifiant de cet objet identifie le subscriber dans IceStorm.
         subId = Ice.Identity()
         subId.name = subscriberName #Ice.generateUUID()
-        subscriber = adapter.add(topicManagerInstance, subId)
+        self.subscriber = adapter.add(topicManagerInstance, subId)
 
         # Activation de l'adapter
         adapter.activate()
 
         # Souscription
-        subscriber = subscriber.ice_oneway()
+        self.subscriber = self.subscriber.ice_oneway()
         try:
             qos = {}
-            topic.subscribeAndGetPublisher(qos, subscriber)
+            self.topic.subscribeAndGetPublisher(qos, self.subscriber)
         except IceStorm.AlreadySubscribed as ex:
             print "icestormutils.Subscriber : Subscriber existant"
-            topic.unsubscribe(subscriber)
-            topic.subscribeAndGetPublisher(qos, subscriber)
+            self.topic.unsubscribe(self.subscriber)
+            self.topic.subscribeAndGetPublisher(qos, self.subscriber)
 
         print "icestormutils.Subscriber : Subscriber pour topic", topicName, "obtenu"

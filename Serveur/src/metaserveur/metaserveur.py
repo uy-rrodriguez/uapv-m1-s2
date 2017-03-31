@@ -40,22 +40,26 @@ def main():
         ic = Ice.initialize(iniData)
 
         # Création du publisher qui enverra les commandes aux miniserveurs
-        #publisherCommandes = PublisherCommandes(ic)
+        publisherCommandes = PublisherCommandes(ic)
 
         # Création du souscripteur au TopicChansons
         subscriberChansons = SubscriberChansons(ic)
 
         # Création du souscripteur au TopicMiniserveurs
-        #subscriberMini = SubscriberMiniserveurs(ic)
+        subscriberMini = SubscriberMiniserveurs(ic)
 
         # Création du servant pour le Métaserveur
-        #adapter = ic.createObjectAdapterWithEndpoints("Metaserveur", "default -p " + str(config.PORT_ICE))
-        #meta = MetaserveurI()
-        #adapter.add(meta, ic.stringToIdentity("Metaserveur"))
-        #adapter.activate()
+        adapter = ic.createObjectAdapterWithEndpoints("Metaserveur", "default -p " + str(config.PORT_ICE))
+        meta = MetaserveurI()
+        adapter.add(meta, ic.stringToIdentity("Metaserveur"))
+        adapter.activate()
 
         # Finalement on reste à l'écoute de messages entrant
         ic.waitForShutdown()
+
+
+    except (KeyboardInterrupt, SystemExit):
+        pass
 
     except:
         traceback.print_exc()

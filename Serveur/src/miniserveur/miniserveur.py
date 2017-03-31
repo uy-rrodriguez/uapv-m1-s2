@@ -1,9 +1,9 @@
 # coding: utf8
 
-import sys, traceback, time
+import sys, traceback, time, subprocess
 import Ice, IceStorm
 import AppMP3Player
-import config
+import config, log
 from publisher_mini import PublisherMiniserveurs
 from demon import DemonChansons
 from subscriber_commandes import SubscriberCommandes
@@ -18,27 +18,32 @@ class Miniserveur:
         self.subscriberCommandes = subscriberCommandes
 
     def mainloop(self):
-        self.demon.run()
+        print self.demon.wait()
 
 
-def main():
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+
     status = 0
     ic = None
+    processDemon = None
+
     try:
-        props = Ice.createProperties(sys.argv)
-        props.setProperty("TopicChansons.Subscriber.Endpoints", "tcp:udp")
+        props = Ice.createProperties(argv)
         iniData = Ice.InitializationData()
         iniData.properties = props
         ic = Ice.initialize(iniData)
 
         # Création du publisher pour envoyer les mises-à-jour des chansons
-        demonChansons = DemonChansons(ic)
+        #processDemon = subprocess.Popen("python -m miniserveur.demon", stdout=open(config.LOG_MINISERVEUR_DEMON, "a"))
+        processDemon = subprocess.Popen("python -m miniserveur.demon")
 
         # Création du publisher pour indiquer au Métaserveur le démarrage ou arrêt du miniserveur
-        publisherMiniserveurs = None#PublisherMiniserveur(ic)
+        publisherMiniserveurs = PublisherMiniserveurs(ic)
 
         # Création du subscriber pour recevoir les commandes provenantes du Métaserveur
-        subscriberCommandes = None#SubscriberCommandes(ic)
+        subscriberCommandes = SubscriberCommandes(ic)
 
 
         # Client
@@ -47,24 +52,36 @@ def main():
         # Boucle principale
         #client.mainloop()
 
-        miniserveur = Miniserveur(publisherMiniserveurs, demonChansons, subscriberCommandes)
+        miniserveur = Miniserveur(publisherMiniserveurs, processDemon, subscriberCommandes)
         miniserveur.mainloop()
 
+
+    except (KeyboardInterrupt, SystemExit):
+        pass
 
     except:
         traceback.print_exc()
         status = 1
 
+
+    if processDemon:
+        try:
+            processDemon.kill()
+        except:
+            traceback.print_exc()
+            status = 1
+
+    # Clean up
     if ic:
-        # Clean up
         try:
             ic.destroy()
         except:
             traceback.print_exc()
             status = 1
 
+
     sys.exit(status)
 
 
 if __name__ == "__main__":
-  main()
+    sys.exit(main())

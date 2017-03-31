@@ -3,7 +3,7 @@
 import sys, traceback
 import Ice, IceStorm
 import AppMP3Player
-import config
+import config, log
 
 '''
     Classe Publisher qui sera étendue par tout publisher IceStorm.
@@ -28,4 +28,5 @@ class Publisher(object):
 
         self.publisher = topic.getPublisher().ice_oneway()
 
-        print "icestormutils.Publisher : Publisher pour topic " + topicName + " obtenu"
+        print "icestormutils.Publisher : Publisher pour topic", topicName, "obtenu"
+        sys.stdout.flush()

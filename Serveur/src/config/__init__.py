@@ -19,8 +19,14 @@ IP_MANAGER = "127.0.0.1"
 IP_METASERVEUR = "127.0.0.1"
 
 # Configuration de ports
-PORT_ICEBOX              = 9996
-PORT_ICE                 = 10000
-PORT_ICESTORM            = 20000
-PORT_ICESTORM_PUBLISHER  = 20001
-PORT_WS                  = 30000
+PORT_ICEBOX              = "9996"
+PORT_ICE                 = "10000"
+PORT_ICESTORM            = "20000"
+PORT_ICESTORM_PUBLISHER  = "20001"
+PORT_WS                  = "30000"
+
+# Fichiers logs
+LOG_MINISERVEUR_DEMON     = "log/miniserveur_demon.log"
+
+# Configuration du démon qui va lire les chansons
+DEMON_SONGS_PATH = "miniserveur/musique"

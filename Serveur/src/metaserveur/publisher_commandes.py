@@ -13,7 +13,7 @@ import config, icestormutils
 class PublisherCommandes(icestormutils.Publisher):
 
     def __init__(self, ic):
-        super(PublisherMiniserveur, self).__init__(ic, "TopicCommandes")
+        super(PublisherCommandes, self).__init__(ic, "TopicCommandes")
         self.manager = AppMP3Player.TopicMiniserveursManagerPrx.uncheckedCast(self.publisher);
 
     def jouer_chanson(self):

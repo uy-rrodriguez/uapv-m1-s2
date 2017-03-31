@@ -25,5 +25,7 @@ class TopicChansonsManagerI(AppMP3Player.TopicChansonsManager):
 '''
 class SubscriberChansons(icestormutils.Subscriber):
     def __init__(self, ic):
-        super(SubscriberChansons, self).__init__(ic, "TopicChansons", "TopicChansons_Metaserveur", TopicChansonsManagerI())
+        super(SubscriberChansons, self).__init__(ic, "TopicChansons",
+                                                 "TopicChansons_Metaserveur",
+                                                 TopicChansonsManagerI())
 

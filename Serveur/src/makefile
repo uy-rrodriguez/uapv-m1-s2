@@ -31,7 +31,7 @@ run-mini:
 
 run-icebox:
 	@echo "---------------- Run icebox start ----------------"
-	icebox --Ice.Config=config.icebox
+	icebox --Ice.Config=config/config.icebox
 
 
 run-pyglet:
@@ -46,6 +46,7 @@ clean:
 	rm *_ice.py
 	rm *.pyc
 	rm */*.pyc
+	rm */*/*.pyc
 	@echo "---------------- Clean end ----------------"
 
 dist:
