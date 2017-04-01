@@ -1,0 +1,17 @@
+<?php
+require_once('[!SIMPLE_TEST!]');
+require_once('[!RAPPORTEUR!]');
+require_once('[!CLASSE_TESTER!]');
+
+// Choix du rapporteur
+SimpleTest::prefer(new MonRapporteurHTML());
+
+class TestGenere extends UnitTestCase {
+    function setUp() {
+        echo "<div style='margin-top: 0px;'>&nbsp;</div>";
+    }
+
+    function tearDown() {
+        echo "<div style='margin-top: 20px; border-top: 2px solid #CCC;'>&nbsp;</div>";
+    }
+
