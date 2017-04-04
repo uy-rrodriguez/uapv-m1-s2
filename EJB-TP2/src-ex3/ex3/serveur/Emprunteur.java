@@ -1,24 +1,18 @@
 package ex3.serveur;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ex3.serveur.LivreEmp;
 
 @Entity
 @Table(name="emprunteur")
 public class Emprunteur {
+	
 	@Id
 	private int numemp;
 	private String nom;
 	private int nblivresemp;
-	
-	@OneToMany(mappedBy="emprunteur")
-	private List<LivreEmp> livres;
 
 	
 	public int getNumemp() {
@@ -45,11 +39,4 @@ public class Emprunteur {
 		this.nblivresemp = nblivresemp;
 	}
 
-	public List<LivreEmp> getLivres() {
-		return livres;
-	}
-
-	public void setLivres(List<LivreEmp> livres) {
-		this.livres = livres;
-	}
 }

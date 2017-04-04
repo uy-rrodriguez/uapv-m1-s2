@@ -2,7 +2,7 @@ ifeq ($(OS),Windows_NT)
 	# Config Windows (PowerShell)
 	SEP=;
 else
-	# Config. Linux (facult�)
+	# Config. Linux (faculté)
 	SEP=:
 endif
 
@@ -11,7 +11,7 @@ LIB=.$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/domains/domain1/lib/postg
 
 
 #################################################################
-#  QUESTION 2                                                   #
+#  QUESTION 3                                                   #
 #################################################################
 
 all: serveur client
@@ -20,25 +20,25 @@ all: serveur client
 serveur: serveur-compile serveur-build serveur-deploy
 
 serveur-compile:
-	javac serveur/*.java -classpath "$(LIB)"
+	javac ex4/serveur/*.java ex4/serveur/exception/*.java -classpath "$(LIB)"
 
 serveur-build:
-	jar cvf dist/ejb-tp1-ex2-serveur.jar serveur/*.class META-INF/*
+	jar cvf dist/ejb-tp2-ex4-serveur.jar ex4/serveur/*.class ex4/serveur/exception/*.class META-INF/*
 
 serveur-deploy:
-	asadmin deploy --force dist/ejb-tp1-ex2-serveur.jar
+	asadmin deploy --force dist/ejb-tp2-ex4-serveur.jar
 
 # Client
 client: client-compile client-build client-run
 
 client-compile:
-	javac client/*.java -classpath "$(LIB)"
+	javac ex4/client/*.java -classpath "$(LIB)"
 
 client-build:
-	jar cvf dist/ejb-tp1-ex2-client.jar client/*.class
+	jar cvf dist/ejb-tp2-ex4-client.jar ex4/client/*.class
 
 client-run:
-	java -cp "$(LIB)$(SEP)dist/ejb-tp1-ex2-client.jar" client.ClientEx2
+	java -cp "$(LIB)$(SEP)dist/ejb-tp2-ex4-client.jar" ex4.client.Client
 
 
 #################################################################
@@ -46,8 +46,9 @@ client-run:
 #################################################################
 
 clean:
-	rm -R "./serveur/Livre_.java"
-	rm -R ./*/*.class
+	rm -R ./*/serveur/*_.java
+	rm -R ./*/*/*.class
+	rm -R ./*/*/*/*.class
 	rm -R ./dist/*.jar
 
 

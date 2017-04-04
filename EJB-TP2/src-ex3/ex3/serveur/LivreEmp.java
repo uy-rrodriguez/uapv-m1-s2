@@ -2,11 +2,8 @@ package ex3.serveur;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import ex3.serveur.Emprunteur;
 
 @Entity
 @Table(name="livre_emp")
@@ -14,10 +11,7 @@ public class LivreEmp {
 	@Id
 	private String isbn;
 	private String titre;
-	
-	@OneToOne
-	@JoinColumn(name="empruntepar", referencedColumnName="numemp")
-	private Emprunteur emprunteur;
+	private int empruntepar;
 
 	
 	public String getIsbn() {
@@ -36,13 +30,12 @@ public class LivreEmp {
 		this.titre = titre;
 	}
 
-	public Emprunteur getEmprunteur() {
-		return emprunteur;
+	public int getEmpruntepar() {
+		return empruntepar;
 	}
 
-	public void setEmprunteur(Emprunteur emprunteur) {
-		this.emprunteur = emprunteur;
+	public void setEmpruntepar(int empruntepar) {
+		this.empruntepar = empruntepar;
 	}
-
 	
 }

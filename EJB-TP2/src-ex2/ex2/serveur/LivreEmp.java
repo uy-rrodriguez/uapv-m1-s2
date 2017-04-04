@@ -1,23 +1,30 @@
 package ex2.serveur;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import ex2.serveur.Emprunteur;
 
 @Entity
 @Table(name="livre_emp")
-public class LivreEmp {
+@NamedQueries({
+	@NamedQuery(name="getByISBN", query="SELECT l FROM LivreEmp l WHERE l.isbn = :isbn"),
+	@NamedQuery(name="getDisponibles", query="SELECT l FROM LivreEmp l WHERE l.empruntepar = 0")
+})
+public class LivreEmp implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7390191950291185324L;
+	
 	@Id
 	private String isbn;
 	private String titre;
-	
-	@OneToOne
-	@JoinColumn(name="empruntepar", referencedColumnName="numemp")
-	private Emprunteur emprunteur;
+	private int empruntepar;
 
 	
 	public String getIsbn() {
@@ -36,13 +43,12 @@ public class LivreEmp {
 		this.titre = titre;
 	}
 
-	public Emprunteur getEmprunteur() {
-		return emprunteur;
+	public int getEmpruntepar() {
+		return empruntepar;
 	}
 
-	public void setEmprunteur(Emprunteur emprunteur) {
-		this.emprunteur = emprunteur;
+	public void setEmpruntepar(int empruntepar) {
+		this.empruntepar = empruntepar;
 	}
-
 	
 }

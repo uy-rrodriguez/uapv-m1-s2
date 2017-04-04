@@ -20,10 +20,10 @@ all: serveur client
 serveur: serveur-compile serveur-build serveur-deploy
 
 serveur-compile:
-	javac ex3/serveur/*.java -classpath "$(LIB)"
+	javac ex3/serveur/*.java ex3/serveur/exception/*.java -classpath "$(LIB)"
 
 serveur-build:
-	jar cvf dist/ejb-tp2-ex3-serveur.jar ex3/serveur/*.class META-INF/*
+	jar cvf dist/ejb-tp2-ex3-serveur.jar ex3/serveur/*.class ex3/serveur/exception/*.class META-INF/*
 
 serveur-deploy:
 	asadmin deploy --force dist/ejb-tp2-ex3-serveur.jar
@@ -48,6 +48,7 @@ client-run:
 clean:
 	rm -R ./*/serveur/*_.java
 	rm -R ./*/*/*.class
+	rm -R ./*/*/*/*.class
 	rm -R ./dist/*.jar
 
 

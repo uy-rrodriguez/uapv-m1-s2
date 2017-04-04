@@ -17,7 +17,8 @@ public class Client {
 		try {
 			InitialContext ic = new InitialContext();
 			
-			System.out.println("Test Excercice A : GestionEmprunt");
+			System.out.println("\nTest Excercice A : GestionEmprunt");
+			System.out.println("=======================================\n");
 			GestionEmprunt gestion = (GestionEmprunt) ic.lookup("ex1.serveur.GestionEmprunt");
 			
 			int numEmprunteur = 1;
@@ -39,6 +40,8 @@ public class Client {
 			System.out.println("Test rendre");
 			boolean rendu = gestion.rendre(isbn);
 			System.out.println("Resultat rendu : " + rendu);
+			pause();
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

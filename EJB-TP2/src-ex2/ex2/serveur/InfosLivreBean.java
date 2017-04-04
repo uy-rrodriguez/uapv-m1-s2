@@ -8,8 +8,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import ex2.serveur.InfosLivre;
-import ex2.serveur.Livre;
 
 @Stateful
 public class InfosLivreBean implements InfosLivre {
@@ -25,7 +23,7 @@ public class InfosLivreBean implements InfosLivre {
 		query.setParameter("isbn", isbn);
 		
 		try {
-			Livre l = (Livre) query.getSingleResult();
+			LivreEmp l = (LivreEmp) query.getSingleResult();
 			return l.getTitre();
 		}
 		catch (NoResultException nrex) {
@@ -34,11 +32,11 @@ public class InfosLivreBean implements InfosLivre {
 	}
 
 	@Override
-	public List<Livre> getLivresDisponibles() throws Exception {
+	public List<LivreEmp> getLivresDisponibles() throws Exception {
 		System.out.println("getLivresDisponibles");
 		
 		Query query = em.createNamedQuery("getDisponibles");
-		List<Livre> resultat = query.getResultList();
+		List<LivreEmp> resultat = query.getResultList();
 		
 		return resultat;
 	}

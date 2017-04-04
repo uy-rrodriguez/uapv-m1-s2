@@ -6,7 +6,7 @@ import java.util.List;
 import javax.naming.InitialContext;
 
 import ex2.serveur.InfosLivre;
-import ex2.serveur.Livre;
+import ex2.serveur.LivreEmp;
 
 public class Client {
 	private static void pause() {
@@ -19,7 +19,8 @@ public class Client {
 		try {
 			InitialContext ic = new InitialContext();
 			
-			System.out.println("Test Excercice B : InfosLivre");
+			System.out.println("\nTest Excercice B : InfosLivre");
+			System.out.println("=======================================\n");
 			InfosLivre infos = (InfosLivre) ic.lookup("ex2.serveur.InfosLivre");
 			
 			String isbn = "RMRL";
@@ -32,11 +33,13 @@ public class Client {
 			
 			
 			System.out.println("Test lister disponibles");
-			List<Livre> dispos = infos.getLivresDisponibles();
+			List<LivreEmp> dispos = infos.getLivresDisponibles();
 			System.out.println("Livres dispos (" + dispos.size() + ")");
-			for (Livre l : dispos) {
+			for (LivreEmp l : dispos) {
 				System.out.println("  - " + l.getTitre());
 			}
+			pause();
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

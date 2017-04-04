@@ -23,12 +23,21 @@ public class ClientEx2 {
 			System.out.println("Test GestionLivre");
 			GestionLivre gestion = (GestionLivre) ic.lookup("serveur.GestionLivre");
 			
-			String isbn = "zzzz";
+			String isbn = "RMRL";
+			String[] isbns = {"Ric1", "Ric2", "Ric3", "Ric4", "Ric5"};
 			
 			
 			System.out.println("Test nouveauLivre");
-			Livre l = gestion.nouveauLivre(isbn, "Le Petit Prince");
-			System.out.println("Livre : " + l);
+			Livre l = gestion.nouveauLivre(isbn, "Le Petit Ricci");
+			System.out.println("Creation " + isbn + " : " + l);
+			pause();
+			
+			
+			System.out.println("Test plusieurs nouveaux livres");
+			for (String isbnFor : isbns) {
+				Livre lFor = gestion.nouveauLivre(isbnFor, isbnFor);
+				System.out.println("    Creation " + isbnFor + " : " + lFor);
+			}
 			pause();
 			
 			
@@ -46,7 +55,16 @@ public class ClientEx2 {
 			
 			System.out.println("Test supprimerLivre");
 			boolean supprime = gestion.supprimerLivre(isbn);
-			System.out.println("Resultat suppression : " + supprime);
+			System.out.println("Suppression " + isbn + " : " + supprime);
+			pause();
+			
+			
+			System.out.println("Test supprimer plusieurs livres");
+			for (String isbnFor : isbns) {
+				boolean supprimeFor = gestion.supprimerLivre(isbnFor);
+				System.out.println("    Suppression " + isbnFor + " : " + supprimeFor);
+			}
+			pause();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

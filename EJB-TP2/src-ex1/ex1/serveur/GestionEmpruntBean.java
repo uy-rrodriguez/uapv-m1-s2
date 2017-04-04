@@ -11,7 +11,7 @@ import ex1.serveur.LivreEmp;
 @Stateful
 public class GestionEmpruntBean implements GestionEmprunt {
 
-	private int numEmprunteur = 0;
+	private Emprunteur emprunteur = null;
 
 	@PersistenceContext(unitName="GestionEmprunt")
 	protected EntityManager em;
@@ -20,13 +20,12 @@ public class GestionEmpruntBean implements GestionEmprunt {
 	public boolean nouvelEmprunt(int numEmprunteur) throws Exception {
 		System.out.println("nouvelEmprunt " + numEmprunteur);
 		
-		Emprunteur e = em.find(Emprunteur.class, numEmprunteur);
-		if (e == null) {
+		emprunteur = em.find(Emprunteur.class, numEmprunteur);
+		if (emprunteur == null) {
 			System.out.println("nouvelEmprunt : Emprunteur " + numEmprunteur + " non trouvé");
 			return false;
 		}
 		
-		this.numEmprunteur = numEmprunteur;
 		return true;
 	}
 
@@ -40,22 +39,17 @@ public class GestionEmpruntBean implements GestionEmprunt {
 			return false;
 		}
 		
-		if (l.getEmprunteur() != null) {
+		if (l.getEmpruntepar() != 0) {
 			System.out.println("emprunter : Livre déjà emprunté");
 			return false;
 		}
 		
-		Emprunteur e = em.find(Emprunteur.class, numEmprunteur);
-		if (e == null) {
-			System.out.println("nouvelEmprunt : Emprunteur " + numEmprunteur + " non trouvé");
-			return false;
-		}
+				
+		emprunteur.setNblivresemp(emprunteur.getNblivresemp() + 1);
+		l.setEmpruntepar(emprunteur.getNumemp());
 		
-		e.setNblivresemp(e.getNblivresemp() + 1);
-		l.setEmprunteur(e);
-		
-		em.merge(e);
-		System.out.println("emprunter em.merge " + e);
+		em.merge(emprunteur);
+		System.out.println("emprunter em.merge " + emprunteur);
 		
 		em.merge(l);
 		System.out.println("emprunter em.merge " + l);
@@ -72,14 +66,18 @@ public class GestionEmpruntBean implements GestionEmprunt {
 			return false;
 		}
 		
-		if (l.getEmprunteur() == null) {
+		if (l.getEmpruntepar() == 0) {
 			System.out.println("rendre : Livre non emprunté");
 			return false;
 		}
 		
-		Emprunteur e = l.getEmprunteur();
-		e.setNblivresemp(e.getNblivresemp() - 1);
-		l.setEmprunteur(null);
+		// On modifie l'emprunteur
+		Emprunteur e = em.find(Emprunteur.class, l.getEmpruntepar());
+		if (e != null) {
+			e.setNblivresemp(e.getNblivresemp() - 1);
+		}
+		
+		l.setEmpruntepar(0);
 		
 		em.merge(e);
 		System.out.println("emprunter em.merge " + e);
