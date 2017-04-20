@@ -33,13 +33,12 @@ class Subscriber(object):
         # L'identifiant de cet objet identifie le subscriber dans IceStorm.
         subId = Ice.Identity()
         subId.name = subscriberName #Ice.generateUUID()
-        self.subscriber = adapter.add(topicManagerInstance, subId)
+        self.subscriber = adapter.add(topicManagerInstance, subId).ice_oneway()
 
         # Activation de l'adapter
         adapter.activate()
 
         # Souscription
-        self.subscriber = self.subscriber.ice_oneway()
         try:
             qos = {}
             self.topic.subscribeAndGetPublisher(qos, self.subscriber)

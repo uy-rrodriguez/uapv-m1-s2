@@ -4,22 +4,40 @@ import sys, traceback, json
 import AppMP3Player
 import config
 
+
+ACTIONS_META = [config.COM_PLAY,
+               config.COM_PAUSE,
+               config.COM_STOP,
+               config.COM_LIST,
+               config.COM_SEARCH]
+
+
 class Traitement:
-    def __init__(self):
-        pass
+    def __init__(self, metaserveur):
+        self.metaserveur = metaserveur
+
 
     def traiterCommande(self, ipClient, commande):
-        print "Traitement->traiterCommande :", commande.commande, ";".join(commande.params)
+        print "Traitement->traiterCommande :", ipClient, commande.commande, ";".join(commande.params)
 
         try:
             # Appel à l'action correspondante
-            action = getattr(self, commande.commande)
-            res = action(commande.params)
+            # Quelques actions seront traitées par le Métaserveur
+            # D'autres seront traités par d'autres modules (ceci permet une évolution du systeme)
 
-            # Traitement du resultat
-            commande.retour = json.dumps(res)
-            commande.erreur = False
-            commande.msgErreur = ""
+            # Appel Métaserveur
+            if (commande.commande in ACTIONS_META):
+                commande = self.metaserveur.traiterCommande(ipClient, commande)
+
+            else:
+                action = getattr(self, commande.commande)
+                res = action(commande.params)
+
+                # Traitement du résultat
+                commande.retour = json.dumps(res)
+                commande.erreur = False
+                commande.msgErreur = ""
+
 
         except AttributeError as e:
             commande.erreur = True
@@ -33,23 +51,6 @@ class Traitement:
 
         return commande #Commande
 
-
-    def play(self, *args):
-        print "Traitement->play :", args[0]
-        return True
-
-
-    def pause(self, *args):
-        print "Traitement->pause"
-        return True
-
-    def stop(self, *args):
-        print "Traitement->stop"
-        return True
-
-    def search(self, *args):
-        print "Traitement->search :", args[0]
-        return True
 
     def vol_up(self, *args):
         print "Traitement->vol_up"

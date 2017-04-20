@@ -25,40 +25,43 @@ class DemonChansons(icestormutils.Publisher):
 
     def ajouter_chanson(self, nom, artiste, categorie, path):
         try:
-            print "DemonChansons->ajouter_chanson"; sys.stdout.flush()
-
+            #print "DemonChansons->ajouter_chanson"; sys.stdout.flush()
             c = AppMP3Player.Chanson()
             c.nom = nom
             c.artiste = artiste
             c.categorie = categorie
             c.path = path
             self.manager.ajouterChanson(c)
+
         except:
-            self.log.print_exc()
+            sys.print_exc()
+
 
     def supprimer_chanson(self, nom):
         try:
-            print "DemonChansons->supprimer_chanson"; sys.stdout.flush()
+            #print "DemonChansons->supprimer_chanson"; sys.stdout.flush()
             c = AppMP3Player.Chanson()
             c.nom = nom
             self.manager.supprimerChanson(c)
         except:
-            self.log.print_exc()
+            sys.print_exc()
 
 
     def check_folder(self):
         songs = []
 
-        for root, dirs, files in os.walk(config.DEMON_SONGS_PATH):
+        for root, dirs, files in os.walk(config.MINISERVEUR_SONGS_PATH):
             for name in files:
                 if re.match("^.+\.mp3$", name):
                     songs.append(os.path.join(root, name))
 
+        '''
         print "Liste actuelle"
         for s in songs:
             print s
 
         print ""
+        '''
 
         setSongs = set(songs)
         setActual = set(self.actualSongs)
@@ -66,18 +69,23 @@ class DemonChansons(icestormutils.Publisher):
         supprimees = [item for item in self.actualSongs if item not in setSongs]
         ajoutees = [item for item in songs if item not in setActual]
 
-        print "Supressions"
+
+        # Traitement des fichiers supprimés
+        #print "Supressions"
         for s in supprimees:
-            print s
+            #print s
+            self.supprimer_chanson(os.path.basename(s))
+        #print ""
 
-        print ""
 
-        print "Ajouts"
+        # Traitement des fichiers ajoutés
+        #print "Ajouts"
         for s in ajoutees:
-            print s
+            #print s
+            self.ajouter_chanson(os.path.basename(s), "", "", s)
+        #print ""
 
-        print ""
-
+        # Mise-à-jour de la liste de chansons actuelle
         self.actualSongs = songs
 
 
@@ -86,14 +94,6 @@ class DemonChansons(icestormutils.Publisher):
             print "DemonChansons->run"; sys.stdout.flush()
 
             while True:
-                '''
-                self.ajouter_chanson("Hotel California", "The Eagles",
-                                     "Rock", "mp3/Hotel_California.mp3")
-                time.sleep(1)
-                self.supprimer_chanson("Hotel California")
-                time.sleep(1)
-                '''
-
                 self.check_folder()
                 time.sleep(10)
 

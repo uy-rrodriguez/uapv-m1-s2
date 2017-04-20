@@ -1,9 +1,10 @@
 # coding: utf8
 
 import sys, traceback
+import os, re
 import Ice, IceStorm
 import AppMP3Player
-import config, icestormutils
+import config, icestormutils, player
 
 
 '''
@@ -12,19 +13,74 @@ import config, icestormutils
     un nouveau message, on fera automatiquement appel aux méthodes de
     cette classe.
 '''
-class TopicChansonsManagerI(AppMP3Player.TopicChansonsManager):
-    def ajouterChanson(self, chanson):
-        print "SubscriberCommandes->ajouterChanson :", chanson.nom, chanson.path
+class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
 
-    def supprimerChanson(self, chanson):
-        print "SubscriberCommandes->supprimerChanson :", chanson.nom
+    def __init__(self, publisherTopicChansons):
+        self.listePlayers = {}
+        self.publisherTopicChansons = publisherTopicChansons
+
+
+    def listerChansons(self, current=None):
+        #print "SubscriberCommandes->listerChansons"
+
+        chansons = []
+        for root, dirs, files in os.walk(config.MINISERVEUR_SONGS_PATH):
+            for name in files:
+                if re.match("^.+\.mp3$", name):
+                    cPath = os.path.join(root, name)
+                    c = AppMP3Player.Chanson()
+                    c.nom = os.path.basename(cPath)
+                    c.artiste = ""
+                    c.categorie = ""
+                    c.path = cPath
+                    chansons.append(c)
+                    #chansons.append(os.path.join(root, name))
+
+        # Envoie des fichiers existants à travers du topic de chansons
+        self.publisherTopicChansons.listerChansons(chansons)
+
+
+    def jouerChanson(self, ipClient, chanson, current=None):
+        print "SubscriberCommandes->jouerChanson :", ipClient, chanson.nom, chanson.path
+
+        if (ipClient not in self.listePlayers.keys()):
+            mp3player = player.Player(ipClient, config.CLIENT_VLC_PORT)
+            self.listePlayers[ipClient] = mp3player
+        else:
+            mp3player = self.listePlayers[ipClient]
+            mp3player.stop()
+
+        mp3player.play(chanson.path)
+
+
+    def pauseChanson(self, ipClient, current=None):
+        print "SubscriberCommandes->pauseChanson :", ipClient
+
+        if (ipClient in self.listePlayers.keys()):
+            mp3player = self.listePlayers[ipClient]
+            mp3player.stop()
+            del self.listePlayers[ipClient]
+        else:
+            raise RuntimeError("Le client n'est pas en train de jouer aucune chanson")
+
+
+    def arreterChanson(self, ipClient, current=None):
+        print "SubscriberCommandes->arreterChanson :", ipClient
+
+        if (ipClient in self.listePlayers.keys()):
+            mp3player = self.listePlayers[ipClient]
+            mp3player.stop()
+            del self.listePlayers[ipClient]
+        else:
+            raise RuntimeError("Le client n'est pas en train de jouer aucune chanson")
 
 
 
 class SubscriberCommandes(icestormutils.Subscriber):
 
-    def __init__(self, ic):
-        super(SubscriberCommandes, self).__init__(ic, "TopicCommandes",
+    def __init__(self, ic, publisherTopicChansons):
+        super(SubscriberCommandes, self).__init__(ic,
+                                                  "TopicCommandes",
                                                   "TopicCommandes_Miniserveur",
-                                                  TopicChansonsManagerI())
+                                                  TopicCommandesManagerI(publisherTopicChansons))
 

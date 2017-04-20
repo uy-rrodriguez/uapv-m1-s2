@@ -1,20 +1,15 @@
 
 all: build deploy
 
-build: build-py
-
-build-py:
-	@echo "---------------- Build Python start ----------------"
+build:
+	@echo "---------------- Build Ice ----------------"
 	# Interfaces utilisees en Python
 	slice2py --all ../../Interfaces/Manager.ice
 	slice2py --all ../../Interfaces/Metaserveur.ice
 	slice2py --all ../../Interfaces/Messagerie.ice
 
-run:
-	python ClientMP3.py
-
 run-manager:
-	@echo "---------------- Run manager start ----------------"
+	@echo "---------------- Run manager ----------------"
 	python -m manager.manager
 
 run-ws:
@@ -22,23 +17,20 @@ run-ws:
 	python -m ws.ws
 
 run-meta:
-	@echo "---------------- Run metaserveur start ----------------"
+	@echo "---------------- Run metaserveur ----------------"
 	python -m metaserveur.metaserveur
 
 run-mini:
-	@echo "---------------- Run miniserveur start ----------------"
+	@echo "---------------- Run miniserveur ----------------"
 	python -m miniserveur.miniserveur
 
 run-icebox:
-	@echo "---------------- Run icebox start ----------------"
+	@echo "---------------- Run icebox ----------------"
 	icebox --Ice.Config=config/config.icebox
 
-
-run-pyglet:
-	# set PYTHONPATH ~/Donnees_itinerantes/FAC/ArchDistrib/TPs/ProjetMP3/src/client/lib/pyglet/pyglet-1.2.4/:$(PYTHONPATH)
-	# export PYTHONPATH=lib/pyglet/pyglet-1.2.4/:$(PYTHONPATH)
-	# echo $$PYTHONPATH
-	python GUI_pyglet.py
+run-icestormadmin:
+	@echo "---------------- Run icestormadmin ----------------"
+	icestormadmin --Ice.Config=config/config.icestormadmin
 
 clean:
 	@echo "---------------- Clean start ----------------"
@@ -46,7 +38,6 @@ clean:
 	rm *_ice.py
 	rm *.pyc
 	rm */*.pyc
-	rm */*/*.pyc
 	@echo "---------------- Clean end ----------------"
 
 dist:

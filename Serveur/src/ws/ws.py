@@ -128,7 +128,6 @@ def main():
     ic = None
     try:
         props = Ice.createProperties(sys.argv)
-        #props.setProperty("Ice.MessageSizeMax", "20480")
         iniData = Ice.InitializationData()
         iniData.properties = props
 

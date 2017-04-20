@@ -12,6 +12,11 @@ module AppMP3Player {
         string path;
     };
 
+    /**
+     * Séquence pour stocker une liste de Chanson
+     */
+    sequence<Chanson> ListeChansons;
+
 
     /**
      * Cette interface représente un gestionnaire de chansons du côté mini-serveur.
@@ -21,6 +26,7 @@ module AppMP3Player {
      *     - supprimer une chanson
      */
     interface TopicChansonsManager {
+        void listerChansons(ListeChansons chansons);
         void ajouterChanson(Chanson c);
         void supprimerChanson(Chanson c);
     };
@@ -35,9 +41,10 @@ module AppMP3Player {
      *     - arrêter une chanson
      */
     interface TopicCommandesManager {
-        void jouerChanson(Chanson c);
-        void pauseChanson(Chanson c);
-        void arreterChanson(Chanson c);
+        void listerChansons();
+        void jouerChanson(string ipClient, Chanson c);
+        void pauseChanson(string ipClient);
+        void arreterChanson(string ipClient);
     };
 
 

@@ -8,37 +8,47 @@ import config, icestormutils
 
 '''
     Ce Publisher IceStorm enverra des messages au topic TopicCommandes
-    pour communiquer avec les miniserveurs.
+    pour communiquer aux miniserveurs le demarrage et arret des chansons.
 '''
 class PublisherCommandes(icestormutils.Publisher):
 
-    def __init__(self, ic):
+    def __init__(self, ic, metaserveur):
         super(PublisherCommandes, self).__init__(ic, "TopicCommandes")
-        self.manager = AppMP3Player.TopicMiniserveursManagerPrx.uncheckedCast(self.publisher);
+        self.manager = AppMP3Player.TopicCommandesManagerPrx.uncheckedCast(self.publisher);
 
-    def jouer_chanson(self):
+        self.metaserveur = metaserveur
+
+
+    def listerChansons(self):
         try:
-            print "PublisherCommandes->jouer_chanson"
-            c = AppMP3Player.Chanson()
-            c.nom = "Bidon"
-            self.manager.jouerChanson(c)
+            #print "PublisherCommandes->listerChansons"
+            self.manager.listerChansons()
         except:
             traceback.print_exc()
 
-    def pause_chanson(self):
+
+    def jouerChanson(self, ipClient, nomChanson):
         try:
-            print "PublisherCommandes->pause_chanson"
-            c = AppMP3Player.Chanson()
-            c.nom = "Bidon"
-            self.manager.pauseChanson(c)
+            print "PublisherCommandes->jouerChanson : ", ipClient, nomChanson
+            c = self.metaserveur.get_chanson_by_nom(nomChanson)
+            if (c is not None):
+                self.manager.jouerChanson(ipClient, c)
+            else:
+                raise RuntimeException("La chanson '" + nomChanson + "' n'existe pas")
+
         except:
             traceback.print_exc()
 
-    def arreter_chanson(self):
+    def pauseChanson(self, ipClient):
         try:
-            print "PublisherCommandes->arreter_chanson"
-            c = AppMP3Player.Chanson()
-            c.nom = "Bidon"
-            self.manager.arreterChanson(c)
+            print "PublisherCommandes->pauseChanson : ", ipClient
+            self.manager.pauseChanson(ipClient)
+        except:
+            traceback.print_exc()
+
+    def arreterChanson(self, ipClient):
+        try:
+            print "PublisherCommandes->arreterChanson : ", ipClient
+            self.manager.arreterChanson(ipClient)
         except:
             traceback.print_exc()
