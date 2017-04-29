@@ -11,16 +11,16 @@
     <color name="textColorSecondary">#e8f5e9</color>
     -->
 
-    <color name="colorPrimary">#4dd0e1</color>
-    <color name="colorPrimaryDark">#009faf</color>
-    <color name="colorPrimaryLight">#88ffff</color>
-    <color name="textColorPrimary">#004d40</color>
-    <color name="colorSecondary">#00c853</color>
-    <color name="colorSecondaryDark">#009624</color>
-    <color name="colorSecondaryLight">#5efc82</color>
-    <color name="textColorSecondary">#e8f5e9</color>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#002984</color>
+    <color name="colorPrimaryLight">#757de8</color>
+    <color name="textColorPrimary">#ffffff</color>
+    <color name="colorSecondary">#ff5722</color>
+    <color name="colorSecondaryDark">#c41c00</color>
+    <color name="colorSecondaryLight">#ff8a50</color>
+    <color name="textColorSecondary">#000000</color>
 
     <color name="windowBackground">#E1E2E1</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#9ccc65</color>
+    <color name="colorAccent">#00c853</color>
 </resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.ceri.rrodriguez.playerdistribue.activity.HomeFragment">
+
+    <!-- A RecyclerView with some commonly used attributes -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/songs_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="2dp"
+        android:background="@color/colorPrimaryLight"
+        android:elevation="3dp">
+
+        <TextView
+            android:id="@+id/playing_song_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:layout_marginRight="48dp"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/btnStop"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_action_stop" />
+    </RelativeLayout>
+
+</RelativeLayout>
