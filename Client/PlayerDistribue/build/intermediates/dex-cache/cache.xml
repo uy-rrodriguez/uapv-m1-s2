@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Ricci\.android\build-cache\83f840e60a4ba29271f8f4a77d4a2fbea4d0ed8a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c5d103b270b3f3b50d8e6b44aa8e068b0de33426">
+        <dex dex="G:\Dev\RepoGit\uapv-m1-s2\Client\PlayerDistribue\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c57601db6c53ee7a6d24c5c41b5b5f5a0eceee11\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Ricci\.android\build-cache\14fb841cdb0400ab8e5bb32c6c0b970089dae688\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fbb206f7a119f66ce171d95aae1225a5b209a8b7">
+        <dex dex="G:\Dev\RepoGit\uapv-m1-s2\Client\PlayerDistribue\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c4fd224e1e9a20d4d7115846a16e6334a11f30fd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="G:\Dev\RepoGit\uapv-m1-s2\Client\PlayerDistribue\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="21850ff5280d83f8392036743ccb6dc850b5ed1a">
+        <dex dex="G:\Dev\RepoGit\uapv-m1-s2\Client\PlayerDistribue\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_b04a9801936ca7f6f0c87b3d5036f5e3cac06e71\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="G:\Dev\RepoGit\uapv-m1-s2\Client\PlayerDistribue\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="G:\Dev\RepoGit\uapv-m1-s2\Client\PlayerDistribue\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_79de74da96281b919e6ce1111cc75f593681e1d6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Ricci\.android\build-cache\8cd295bbb28410c8d0a9da6228f243c7aae12c62\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9ab787a20aae245b5b3651ae0b9c38459eb37715">
+        <dex dex="G:\Dev\RepoGit\uapv-m1-s2\Client\PlayerDistribue\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d6e1831355e746964d7ee47168d8571eb2dba9fa\classes.dex" />
+    </item>
+
+</items>
