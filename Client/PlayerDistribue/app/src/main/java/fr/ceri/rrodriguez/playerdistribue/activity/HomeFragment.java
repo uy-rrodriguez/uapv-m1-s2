@@ -71,6 +71,14 @@ public class HomeFragment extends Fragment {
         songsAdapter = new SongsAdapter(listeChansonsTest);
         songsRecyclerView.setAdapter(songsAdapter);
 
+
+        // Barre avec le nom de la chanson actuelle
+        // On recupere la chanson stockee dans le contexte
+        PlayerActivity host = (PlayerActivity) this.getActivity();
+        String nomChansonActuelle = host.getSession().getChansonActuelle();
+        TextView viewChansonActuelle = (TextView) rootView.findViewById(R.id.playing_song_name);
+        viewChansonActuelle.setText(nomChansonActuelle);
+
         // Button STOP
         btnStop = (ImageButton) rootView.findViewById(R.id.btnStop);
         btnStop.setOnClickListener(new BtnStopClickListener());
@@ -102,6 +110,11 @@ public class HomeFragment extends Fragment {
                 snackbar.show();
 
                 viewChansonActuelle.setText("");
+
+
+                // On change la chanson stockee dans le contexte
+                PlayerActivity host = (PlayerActivity) v.getContext();
+                host.getSession().setChansonActuelle("");
             }
             catch (Exception e) {
                 e.printStackTrace();

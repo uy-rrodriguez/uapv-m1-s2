@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import fr.ceri.rrodriguez.playerdistribue.R;
+import fr.ceri.rrodriguez.playerdistribue.activity.PlayerActivity;
+
 
 /**
  * Created by Ricci on 28/04/2017.
@@ -95,6 +97,11 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongViewHold
                 RelativeLayout fragment = (RelativeLayout) recycler.getParent();
                 TextView viewChansonActuelle = (TextView) fragment.findViewById(R.id.playing_song_name);
                 viewChansonActuelle.setText(viewChansonClickee.getText());
+
+
+                // On change la chanson stockee dans le contexte
+                PlayerActivity host = (PlayerActivity) view.getContext();
+                host.getSession().setChansonActuelle(viewChansonClickee.getText().toString());
             }
             catch (Exception e) {
                 e.printStackTrace();

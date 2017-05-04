@@ -12,13 +12,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+// Communication avec le webservice
+import android.os.AsyncTask;
+import android.util.Log;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
 import fr.ceri.rrodriguez.playerdistribue.R;
+import fr.ceri.rrodriguez.playerdistribue.model.ActivitySession;
+import fr.ceri.rrodriguez.playerdistribue.model.WSData;
+
 
 public class PlayerActivity extends AppCompatActivity
         implements FragmentNavigationDrawer.FragmentNavigationDrawerListener {
 
     private Toolbar mToolbar;
     private FragmentNavigationDrawer drawerFragment;
+
+    // Pour gerer les variables de session
+    private ActivitySession session;
+    public ActivitySession getSession() {
+        return this.session;
+    }
 
 
     @Override
@@ -35,6 +50,15 @@ public class PlayerActivity extends AppCompatActivity
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
+
+
+        // Recuperation de l'etat anterieur de l'app
+        if (savedInstanceState != null) {
+            session = (ActivitySession) savedInstanceState.getSerializable("SESSION");
+        }
+        else {
+            session = new ActivitySession();
+        }
     }
 
     @Override
@@ -53,6 +77,24 @@ public class PlayerActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Snackbar snackbar = Snackbar
+                    .make((DrawerLayout) findViewById(R.id.drawer_layout),
+                    "Click Main Menu Settings",
+                    Snackbar.LENGTH_LONG);
+            snackbar.show();
+
+            return true;
+        }
+
+        else if (id == R.id.action_refresh) {
+            new WSRequestTask().execute();
+
+            Snackbar snackbar = Snackbar
+                    .make((DrawerLayout) findViewById(R.id.drawer_layout),
+                    "Click Main Menu Refresh",
+                    Snackbar.LENGTH_LONG);
+            snackbar.show();
+
             return true;
         }
 
@@ -94,11 +136,64 @@ public class PlayerActivity extends AppCompatActivity
             getSupportActionBar().setTitle(title);
 
 
+            /*
             // Test SnackBar
             Snackbar snackbar = Snackbar
-                    .make((DrawerLayout) findViewById(R.id.drawer_layout), "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
-
+                    .make((DrawerLayout) findViewById(R.id.drawer_layout),
+                    "Welcome to AndroidHive",
+                    Snackbar.LENGTH_LONG);
             snackbar.show();
+            */
         }
     }
+
+
+    /**
+     * Gestion de la session lors de la sauvegarde de l'etat de l'app
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("SESSION", session);
+    }
+
+
+
+    /**
+     * Gestion du webservice
+     */
+
+    public class WSRequestTask extends AsyncTask<Void, Void, WSData> {
+        @Override
+        protected WSData doInBackground(Void... params) {
+            try {
+                final String url = "http://rest-service.guides.spring.io/greeting";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                WSData wsdata = restTemplate.getForObject(url, WSData.class);
+                return wsdata;
+            }
+            catch (Exception e) {
+                Log.e("PlayerActivity", e.getMessage(), e);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(WSData wsdata) {
+            //TextView greetingIdText = (TextView) findViewById(R.id.id_value);
+            //TextView greetingContentText = (TextView) findViewById(R.id.content_value);
+            //greetingIdText.setText(greeting.getId());
+            //greetingContentText.setText(greeting.getContent());
+
+            Snackbar snackbar = Snackbar
+                    .make((DrawerLayout) findViewById(R.id.drawer_layout),
+                    "WS > Id : " + wsdata.getId() + "; Content : " + wsdata.getContent(),
+                    Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
+
+    }
+
 }
