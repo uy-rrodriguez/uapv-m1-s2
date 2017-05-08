@@ -1,5 +1,6 @@
 #EMU=G:\Users\Ricci\AppData\Local\Android\sdk\tools/emulator.exe
 EMU=G:\Users\Ricci\AppData\Local\Android\sdk\emulator/emulator.exe
+ADB=G:/Users/Ricci/AppData/Local/Android/sdk/platform-tools/adb.exe
 APK=G:\Dev\RepoGit\uapv-m1-s2\Client\PlayerDistribue\app\build\outputs/apk/app-debug.apk
 
 default: build-install
@@ -23,7 +24,15 @@ run-emu:
 
 install:
 	@echo "---------------- Install APK ----------------"
-	adb install "$(APK)"
+	$(ADB) install "$(APK)"
+
+log:
+	@echo "---------------- Logs Android ----------------"
+	$(ADB) logcat ActivityManager:E AndroidRuntime:E PlayerActivity:D *:S
+
+log-clean:
+	@echo "---------------- Clean Logs Android ----------------"
+	$(ADB) logcat -c
 
 clean:
 	@echo "---------------- Clean start ----------------"

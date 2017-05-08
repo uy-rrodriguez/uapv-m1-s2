@@ -1,5 +1,8 @@
 package fr.ceri.rrodriguez.playerdistribue.activity;
 
+import java.lang.Thread;
+import java.util.Arrays;
+
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +14,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 // Communication avec le webservice
 import android.os.AsyncTask;
 import android.util.Log;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 
 import fr.ceri.rrodriguez.playerdistribue.R;
 import fr.ceri.rrodriguez.playerdistribue.model.ActivitySession;
@@ -159,25 +168,41 @@ public class PlayerActivity extends AppCompatActivity
 
 
 
-    /**
-     * Gestion du webservice
-     */
+    /* ******************************************************************************* */
+    /*    Inner class : WSRequestTask, faire appel à des WS.                           */
+    /* ******************************************************************************* */
 
     public class WSRequestTask extends AsyncTask<Void, Void, WSData> {
         @Override
         protected WSData doInBackground(Void... params) {
+            Snackbar snackbar = Snackbar
+                .make((DrawerLayout) findViewById(R.id.drawer_layout),
+                      "WS > doInBackground",
+                      Snackbar.LENGTH_LONG);
+            snackbar.show();
+
+            WSData wsdata = null;
+
             try {
-                final String url = "http://rest-service.guides.spring.io/greeting";
+                final String url = "http://192.168.0.16:30000/manuelle/play/1";
+
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                WSData wsdata = restTemplate.getForObject(url, WSData.class);
-                return wsdata;
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+                HttpEntity<String> entity = new HttpEntity<String>("", headers);
+
+                //wsdata = restTemplate.getForObject(url, WSData.class);
+                ResponseEntity<WSData> resp = restTemplate.exchange(url, HttpMethod.GET, entity, WSData.class);
+                wsdata = resp.getBody();
             }
             catch (Exception e) {
                 Log.e("PlayerActivity", e.getMessage(), e);
             }
 
-            return null;
+            return wsdata;
         }
 
         @Override
@@ -187,11 +212,24 @@ public class PlayerActivity extends AppCompatActivity
             //greetingIdText.setText(greeting.getId());
             //greetingContentText.setText(greeting.getContent());
 
+            /*
             Snackbar snackbar = Snackbar
                     .make((DrawerLayout) findViewById(R.id.drawer_layout),
                     "WS > Id : " + wsdata.getId() + "; Content : " + wsdata.getContent(),
                     Snackbar.LENGTH_LONG);
             snackbar.show();
+            */
+
+            Snackbar snackbar = Snackbar
+                .make((DrawerLayout) findViewById(R.id.drawer_layout),
+                      "WS > onPostExecute",
+                      Snackbar.LENGTH_LONG);
+            snackbar.show();
+
+
+            TextView res = (TextView) findViewById(R.id.ws_result);
+            res.setText("WS > onPostExecute > " + wsdata);
+
         }
 
     }

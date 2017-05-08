@@ -1,6 +1,7 @@
 # coding: utf8
 
-import sys, traceback, Ice
+import sys, traceback, json
+import Ice
 import AppMP3Player
 import web
 import config
@@ -15,9 +16,9 @@ import config
 
 # Formats d'URLs acceptés
 urls = (
-    "/die",                          "Suicide",
-    "/commande_vocale/(.*)",         "CommandeVocale",
-    "/commande_manuelle/(.*)/(.*)",  "CommandeManuelle"
+    "/vocale/(.*)",         "CommandeVocale",
+    "/manuelle/(.*)/(.*)",  "CommandeManuelle",
+    "/(.*)",                "NotFound"
 )
 
 # Variable qui va stocker l'instance du WS (sera de type MonWebservice)
@@ -70,17 +71,39 @@ class MonWebservice(web.application, object):
 '''
 class CommandeVocale:
     def GET(self, strParole):
+        web.header('Content-Type', 'application/json')
+
+        reponse = {"erreur" : True,
+                   "msgErreur" : "Erreur inconnue",
+                   "commande" : "", "retour" : ""}
+
         try:
             if (ManagerProxy.proxy and ManagerProxy.proxy != None):
                 parole = AppMP3Player.Parole()
                 parole.data = []
-                return ManagerProxy.proxy.commandeVocale(parole)
+
+                # Appel
+                c = ManagerProxy.proxy.commandeVocale(parole)
+
+                # Reponse
+                reponse = {}
+                reponse["commande"] = c.commande
+                reponse["erreur"] = c.erreur
+                reponse["msgErreur"] = c.msgErreur
+                reponse["retour"] = c.retour
 
             else:
-                return ManagerProxy.proxy #return "Erreur de connection au serveur Manager"
+                reponse["msgErreur"] = "Erreur de connection au serveur Manager"
 
-        except:
-            return sys.exc_info()
+            return json.dumps(reponse)
+
+        except Exception, e:
+            traceback.print_exc()
+
+            reponse = {"erreur" : True,
+                       "msgErreur" : "%s" % e,
+                       "commande" : "", "retour" : ""}
+            return json.dumps(reponse)
 
 
 # -- CommandeManuelle ------------------------------------------- #
@@ -91,30 +114,60 @@ class CommandeVocale:
 '''
 class CommandeManuelle:
     def GET(self, commande, chanson):
+        web.header('Content-Type', 'application/json')
+
+        reponse = {"erreur" : True,
+                   "msgErreur" : "Erreur inconnue",
+                   "commande" : "", "retour" : ""}
+
         try:
             if (ManagerProxy.proxy and ManagerProxy.proxy != None):
                 # Création de l'objet Commande
                 c = AppMP3Player.Commande()
                 c.commande = commande
                 c.params = [chanson]
-                return ManagerProxy.proxy.commandeManuelle(c)
+
+                # Appel
+                c = ManagerProxy.proxy.commandeManuelle(c)
+
+                # Reponse
+                reponse = {}
+                reponse["commande"] = c.commande
+                reponse["erreur"] = c.erreur
+                reponse["msgErreur"] = c.msgErreur
+                reponse["retour"] = c.retour
 
             else:
-                return "Erreur de connection au serveur Manager"
+                reponse["msgErreur"] = "Erreur de connection au serveur Manager"
 
-        except:
-            return sys.exc_info()
+            return json.dumps(reponse)
+
+        except Exception, e:
+            traceback.print_exc()
+
+            reponse = {"erreur" : True,
+                       "msgErreur" : "%s" % e,
+                       "commande" : "", "retour" : ""}
+            return json.dumps(reponse)
 
 
-# -- Suicide ---------------------------------------------------- #
+# -- NotFound --------------------------------------------- #
 
 '''
-    Classe pour arrêter le serveur à distance.
-    (ceci est extrêmement insecure mais tellement utile pour les test...)
+    Traitement d'une URL qui ne correspond a aucune autre regle.
 '''
-class Suicide:
-    def GET(self):
-        MonWebservice.instance.stop()
+class NotFound:
+    def reponse(self):
+        reponse = {"erreur" : True,
+                   "msgErreur" : "URL incorrecte",
+                   "commande" : "", "retour" : ""}
+        return json.dumps(reponse)
+
+    def GET(self, data):
+        return self.reponse()
+
+    def POST(self, data):
+        return self.reponse()
 
 
 
@@ -133,7 +186,7 @@ def main():
 
         # Initialisation du serveur et Ice
         ic = Ice.initialize(iniData)
-        base = ic.stringToProxy("Manager:default -h " + config.IP_MANAGER + " -p " + str(config.PORT_ICE))
+        base = ic.stringToProxy("Manager:default -h " + config.IP_MANAGER + " -p " + str(config.PORT_ICE_MANAGER))
         manager = AppMP3Player.ManagerPrx.checkedCast(base)
         if not manager:
             raise RuntimeError("Invalid proxy")
@@ -144,7 +197,7 @@ def main():
 
         # Démarrage du webservice
         instanceWS = MonWebservice(urls, globals())
-        instanceWS.run(port=config.PORT_WS)
+        instanceWS.run(port=int(config.PORT_WS))
 
 
     except:
