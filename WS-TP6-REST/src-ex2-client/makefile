@@ -14,8 +14,8 @@ LIB=.$(SEP)./dist/*$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/jav
 #  COMPILATION                                                  #
 #################################################################
 
-TP=tp5
-EX=ex1
+TP=tp6
+EX=ex2
 NOM_JAR=client-$(TP)-$(EX).jar
 
 client: compile build run clean
@@ -27,7 +27,7 @@ build:
 	jar cvf dist/$(NOM_JAR) $(EX)/*.class
 
 run:
-	java -cp "$(LIB)" $(EX).ClientREST
+	java -cp "$(LIB)" $(EX).ClientREST ${ARGS}
 
 
 #################################################################

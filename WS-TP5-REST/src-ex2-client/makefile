@@ -15,10 +15,10 @@ LIB=.$(SEP)./dist/*$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/jav
 #################################################################
 
 TP=tp5
-EX=ex1
+EX=ex2
 NOM_JAR=client-$(TP)-$(EX).jar
 
-client: compile build run
+client: compile build run clean
 
 compile:
 	javac $(EX)/*.java -cp "$(LIB)"

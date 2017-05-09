@@ -12,15 +12,46 @@ import org.glassfish.jersey.client.ClientConfig;
 public class ClientREST {
 	
 	public static void main(String[] args) {
-		Client client = ClientBuilder.newClient(/*new ClientConfig()*/);
-		WebTarget target = client.target("http://localhost:8080/WSREST-tp5-ex1");
+		Client client = ClientBuilder.newClient(new ClientConfig());
+		WebTarget target = client.target("http://localhost:8080/WSREST-tp5-ex2");
 		
-		WebTarget salutTarget = target.path("salut");
-		Invocation.Builder salutInvocationBuilder = salutTarget.request(MediaType.TEXT_PLAIN_TYPE);
+		MediaType mediaType = null;
+		WebTarget testTarget = null;
+		Invocation.Builder invocationBuilder = null;
+		Response response = null;
 		
-		Response response = salutInvocationBuilder.get();
+		
+		// Test text/plain
+		mediaType = MediaType.TEXT_PLAIN_TYPE;
+		System.out.println("Test " + mediaType);
+		
+		testTarget = target.path("salut");
+		invocationBuilder = testTarget.request(mediaType);
+		response = invocationBuilder.get();
 		System.out.println(response.getStatus());
 		System.out.println(response.readEntity(String.class));
+		
+		
+		// Test text/xml
+		mediaType = MediaType.TEXT_XML_TYPE;
+		System.out.println("Test " + mediaType);
+		
+		testTarget = target.path("hello");
+		invocationBuilder = testTarget.request(mediaType);
+		response = invocationBuilder.get();
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));
+				
+		// Test text/html
+		mediaType = MediaType.TEXT_HTML_TYPE;
+		System.out.println("Test " + mediaType);
+		
+		testTarget = target.path("ola");
+		invocationBuilder = testTarget.request(mediaType);
+		response = invocationBuilder.get();
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));
+		
 	}
 
 }

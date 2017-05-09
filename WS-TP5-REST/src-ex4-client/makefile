@@ -15,7 +15,7 @@ LIB=.$(SEP)./dist/*$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/jav
 #################################################################
 
 TP=tp5
-EX=ex1
+EX=ex4
 NOM_JAR=client-$(TP)-$(EX).jar
 
 client: compile build run clean

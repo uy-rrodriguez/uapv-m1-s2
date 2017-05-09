@@ -35,5 +35,5 @@ deploy:
 #################################################################
 
 clean:
-	#rm -R "./WEB-INF/classes/*"
-	#rm -R ./dist/*.war
+	rm -R "./WEB-INF/classes/*"
+	rm -R ./dist/*.war
