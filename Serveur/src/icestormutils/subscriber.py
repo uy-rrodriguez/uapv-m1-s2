@@ -4,6 +4,8 @@ import sys, traceback
 import Ice, IceStorm
 import AppMP3Player
 import config
+from utils import *
+
 
 '''
     Classe Subscriber qui sera étendue par tout subscriber IceStorm.
@@ -43,8 +45,9 @@ class Subscriber(object):
             qos = {}
             self.topic.subscribeAndGetPublisher(qos, self.subscriber)
         except IceStorm.AlreadySubscribed as ex:
-            print "icestormutils.Subscriber : Subscriber existant"
+            print_("icestormutils.Subscriber : Subscriber existant")
             self.topic.unsubscribe(self.subscriber)
             self.topic.subscribeAndGetPublisher(qos, self.subscriber)
 
-        print "icestormutils.Subscriber : Subscriber pour topic", topicName, "obtenu"
+        print_("icestormutils.Subscriber : Subscriber pour topic", topicName, "obtenu")
+

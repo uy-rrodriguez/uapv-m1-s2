@@ -4,6 +4,7 @@ import sys, traceback, time
 import Ice
 import AppMP3Player
 import config, reconnaissance, parsing, traitement
+from utils import *
 
 
 class ManagerI(AppMP3Player.Manager):
@@ -31,7 +32,7 @@ class ManagerI(AppMP3Player.Manager):
         Reception et traitement des commandes vocales.
     '''
     def commandeVocale(self, parole, current=None):
-        print "ManagerI->commandeVocale"
+        print_("ManagerI->commandeVocale")
 
         # Reconnaissance
         r = reconnaissance.Reconnaissance()
@@ -45,7 +46,7 @@ class ManagerI(AppMP3Player.Manager):
         t = traitement.Traitement(self.metaserveur)
         commande = t.traiterCommande(self.getClientIP(current), commande)
 
-        print "ManagerI->return\n"
+        print_("ManagerI->return\n")
         return commande
 
 
@@ -53,13 +54,13 @@ class ManagerI(AppMP3Player.Manager):
         Reception et traitement des commandes manuelles.
     '''
     def commandeManuelle(self, commande, current=None):
-        print "ManagerI->commandeManuelle"
+        print_("ManagerI->commandeManuelle")
 
         # Traitement, on lui passe le Métaserveur
         t = traitement.Traitement(self.metaserveur)
         commande = t.traiterCommande(self.getClientIP(current), commande)
 
-        print "ManagerI->return\n"
+        print_("ManagerI->return\n")
         return commande
 
 
@@ -98,6 +99,9 @@ def main():
         ic.waitForShutdown()
 
 
+    except (KeyboardInterrupt, SystemExit):
+        pass
+
     except:
         traceback.print_exc()
         status = 1
@@ -114,4 +118,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

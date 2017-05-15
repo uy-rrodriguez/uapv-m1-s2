@@ -1,0 +1,60 @@
+make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
+---------------- Run metaserveur ----------------
+python -m metaserveur.metaserveur
+icestormutils.Publisher : Publisher pour topic TopicCommandes obtenu
+icestormutils.Subscriber : Subscriber existant
+icestormutils.Subscriber : Subscriber pour topic TopicChansons obtenu
+icestormutils.Subscriber : Subscriber existant
+icestormutils.Subscriber : Subscriber pour topic TopicMiniserveurs obtenu
+MetaserveurI->to_list
+MetaserveurI->to_list
+MetaserveurI->play : 1
+PublisherCommandes->jouerChanson :  127.0.0.1 Claridad.mp3
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->play : 3
+PublisherCommandes->jouerChanson :  127.0.0.1 David Garrett - Smooth Criminal.mp3
+MetaserveurI->stream_addr
+MetaserveurI->play : 1
+PublisherCommandes->jouerChanson :  127.0.0.1 Claridad.mp3
+MetaserveurI->stream_addr
+MetaserveurI->play : 8
+PublisherCommandes->jouerChanson :  127.0.0.1 The Eagles - Hotel California.mp3
+MetaserveurI->stream_addr
+Metaserveur->stop
+PublisherCommandes->arreterChanson :  127.0.0.1
+Traceback (most recent call last):
+  File "G:\Dev\RepoGit\uapv-m1-s2\Serveur\src\metaserveur\metaserveur.py", line 287, in main
+Traceback (most recent call last):
+  File "G:\Dev\Python\Python27x86\lib\runpy.py", line 174, in _run_module_as_main
+    "__main__", fname, loader, pkg_name)
+  File "G:\Dev\Python\Python27x86\lib\runpy.py", line 72, in _run_code
+    exec code in run_globals
+  File "G:\Dev\RepoGit\uapv-m1-s2\Serveur\src\metaserveur\metaserveur.py", line 309, in <module>
+    sys.exit(main())
+  File "G:\Dev\RepoGit\uapv-m1-s2\Serveur\src\metaserveur\metaserveur.py", line 294, in main
+    print_exc_()
+  File "utils\__init__.py", line 17, in print_exc_
+    traceback.print_exc(file=sys.stdout)
+  File "G:\Dev\Python\Python27x86\lib\traceback.py", line 233, in print_exc
+    print_exception(etype, value, tb, limit, file)
+  File "G:\Dev\Python\Python27x86\lib\traceback.py", line 125, in print_exception
+    print_tb(tb, limit, file)
+  File "G:\Dev\Python\Python27x86\lib\traceback.py", line 69, in print_tb
+    line = linecache.getline(filename, lineno, f.f_globals)
+  File "G:\Dev\Python\Python27x86\lib\linecache.py", line 14, in getline
+    lines = getlines(filename, module_globals)
+  File "G:\Dev\Python\Python27x86\lib\linecache.py", line 41, in getlines
+    return updatecache(filename, module_globals)
+  File "G:\Dev\Python\Python27x86\lib\linecache.py", line 132, in updatecache
+    lines = fp.readlines()
+KeyboardInterrupt
+!! 05/12/17 17:55:03.596 error: communicator not destroyed during global destruction.make[1]: *** [run-meta] Error 1

@@ -1,5 +1,5 @@
 
-all: build deploy
+all: clean build run-launcher
 
 build:
 	@echo "---------------- Build Ice ----------------"
@@ -7,6 +7,10 @@ build:
 	slice2py --all ../../Interfaces/Manager.ice
 	slice2py --all ../../Interfaces/Metaserveur.ice
 	slice2py --all ../../Interfaces/Messagerie.ice
+
+run-launcher:
+	@echo "---------------- Run launcher ----------------"
+	python -m launcher.launcher
 
 run-manager:
 	@echo "---------------- Run manager ----------------"

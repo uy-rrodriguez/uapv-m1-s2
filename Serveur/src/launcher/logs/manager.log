@@ -1,0 +1,83 @@
+make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
+---------------- Run manager ----------------
+python -m manager.manager
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 to_list 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 to_list 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play 1
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play 3
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play 1
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play 8
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stop 
+ManagerI->return
+

@@ -1,7 +1,7 @@
 package fr.ceri.rrodriguez.playerdistribue.activity;
 
 import java.lang.Thread;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 
 // Communication avec le webservice
+import java.util.Arrays;
 import android.os.AsyncTask;
 import android.util.Log;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -26,10 +27,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import fr.ceri.rrodriguez.playerdistribue.util.WSUtil;
+import fr.ceri.rrodriguez.playerdistribue.model.WSData;
 
 import fr.ceri.rrodriguez.playerdistribue.R;
 import fr.ceri.rrodriguez.playerdistribue.model.ActivitySession;
-import fr.ceri.rrodriguez.playerdistribue.model.WSData;
 
 
 public class PlayerActivity extends AppCompatActivity
@@ -37,6 +39,7 @@ public class PlayerActivity extends AppCompatActivity
 
     private Toolbar mToolbar;
     private FragmentNavigationDrawer drawerFragment;
+
 
     // Pour gerer les variables de session
     private ActivitySession session;
@@ -60,7 +63,6 @@ public class PlayerActivity extends AppCompatActivity
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
 
-
         // Recuperation de l'etat anterieur de l'app
         if (savedInstanceState != null) {
             session = (ActivitySession) savedInstanceState.getSerializable("SESSION");
@@ -69,6 +71,7 @@ public class PlayerActivity extends AppCompatActivity
             session = new ActivitySession();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,16 +178,18 @@ public class PlayerActivity extends AppCompatActivity
     public class WSRequestTask extends AsyncTask<Void, Void, WSData> {
         @Override
         protected WSData doInBackground(Void... params) {
+            /*
             Snackbar snackbar = Snackbar
                 .make((DrawerLayout) findViewById(R.id.drawer_layout),
                       "WS > doInBackground",
                       Snackbar.LENGTH_LONG);
             snackbar.show();
+            */
 
             WSData wsdata = null;
 
             try {
-                final String url = "http://192.168.0.16:30000/manuelle/play/1";
+                final String url = WSUtil.URL_WS + "manuelle/to_list";
 
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -227,7 +232,8 @@ public class PlayerActivity extends AppCompatActivity
             snackbar.show();
 
 
-            TextView res = (TextView) findViewById(R.id.ws_result);
+            View fragment = (View) findViewById(R.id.fragment_home);
+            TextView res = (TextView) fragment.findViewById(R.id.ws_result);
             res.setText("WS > onPostExecute > " + wsdata);
 
         }

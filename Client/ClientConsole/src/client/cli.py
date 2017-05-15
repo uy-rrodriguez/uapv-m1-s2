@@ -106,8 +106,8 @@ class App:
 
             # Selection de la chanson
             sel = int(values["id"]) - 1
-            name = self.songs[sel]["nom"]
-            c.params = [name]
+            #name = self.songs[sel]["nom"]
+            c.params = [str(sel)]
 
             # Appel au serveur pour qu'il commence le streaming
             self.srv.commandeManuelle(c)

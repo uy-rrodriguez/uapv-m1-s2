@@ -13,11 +13,11 @@ import config, icestormutils
     cette classe.
 '''
 class TopicMiniserveursManagerI(AppMP3Player.TopicMiniserveursManager):
-    def enregistrerServeur(self, ip, current=None):
-        print "SubscriberMiniserveurs->enregistrerServeur :", ip
+    def enregistrerServeur(self, ip, nom, current=None):
+        print_("SubscriberMiniserveurs->enregistrerServeur :", ip, nom)
 
-    def supprimerServeur(self, ip, current=None):
-        print "SubscriberMiniserveurs->supprimerServeur :", ip
+    def supprimerServeur(self, ip, nom, current=None):
+        print_("SubscriberMiniserveurs->supprimerServeur :", ip, nom)
 
 
 '''

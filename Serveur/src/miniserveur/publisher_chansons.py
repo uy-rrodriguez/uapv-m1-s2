@@ -4,6 +4,8 @@ import sys, traceback
 import Ice, IceStorm
 import AppMP3Player
 import config, icestormutils
+from utils import *
+
 
 '''
     Ce Publisher IceStorm enverra des messages au topic TopicMiniserveurs
@@ -11,39 +13,23 @@ import config, icestormutils
 '''
 class PublisherChansons(icestormutils.Publisher):
 
-    def __init__(self, ic):
+    def __init__(self, ic, nomMini):
         super(PublisherChansons, self).__init__(ic, "TopicChansons")
-        self.manager = AppMP3Player.TopicChansonsManagerPrx.uncheckedCast(self.publisher)
+        self.nomMini = nomMini
+        self.managerTopic = AppMP3Player.TopicChansonsManagerPrx.uncheckedCast(self.publisher)
 
 
     def listerChansons(self, chansons):
         try:
-            #print "PublisherChansons->listerChansons"
-            self.manager.listerChansons(chansons)
+            #print_("PublisherChansons->listerChansons")
+            self.managerTopic.listerChansons(chansons)
 
         except:
-            sys.print_exc()
+            print_exc_()
 
-
-    def ajouterChanson(self, nom, artiste, categorie, path):
+    def adresseStreaming(self, ipClient, ip, port):
         try:
-            print "PublisherChansons->ajouterChanson :", nom, path
-            c = AppMP3Player.Chanson()
-            c.nom = nom
-            c.artiste = artiste
-            c.categorie = categorie
-            c.path = path
-            self.manager.ajouterChanson(c)
+            self.managerTopic.adresseStreaming(ipClient, ip, port)
 
         except:
-            sys.print_exc()
-
-
-    def supprimerChanson(self, nom):
-        try:
-            print "PublisherChansons->supprimerChanson :", nom
-            c = AppMP3Player.Chanson()
-            c.nom = nom
-            self.manager.supprimerChanson(c)
-        except:
-            sys.print_exc()
+            print_exc_()

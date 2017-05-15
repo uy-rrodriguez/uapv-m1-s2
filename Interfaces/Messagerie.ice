@@ -8,8 +8,10 @@ module AppMP3Player {
         string artiste;
         string categorie;
 
-        string ipServeur;
         string path;
+
+        //string ipServeur;
+        string miniserveur;
     };
 
     /**
@@ -27,8 +29,9 @@ module AppMP3Player {
      */
     interface TopicChansonsManager {
         void listerChansons(ListeChansons chansons);
-        void ajouterChanson(Chanson c);
-        void supprimerChanson(Chanson c);
+        void adresseStreaming(string ipClient, string ip, int port);
+        //void ajouterChanson(Chanson c);
+        //void supprimerChanson(Chanson c);
     };
 
 
@@ -55,7 +58,7 @@ module AppMP3Player {
      *     - indiquer l'arrêt d'un miniserveur existant
      */
     interface TopicMiniserveursManager {
-        void enregistrerServeur(string ip);
-        void supprimerServeur(string ip);
+        void enregistrerServeur(string ip, string nom);
+        void supprimerServeur(string ip, string nom);
     };
 };

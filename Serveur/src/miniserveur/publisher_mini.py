@@ -4,6 +4,8 @@ import sys, traceback
 import Ice, IceStorm
 import AppMP3Player
 import config, icestormutils
+from utils import *
+
 
 '''
     Ce Publisher IceStorm enverra des messages au topic TopicMiniserveurs
@@ -11,20 +13,21 @@ import config, icestormutils
 '''
 class PublisherMiniserveurs(icestormutils.Publisher):
 
-    def __init__(self, ic):
+    def __init__(self, ic, nomMini):
         super(PublisherMiniserveurs, self).__init__(ic, "TopicMiniserveurs")
-        self.manager = AppMP3Player.TopicMiniserveursManagerPrx.uncheckedCast(self.publisher);
+        self.nomMini = nomMini
+        self.managerTopic = AppMP3Player.TopicMiniserveursManagerPrx.uncheckedCast(self.publisher);
 
     def enregistrer_serveur(self):
         try:
-            print "PublisherMiniserveur->enregistrer_serveur"
-            self.manager.enregistrerServeur("127.0.0.1")
+            print_("PublisherMiniserveur->enregistrer_serveur")
+            self.managerTopic.enregistrerServeur(get_ip(), self.nomMini)
         except:
-            traceback.print_exc()
+            print_exc_()
 
     def supprimer_serveur(self):
         try:
-            print "PublisherMiniserveur->supprimer_serveur"
-            self.manager.supprimerServeur("127.0.0.1")
+            print_("PublisherMiniserveur->supprimer_serveur")
+            self.managerTopic.supprimerServeur(get_ip(), self.nomMini)
         except:
-            traceback.print_exc()
+            print_exc_()

@@ -4,6 +4,7 @@ import sys, traceback
 import Ice, IceStorm
 import AppMP3Player
 import config, icestormutils
+from utils import *
 
 
 '''
@@ -14,41 +15,58 @@ class PublisherCommandes(icestormutils.Publisher):
 
     def __init__(self, ic, metaserveur):
         super(PublisherCommandes, self).__init__(ic, "TopicCommandes")
-        self.manager = AppMP3Player.TopicCommandesManagerPrx.uncheckedCast(self.publisher);
+        self.topicManager = AppMP3Player.TopicCommandesManagerPrx.uncheckedCast(self.publisher);
 
         self.metaserveur = metaserveur
 
 
     def listerChansons(self):
         try:
-            #print "PublisherCommandes->listerChansons"
-            self.manager.listerChansons()
+            #print_("PublisherCommandes->listerChansons")
+            self.topicManager.listerChansons()
         except:
-            traceback.print_exc()
+            print_exc_()
 
 
-    def jouerChanson(self, ipClient, nomChanson):
-        try:
-            print "PublisherCommandes->jouerChanson : ", ipClient, nomChanson
-            c = self.metaserveur.get_chanson_by_nom(nomChanson)
-            if (c is not None):
-                self.manager.jouerChanson(ipClient, c)
-            else:
-                raise RuntimeException("La chanson '" + nomChanson + "' n'existe pas")
+    def jouerChanson(self, ipClient, chanson):
+        print_("PublisherCommandes->jouerChanson : ", ipClient, chanson.nom)
+        self.topicManager.jouerChanson(ipClient, chanson)
+        return True
 
-        except:
-            traceback.print_exc()
 
     def pauseChanson(self, ipClient):
         try:
-            print "PublisherCommandes->pauseChanson : ", ipClient
-            self.manager.pauseChanson(ipClient)
+            print_("PublisherCommandes->pauseChanson : ", ipClient)
+            self.topicManager.pauseChanson(ipClient)
         except:
-            traceback.print_exc()
+            print_exc_()
 
     def arreterChanson(self, ipClient):
         try:
-            print "PublisherCommandes->arreterChanson : ", ipClient
-            self.manager.arreterChanson(ipClient)
+            print_("PublisherCommandes->arreterChanson : ", ipClient)
+            self.topicManager.arreterChanson(ipClient)
         except:
-            traceback.print_exc()
+            print_exc_()
+
+
+
+########################################################################################################
+########################################################################################################
+
+
+'''
+    Ce Publisher IceStorm peut envoyer des messages et attendre la reponse.
+'''
+class PublisherTwoWayCommandes(icestormutils.PublisherTwoWay):
+
+    def __init__(self, ic, metaserveur):
+        super(PublisherTwoWayCommandes, self).__init__(ic, "TopicCommandes")
+        self.topicManager = AppMP3Player.TopicCommandesManagerPrx.uncheckedCast(self.publisher);
+
+        self.metaserveur = metaserveur
+
+
+    def jouerChanson(self, ipClient, chanson):
+        print_("PublisherTwoWayCommandes->jouerChanson : ", ipClient, chanson.nom)
+        adresseStream = self.topicManager.jouerChanson(ipClient, chanson)
+        return adresseStream

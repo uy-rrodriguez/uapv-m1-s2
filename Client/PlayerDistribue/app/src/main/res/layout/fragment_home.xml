@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context="fr.ceri.rrodriguez.playerdistribue.activity.HomeFragment">
 
+    <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:indeterminateOnly="true"
+            android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal">
+    </ProgressBar>
+
+
+
     <!-- A RecyclerView with some commonly used attributes -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/songs_recycler_view"
@@ -14,6 +28,19 @@
         android:layout_height="match_parent"
         android:paddingBottom="52dp"
         android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+
+
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/myFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp"
+            android:src="@drawable/ic_action_search"
+            app:elevation="4dp" />
+
 
     <RelativeLayout
         android:id="@+id/container_playing_song_name"

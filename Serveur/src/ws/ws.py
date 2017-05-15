@@ -5,6 +5,7 @@ import Ice
 import AppMP3Player
 import web
 import config
+from utils import *
 
 
 # ############################################################### #
@@ -18,6 +19,7 @@ import config
 urls = (
     "/vocale/(.*)",         "CommandeVocale",
     "/manuelle/(.*)/(.*)",  "CommandeManuelle",
+    "/manuelle/(.*)",       "CommandeManuelle",
     "/(.*)",                "NotFound"
 )
 
@@ -59,7 +61,9 @@ class MonWebservice(web.application, object):
 
     def run(self, port=8080, *middleware):
         func = self.wsgifunc(*middleware)
-        return web.httpserver.runsimple(func, ('0.0.0.0', port))
+        serv = web.httpserver.runsimple(func, ('0.0.0.0', port))
+        print_()
+        return serv
 
 
 
@@ -98,7 +102,7 @@ class CommandeVocale:
             return json.dumps(reponse)
 
         except Exception, e:
-            traceback.print_exc()
+            print_exc_()
 
             reponse = {"erreur" : True,
                        "msgErreur" : "%s" % e,
@@ -113,7 +117,7 @@ class CommandeVocale:
     On va recevoir la commande et le nom du fichier audio correspondant.
 '''
 class CommandeManuelle:
-    def GET(self, commande, chanson):
+    def GET(self, commande, param1=None):
         web.header('Content-Type', 'application/json')
 
         reponse = {"erreur" : True,
@@ -125,7 +129,11 @@ class CommandeManuelle:
                 # Création de l'objet Commande
                 c = AppMP3Player.Commande()
                 c.commande = commande
-                c.params = [chanson]
+
+                if (param1 != None):
+                    c.params = [param1]
+                else:
+                    c.params = []
 
                 # Appel
                 c = ManagerProxy.proxy.commandeManuelle(c)
@@ -143,7 +151,7 @@ class CommandeManuelle:
             return json.dumps(reponse)
 
         except Exception, e:
-            traceback.print_exc()
+            print_exc_()
 
             reponse = {"erreur" : True,
                        "msgErreur" : "%s" % e,
@@ -195,13 +203,21 @@ def main():
         # On stocke le proxy dans une instance de ManagerProxy
         ManagerProxy(manager)
 
+        # Publication de l'IP du WS
+        reponse_ip, erreur_ip = set_public_ip()
+        if not reponse_ip:
+            print_("Erreur lors de la publication de l'IP du WS. " + erreur_ip)
+
+
         # Démarrage du webservice
         instanceWS = MonWebservice(urls, globals())
         instanceWS.run(port=int(config.PORT_WS))
 
+    except (KeyboardInterrupt, SystemExit):
+        pass
 
     except:
-        traceback.print_exc()
+        print_exc_()
         status = 1
 
     if ic:
@@ -209,11 +225,11 @@ def main():
         try:
             ic.destroy()
         except:
-            traceback.print_exc()
+            print_exc_()
             status = 1
 
     sys.exit(status)
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

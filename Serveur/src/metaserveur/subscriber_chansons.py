@@ -4,6 +4,7 @@ import sys, traceback
 import Ice, IceStorm
 import AppMP3Player
 import config, icestormutils
+from utils import *
 
 
 '''
@@ -19,16 +20,13 @@ class TopicChansonsManagerI(AppMP3Player.TopicChansonsManager):
 
 
     def listerChansons(self, chansons, current=None):
-        #print "SubscriberChansons->listerChansons"
+        #print_("SubscriberChansons->listerChansons")
         self.metaserveur.set_chansons(chansons)
 
-    def ajouterChanson(self, chanson, current=None):
-        print "SubscriberChansons->ajouterChanson :", chanson.nom, chanson.path
-        self.metaserveur.add_chanson(chanson)
 
-    def supprimerChanson(self, chanson, current=None):
-        print "SubscriberChansons->supprimerChanson :", chanson.nom
-        self.metaserveur.remove_chanson(chanson)
+    def adresseStreaming(self, ipClient, ip, port, current=None):
+        #print_("SubscriberChansons->listerChansons")
+        self.metaserveur.notifier_adresse_streaming(ipClient, ip, port)
 
 
 '''

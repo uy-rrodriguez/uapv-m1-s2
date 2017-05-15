@@ -1,13 +1,13 @@
 # coding: utf8
 
-import sys, traceback, time, subprocess
+import sys, traceback, time, subprocess, random, string
 import Ice, IceStorm
 import AppMP3Player
 import config
 from publisher_mini import PublisherMiniserveurs
-#from demon import DemonChansons
 from publisher_chansons import PublisherChansons
 from subscriber_commandes import SubscriberCommandes
+from utils import *
 
 #import CLI
 
@@ -31,25 +31,36 @@ def main(argv=None):
     status = 0
     ic = None
     processDemon = None
+    nom = ""
 
     try:
+        # Lors du lancement du Miniserveur, on genere un nom aleatoire
+        ip = get_ip()
+        nom = ip + "_" + "".join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+        print_("Miniserveur-> start", nom)
+
+
+        # Configuration Ice
         props = Ice.createProperties(argv)
         iniData = Ice.InitializationData()
         iniData.properties = props
         ic = Ice.initialize(iniData)
 
+
         # Création du publisher pour envoyer les mises-à-jour des chansons
-        #processDemon = subprocess.Popen("python -m miniserveur.demon", stdout=open(config.LOG_MINISERVEUR_DEMON, "a"))
-        #processDemon = subprocess.Popen("python -m miniserveur.demon")
+        #processDemon = subprocess.Popen("python -m miniserveur.demon " + nom)
+
+        # ==> NE PLUS ACTIVER LE DEMON. Le metaserveur se charge de demander la liste de chansons
+
 
         # Création du publisher pour indiquer au Métaserveur le démarrage ou arrêt du miniserveur
-        publisherMiniserveurs = PublisherMiniserveurs(ic)
+        publisherMiniserveurs = PublisherMiniserveurs(ic, nom)
 
         # Création du publisher pour indiquer au Métaserveur les mises-à-jour dans la liste de chansons
-        publisherChansons = PublisherChansons(ic)
+        publisherChansons = PublisherChansons(ic, nom)
 
         # Création du subscriber pour recevoir les commandes provenantes du Métaserveur
-        subscriberCommandes = SubscriberCommandes(ic, publisherChansons)
+        subscriberCommandes = SubscriberCommandes(ic, publisherChansons, nom)
 
 
         # Client graphique (TODO)
@@ -68,7 +79,7 @@ def main(argv=None):
         pass
 
     except:
-        traceback.print_exc()
+        print_exc_()
         status = 1
 
 
@@ -76,7 +87,7 @@ def main(argv=None):
         try:
             processDemon.kill()
         except:
-            traceback.print_exc()
+            print_exc_()
             status = 1
 
     # Clean up
@@ -84,10 +95,11 @@ def main(argv=None):
         try:
             ic.destroy()
         except:
-            traceback.print_exc()
+            print_exc_()
             status = 1
 
 
+    print_("Miniserveur-> end", nom)
     sys.exit(status)
 
 

@@ -4,6 +4,7 @@ import sys, traceback, time, os, re
 import Ice, IceStorm
 import AppMP3Player
 import config, icestormutils
+from utils import *
 
 
 '''
@@ -14,8 +15,9 @@ import config, icestormutils
 '''
 class DemonChansons(icestormutils.Publisher):
 
-    def __init__(self, ic):
+    def __init__(self, ic, nomMini):
         super(DemonChansons, self).__init__(ic, "TopicChansons")
+        self.nomMini = nomMini
         self.manager = AppMP3Player.TopicChansonsManagerPrx.uncheckedCast(self.publisher)
 
         # Pour la gestion des fichiers musicaux
@@ -25,12 +27,13 @@ class DemonChansons(icestormutils.Publisher):
 
     def ajouter_chanson(self, nom, artiste, categorie, path):
         try:
-            #print "DemonChansons->ajouter_chanson"; sys.stdout.flush()
+            print_("DemonChansons->ajouter_chanson");
             c = AppMP3Player.Chanson()
             c.nom = nom
             c.artiste = artiste
             c.categorie = categorie
             c.path = path
+            c.miniserveur = self.nomMini
             self.manager.ajouterChanson(c)
 
         except:
@@ -39,12 +42,13 @@ class DemonChansons(icestormutils.Publisher):
 
     def supprimer_chanson(self, nom):
         try:
-            #print "DemonChansons->supprimer_chanson"; sys.stdout.flush()
+            print_("DemonChansons->supprimer_chanson")
             c = AppMP3Player.Chanson()
             c.nom = nom
+            c.miniserveur = self.nomMini
             self.manager.supprimerChanson(c)
         except:
-            sys.print_exc()
+            print_exc_()
 
 
     def check_folder(self):
@@ -55,13 +59,6 @@ class DemonChansons(icestormutils.Publisher):
                 if re.match("^.+\.mp3$", name):
                     songs.append(os.path.join(root, name))
 
-        '''
-        print "Liste actuelle"
-        for s in songs:
-            print s
-
-        print ""
-        '''
 
         setSongs = set(songs)
         setActual = set(self.actualSongs)
@@ -71,19 +68,13 @@ class DemonChansons(icestormutils.Publisher):
 
 
         # Traitement des fichiers supprimés
-        #print "Supressions"
         for s in supprimees:
-            #print s
             self.supprimer_chanson(os.path.basename(s))
-        #print ""
 
 
         # Traitement des fichiers ajoutés
-        #print "Ajouts"
         for s in ajoutees:
-            #print s
             self.ajouter_chanson(os.path.basename(s), "", "", s)
-        #print ""
 
         # Mise-à-jour de la liste de chansons actuelle
         self.actualSongs = songs
@@ -91,7 +82,7 @@ class DemonChansons(icestormutils.Publisher):
 
     def run(self):
         try:
-            print "DemonChansons->run"; sys.stdout.flush()
+            print_("DemonChansons->run")
 
             while True:
                 self.check_folder()
@@ -100,7 +91,7 @@ class DemonChansons(icestormutils.Publisher):
         except:
             raise
 
-        print "DemonChansons->end"; sys.stdout.flush()
+        print_("DemonChansons->end")
 
 
 def main(argv=None):
@@ -116,14 +107,14 @@ def main(argv=None):
         iniData.properties = props
         ic = Ice.initialize(iniData)
 
-        demon = DemonChansons(ic)
+        demon = DemonChansons(ic, argv[1])
         demon.run()
 
     except (KeyboardInterrupt, SystemExit):
         pass
 
     except:
-        traceback.print_exc(); sys.stdout.flush()
+        print_exc_();
         status = 1
 
     # Clean up
@@ -132,7 +123,7 @@ def main(argv=None):
             ic.destroy()
         except:
             status = 1
-            traceback.print_exc(); sys.stdout.flush()
+            print_exc_()
 
     exit(status)
 

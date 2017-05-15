@@ -6,9 +6,11 @@
 import sys, os
 import vlc
 import config
+from utils import *
+
 
 class Player:
-  def __init__(self, ipClient, portClient):
+  def __init__(self, ipStream, portStream):
     self.instance = vlc.Instance()
 
     # Créer un MediaPlayer avec l'instance par défaut
@@ -16,8 +18,11 @@ class Player:
 
     # Options pour jouer en streaming
     self.options = config.MINISERVEUR_VLC_OPTIONS
-    self.options = self.options.replace("<port>", str(portClient))
-    self.options = self.options.replace("<ip>", ipClient)
+    self.options = self.options.replace("<port>", str(portStream))
+    #self.options = self.options.replace("<ip>", ipStream)
+
+    self.ipStream = ipStream
+    self.portStream = portStream
 
 
   def play(self, mrl):
@@ -29,6 +34,8 @@ class Player:
 
     # Jouer !
     self.player.play()
+
+    print_("PLAYING")
 
 
   def stop(self):

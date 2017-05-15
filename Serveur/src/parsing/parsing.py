@@ -3,6 +3,7 @@
 import sys, traceback, time, json
 import AppMP3Player
 import config
+from utils import *
 
 
 SYNONYMES = {
@@ -22,7 +23,7 @@ class Parsing:
 
 
     def parsingPhrase(self, phrase):
-        print "Parsing->parsingPhrase"
+        print_("Parsing->parsingPhrase")
 
         # Parsing
         phraseParts = phrase.split(" ")

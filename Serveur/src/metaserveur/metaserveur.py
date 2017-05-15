@@ -5,8 +5,10 @@ import Ice, IceStorm
 import AppMP3Player
 import config
 from publisher_commandes import PublisherCommandes
+from publisher_commandes import PublisherTwoWayCommandes
 from subscriber_chansons import SubscriberChansons
 from subscriber_mini import SubscriberMiniserveurs
+from utils import *
 
 
 '''
@@ -20,31 +22,62 @@ class MetaserveurI(AppMP3Player.Metaserveur):
         # Liste globale de chansons
         self.chansons = []
 
+        # Dictionnaire avec la derniere adresse de streaming par client
+        self.dictStreaming = {}
 
+
+    #def set_proxies(self, publisherCommandes, subscriberChansons, subscriberMini, publisherTwoWayCommandes):
     def set_proxies(self, publisherCommandes, subscriberChansons, subscriberMini):
         self.publisherCommandes = publisherCommandes
         self.subscriberChansons = subscriberChansons
         self.subscriberMini = subscriberMini
 
+        #self.publisherTwoWayCommandes = publisherTwoWayCommandes
 
-    '''
-        Méthodes appelées par les publishers et subscribers afin d'accéder aux données communes
-    '''
 
+
+    # ####################################################################################### #
+    #                                                                                         #
+    #  Ci-dessous: Méthodes appelées par les publishers et subscribers afin d'accéder         #
+    #              a des données communes                                                     #
+    #                                                                                         #
+    # ####################################################################################### #
+
+    ''' ------------------------------------------------------------------------
+        Reception de l'adresse a renvoyer au client concernant son streaming
+        ------------------------------------------------------------------------
+    '''
+    def notifier_adresse_streaming(self, ipClient, ip, port):
+        self.dictStreaming[ipClient] = {"ip": ip, "port": port}
+
+
+    ''' ------------------------------------------------------------------------
+        Set la liste de chansons
+        ------------------------------------------------------------------------
+    '''
     def set_chansons(self, chansons):
         self.chansons = chansons
 
-    def add_chanson(self, chanson):
-        self.chansons.append(chanson)
 
-    def remove_chanson(self, chanson):
-        suppr = None
+    ''' ------------------------------------------------------------------------
+        Supprimer toutes les chansons d'un miniserveur
+        ------------------------------------------------------------------------
+    '''
+    def remove_chansons(self, nomMiniserveur):
+        #suppr = []
         for c in self.chansons:
-            if (c.path == chanson.path):
-                suppr = c
-        if (suppr is not None):
-            self.chansons.remove(suppr)
+            if (c.miniserveur == nomMiniserveur):
+                #suppr.append(c)
+                self.chansons.remove(c)
 
+        #for c in suppr:
+        #    self.chansons.remove(c)
+
+
+    ''' ------------------------------------------------------------------------
+        Chercher une chanson par le nom
+        ------------------------------------------------------------------------
+    '''
     def get_chanson_by_nom(self, nomChanson):
         for c in self.chansons:
             if c.nom == nomChanson:
@@ -52,11 +85,47 @@ class MetaserveurI(AppMP3Player.Metaserveur):
         return None
 
 
+    ''' ------------------------------------------------------------------------
+        Chercher uen chanson par le numero
+        ------------------------------------------------------------------------
     '''
-        Méthodes qui implementen l'intarface Ice du Métaserveur
+    def get_chanson_by_number(self, indexChanson):
+        if len(self.chansons) > indexChanson:
+            return self.chansons[indexChanson]
+        return None
+
+
+    ''' ------------------------------------------------------------------------
+        Transofmrer la liste de chansons dans un dictionnaire Python
+        ------------------------------------------------------------------------
+    '''
+    def get_chansons_dict(self):
+        # Conversion de Chanson a dict Python
+        chansonsDict = []
+        for c in self.chansons:
+            chansonsDict.append({
+                    "nom"         : c.nom,
+                    "artiste"     : c.artiste,
+                    "categorie"   : c.categorie,
+                    "path"        : c.path,
+                    "miniserveur" : str(c.miniserveur)
+                })
+        return chansonsDict
+
+
+
+    # ####################################################################################### #
+    #                                                                                         #
+    #  Ci-dessous: Méthodes qui implementent l'intarface Ice du Métaserveur                   #
+    #                                                                                         #
+    # ####################################################################################### #
+
+    ''' ------------------------------------------------------------------------
+        Traitement des commandes, appel a des methodes specifiques
+        ------------------------------------------------------------------------
     '''
     def traiterCommande(self, ipClient, commande, current=None):
-        print "MetaserveurI->traiterCommande :", ipClient, commande.commande, ";".join(commande.params)
+        #print_("MetaserveurI->traiterCommande :", ipClient, commande.commande, ";".join(commande.params))
 
         try:
             # On stocke l'ip du client concerné dans un attribut local pour pouvoir
@@ -75,63 +144,100 @@ class MetaserveurI(AppMP3Player.Metaserveur):
         except AttributeError as e:
             commande.erreur = True
             commande.msgErreur = "La commande " + commande.commande + " n'existe pas"
-            traceback.print_exc()
+
+        except ValueError as e:
+            commande.erreur = True
+            commande.msgErreur = e.message
 
         except Exception as e:
             commande.erreur = True
             commande.msgErreur = e.message
-            traceback.print_exc()
+            print_exc_()
 
         return commande #Commande
 
 
-
-    def get_chansons_dict(self):
-        # Conversion de Chanson a dict Python
-        chansonsDict = []
-        for c in self.chansons:
-            chansonsDict.append({
-                    "nom"         : c.nom,
-                    "artiste"     : c.artiste,
-                    "categorie"   : c.categorie,
-                    "path"        : c.path
-                })
-        return chansonsDict
-
-
+    ''' ------------------------------------------------------------------------
+        Lister toutes les chansons
+        ------------------------------------------------------------------------
+    '''
     def to_list(self, *args):
-        print "Metaserveur->to_list"
+        print_("MetaserveurI->to_list")
         return self.get_chansons_dict()
 
 
+    ''' ------------------------------------------------------------------------
+        recherche de chansons
+        ------------------------------------------------------------------------
+    '''
     def search(self, *args):
-        print "Metaserveur->search :", args[0]
+        print_("MetaserveurI->search :", args[0])
         return self.get_chansons_dict()
 
 
+    ''' ------------------------------------------------------------------------
+        Jouer une chanson en streaming
+        ------------------------------------------------------------------------
+    '''
     def play(self, *args):
-        print "Metaserveur->play :", args[0]
-        # Envoi de message au miniserveur concerné
-        self.publisherCommandes.jouerChanson(self.ipClientActuel, args[0][0])
+        print_("MetaserveurI->play :", args[0])
+
+        c = self.get_chanson_by_number(int(args[0][0]))
+        if c is None:
+            raise ValueError("La chanson '" + args[0][0] + "' n'existe pas")
+
+        self.publisherCommandes.jouerChanson(self.ipClientActuel, c)
+
+        # Apres de lancer le streaming, il faut attendre l'adresse de celui-ci
+        # Le client viendra la demander
+        self.notifier_adresse_streaming(self.ipClientActuel, None, None)
+
         return True
 
 
+    ''' ------------------------------------------------------------------------
+        Retourner l'adresse du streaming
+        ------------------------------------------------------------------------
+    '''
+    def stream_addr(self, *args):
+        print_("MetaserveurI->stream_addr")
+        dataStream = self.dictStreaming[self.ipClientActuel]
+
+        if dataStream["ip"] == None:
+            return False
+        else:
+            addr = config.STREAM_PROTOCOL + "://" + dataStream["ip"] + ":" + str(dataStream["port"])
+            del self.dictStreaming[self.ipClientActuel]
+            return addr
+
+
+    ''' ------------------------------------------------------------------------
+        Mettre en pause le streaming actuel
+        ------------------------------------------------------------------------
+    '''
     def pause(self, *args):
-        print "Metaserveur->pause"
+        print_("Metaserveur->pause")
         # Envoi de message au miniserveur concerné
         self.publisherCommandes.pauseChanson(self.ipClientActuel)
         return True
 
+
+    ''' ------------------------------------------------------------------------
+        Arreter le streaming actuel
+        ------------------------------------------------------------------------
+    '''
     def stop(self, *args):
-        print "Metaserveur->stop"
+        print_("Metaserveur->stop")
         # Envoi de message au miniserveur concerné
         self.publisherCommandes.arreterChanson(self.ipClientActuel)
         return True
 
 
-'''
-    Main
-    Création d'un souscripteur au TopicChansons et du servant pour le Metaserveur
+
+''' =======================================================================================
+    Main :
+        Création d'un souscripteur au TopicChansons et du servant pour le Metaserveur
+    =======================================================================================
 '''
 def main():
     status = 0
@@ -156,6 +262,9 @@ def main():
         # Création du publisher qui enverra les commandes aux miniserveurs
         publisherCommandes = PublisherCommandes(ic, meta)
 
+        # Création du publisher two way qui enverra la commande playChanson
+        #publisherTwoWayCommandes = PublisherTwoWayCommandes(ic, meta)
+
         # Création du souscripteur au TopicChansons pour recevoir les mises-a-jour
         # des listes de chansons existantes dans les miniserveurs
         subscriberChansons = SubscriberChansons(ic, meta)
@@ -165,6 +274,7 @@ def main():
 
 
         # On assigne à l'instance du Métaserveur tous les publishers et subscribers
+        #meta.set_proxies(publisherCommandes, subscriberChansons, subscriberMini, publisherTwoWayCommandes)
         meta.set_proxies(publisherCommandes, subscriberChansons, subscriberMini)
 
 
@@ -181,7 +291,7 @@ def main():
         pass
 
     except:
-        traceback.print_exc()
+        print_exc_()
         status = 1
 
     if ic:
@@ -189,11 +299,11 @@ def main():
         try:
             ic.destroy()
         except:
-            traceback.print_exc()
+            print_exc_()
             status = 1
 
     sys.exit(status)
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

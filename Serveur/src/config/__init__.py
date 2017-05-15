@@ -2,6 +2,7 @@
 
 # Commandes
 COM_PLAY         = "play"
+COM_STREAM_ADDR  = "stream_addr"
 COM_PAUSE        = "pause"
 COM_STOP         = "stop"
 COM_LIST         = "to_list"
@@ -31,7 +32,9 @@ LOG_MINISERVEUR_DEMON     = "log/miniserveur_demon.log"
 
 # Configuration du démon qui va lire les chansons
 MINISERVEUR_SONGS_PATH = "miniserveur/musique"
-MINISERVEUR_VLC_OPTIONS = "sout=#rtp{access=udp,mux=ts,dst=<ip>,port=<port>}"
+#MINISERVEUR_VLC_OPTIONS = "sout=#rtp{access=udp,mux=ts,dst=<ip>,port=<port>}"
+MINISERVEUR_VLC_OPTIONS = "sout=#http{mux=ts,dst=:<port>/}"
 
-# Configuration du port écouté par le client
-CLIENT_VLC_PORT = 1233
+# Configuration du streaming
+STREAM_VLC_PORT = 1233
+STREAM_PROTOCOL = "http"

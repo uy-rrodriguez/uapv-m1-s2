@@ -3,13 +3,15 @@
 import sys, traceback, json
 import AppMP3Player
 import config
+from utils import *
 
 
 ACTIONS_META = [config.COM_PLAY,
-               config.COM_PAUSE,
-               config.COM_STOP,
-               config.COM_LIST,
-               config.COM_SEARCH]
+                config.COM_STREAM_ADDR,
+                config.COM_PAUSE,
+                config.COM_STOP,
+                config.COM_LIST,
+                config.COM_SEARCH]
 
 
 class Traitement:
@@ -18,7 +20,7 @@ class Traitement:
 
 
     def traiterCommande(self, ipClient, commande):
-        print "Traitement->traiterCommande :", ipClient, commande.commande, ";".join(commande.params)
+        print_("Traitement->traiterCommande :", ipClient, commande.commande, ";".join(commande.params))
 
         try:
             # Appel à l'action correspondante
@@ -42,40 +44,40 @@ class Traitement:
         except AttributeError as e:
             commande.erreur = True
             commande.msgErreur = "La commande " + commande.commande + " n'existe pas"
-            traceback.print_exc()
+            print_exc_()
 
         except Exception as e:
             commande.erreur = True
             commande.msgErreur = e.message
-            traceback.print_exc()
+            print_exc_()
 
         return commande #Commande
 
 
     def vol_up(self, *args):
-        print "Traitement->vol_up"
+        print_("Traitement->vol_up")
         return True
 
     def vol_down(self, *args):
-        print "Traitement->vol_down"
+        print_("Traitement->vol_down")
         return True
 
     def silence(self, *args):
-        print "Traitement->silence"
+        print_("Traitement->silence")
         return True
 
     def fav_add(self, *args):
-        print "Traitement->fav_add"
+        print_("Traitement->fav_add")
         return True
 
     def fav_supp(self, *args):
-        print "Traitement->fav_supp"
+        print_("Traitement->fav_supp")
         return True
 
     def shutdown(self, *args):
-        print "Traitement->shutdown"
+        print_("Traitement->shutdown")
         return True
 
     def shutdown_x(self, *args):
-        print "Traitement->shutdown_x :", args[0]
+        print_("Traitement->shutdown_x :", args[0])
         return True

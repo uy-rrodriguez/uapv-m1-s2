@@ -5,6 +5,7 @@ import os, re
 import Ice, IceStorm
 import AppMP3Player
 import config, icestormutils, player
+from utils import *
 
 
 '''
@@ -15,13 +16,14 @@ import config, icestormutils, player
 '''
 class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
 
-    def __init__(self, publisherTopicChansons):
+    def __init__(self, publisherTopicChansons, nomMini):
+        self.nomMini = nomMini
         self.listePlayers = {}
         self.publisherTopicChansons = publisherTopicChansons
 
 
     def listerChansons(self, current=None):
-        #print "SubscriberCommandes->listerChansons"
+        #print_("SubscriberCommandes->listerChansons")
 
         chansons = []
         for root, dirs, files in os.walk(config.MINISERVEUR_SONGS_PATH):
@@ -33,6 +35,7 @@ class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
                     c.artiste = ""
                     c.categorie = ""
                     c.path = cPath
+                    c.miniserveur = self.nomMini
                     chansons.append(c)
                     #chansons.append(os.path.join(root, name))
 
@@ -41,10 +44,14 @@ class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
 
 
     def jouerChanson(self, ipClient, chanson, current=None):
-        print "SubscriberCommandes->jouerChanson :", ipClient, chanson.nom, chanson.path
+        print_("SubscriberCommandes->jouerChanson :", ipClient, chanson.nom, chanson.miniserveur)
+
+        if (chanson.miniserveur != self.nomMini):
+            print_("SubscriberCommandes->Chanson demandee a", chanson.miniserveur, ". Je suis", self.nomMini)
+            return
 
         if (ipClient not in self.listePlayers.keys()):
-            mp3player = player.Player(ipClient, config.CLIENT_VLC_PORT)
+            mp3player = player.Player(get_ip(), get_free_port())
             self.listePlayers[ipClient] = mp3player
         else:
             mp3player = self.listePlayers[ipClient]
@@ -52,9 +59,14 @@ class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
 
         mp3player.play(chanson.path)
 
+        # On retourne l'addresse du streaming Grace au TopicChansons
+        self.publisherTopicChansons.adresseStreaming(ipClient,
+                                                     mp3player.ipStream,
+                                                     mp3player.portStream)
+
 
     def pauseChanson(self, ipClient, current=None):
-        print "SubscriberCommandes->pauseChanson :", ipClient
+        print_("SubscriberCommandes->pauseChanson :", ipClient)
 
         if (ipClient in self.listePlayers.keys()):
             mp3player = self.listePlayers[ipClient]
@@ -65,7 +77,7 @@ class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
 
 
     def arreterChanson(self, ipClient, current=None):
-        print "SubscriberCommandes->arreterChanson :", ipClient
+        print_("SubscriberCommandes->arreterChanson :", ipClient)
 
         if (ipClient in self.listePlayers.keys()):
             mp3player = self.listePlayers[ipClient]
@@ -78,9 +90,9 @@ class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
 
 class SubscriberCommandes(icestormutils.Subscriber):
 
-    def __init__(self, ic, publisherTopicChansons):
+    def __init__(self, ic, publisherTopicChansons, nomMini):
         super(SubscriberCommandes, self).__init__(ic,
                                                   "TopicCommandes",
                                                   "TopicCommandes_Miniserveur",
-                                                  TopicCommandesManagerI(publisherTopicChansons))
+                                                  TopicCommandesManagerI(publisherTopicChansons, nomMini))
 

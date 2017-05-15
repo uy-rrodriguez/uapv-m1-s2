@@ -1,0 +1,25 @@
+make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
+---------------- Run webservice ----------------
+python -m ws.ws
+http://0.0.0.0:30000/
+
+10.120.12.117:60718 - - [12/May/2017 17:49:13] "HTTP/1.1 GET /manuelle/to_list" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:27] "HTTP/1.1 GET /manuelle/to_list" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/play/1" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:31] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:31] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60748 - - [12/May/2017 17:50:31] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60777 - - [12/May/2017 17:51:29] "HTTP/1.1 GET /manuelle/play/3" - 200 OK
+10.120.12.117:60777 - - [12/May/2017 17:51:29] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60807 - - [12/May/2017 17:52:37] "HTTP/1.1 GET /manuelle/play/1" - 200 OK
+10.120.12.117:60807 - - [12/May/2017 17:52:37] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60833 - - [12/May/2017 17:53:41] "HTTP/1.1 GET /manuelle/play/8" - 200 OK
+10.120.12.117:60833 - - [12/May/2017 17:53:41] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:60855 - - [12/May/2017 17:54:46] "HTTP/1.1 GET /manuelle/stop" - 200 OK

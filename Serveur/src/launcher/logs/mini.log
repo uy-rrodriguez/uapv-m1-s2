@@ -1,0 +1,18 @@
+make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
+---------------- Run miniserveur ----------------
+python -m miniserveur.miniserveur
+Miniserveur-> start 10.120.12.117_S3GU2L32
+icestormutils.Publisher : Publisher pour topic TopicMiniserveurs obtenu
+icestormutils.Publisher : Publisher pour topic TopicChansons obtenu
+icestormutils.Subscriber : Subscriber existant
+icestormutils.Subscriber : Subscriber pour topic TopicCommandes obtenu
+SubscriberCommandes->jouerChanson : 127.0.0.1 Claridad.mp3 10.120.12.117_S3GU2L32
+PLAYING
+SubscriberCommandes->jouerChanson : 127.0.0.1 David Garrett - Smooth Criminal.mp3 10.120.12.117_S3GU2L32
+PLAYING
+SubscriberCommandes->jouerChanson : 127.0.0.1 Claridad.mp3 10.120.12.117_S3GU2L32
+PLAYING
+SubscriberCommandes->jouerChanson : 127.0.0.1 The Eagles - Hotel California.mp3 10.120.12.117_S3GU2L32
+PLAYING
+SubscriberCommandes->arreterChanson : 127.0.0.1
+Miniserveur-> end 10.120.12.117_S3GU2L32
