@@ -1,16 +1,18 @@
-package ex5;
+package ex6;
 
 import java.net.URI;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.xml.bind.annotation.XmlElement;
 
 @Path("/")
 public class AnnuaireService {
@@ -49,7 +51,7 @@ public class AnnuaireService {
 	
 	@POST
 	@Path("contact")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response postContact(
 			@FormParam("nom") String nom,
 			@FormParam("numero") String numero) {
@@ -59,6 +61,18 @@ public class AnnuaireService {
 		}
 		
 		Response r = Response.created(URI.create("contact/" + nom)).build();
+		return r;
+	}
+	
+	@POST
+	@Path("contact")
+    @Consumes(MediaType.APPLICATION_XML)
+	public Response postContact(Contact contact) {
+		if (!carnet.getContacts().containsKey(contact.getNom())) {
+			carnet.getContacts().put(contact.getNom(), contact);
+		}
+		
+		Response r = Response.created(URI.create("contact/" + contact.getNom())).build();
 		return r;
 	}
 	

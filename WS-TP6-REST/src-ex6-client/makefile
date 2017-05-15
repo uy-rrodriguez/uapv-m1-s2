@@ -7,7 +7,7 @@ else
 endif
 
 SERVER=G:/Dev/glassfish4/glassfish
-LIB=.$(SEP)./dist/*$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/javax.ws.rs-api.jar$(SEP)$(SERVER)/modules/jersey-client.jar$(SEP)$(SERVER)/modules/jersey-common.jar$(SEP)$(SERVER)/modules/jersey-guava.jar
+LIB=.$(SEP)./dist/*$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/javax.ws.rs-api.jar$(SEP)$(SERVER)/modules/jersey-client.jar$(SEP)$(SERVER)/modules/jersey-common.jar$(SEP)$(SERVER)/modules/jersey-guava.jar$(SEP)$(SERVER)/modules/jersey-media-jaxb.jar
 
 
 #################################################################
@@ -15,7 +15,7 @@ LIB=.$(SEP)./dist/*$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/jav
 #################################################################
 
 TP=tp6
-EX=ex5
+EX=ex6
 NOM_JAR=client-$(TP)-$(EX).jar
 
 client: compile build run clean
