@@ -7,7 +7,7 @@ else
 endif
 
 SERVER=G:/Dev/glassfish4/glassfish
-LIB=.$(SEP)./dist/*$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/javax.ws.rs-api.jar$(SEP)$(SERVER)/modules/jersey-client.jar$(SEP)$(SERVER)/modules/jersey-common.jar$(SEP)$(SERVER)/modules/jersey-guava.jar$(SEP)$(SERVER)/modules/jersey-media-jaxb.jar
+LIB=.$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/javax.ws.rs-api.jar$(SEP)$(SERVER)/modules/jersey-client.jar$(SEP)$(SERVER)/modules/jersey-common.jar
 
 
 #################################################################
@@ -15,20 +15,19 @@ LIB=.$(SEP)./dist/*$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/jav
 #################################################################
 
 TP=tp6
-EX=ex6
-NOM_JAR=client-$(TP)-$(EX).jar
+EX=ex11
+NOM_WAR=WSREST-$(TP)-$(EX).war
 
-client: compile build run clean
+all: compile build deploy clean
 
 compile:
-	javac ../src-$(EX)-serveur/$(EX)/Contact.java -d . -cp "$(LIB)"
-	javac $(EX)/*.java -cp "$(LIB)"
+	javac $(EX)/*.java -d WEB-INF/classes -classpath "$(LIB)"
 
 build:
-	jar cvf dist/$(NOM_JAR) $(EX)/*.class
+	jar cvf dist/$(NOM_WAR) WEB-INF/* #./*.html
 
-run:
-	java -cp "$(LIB)" $(EX).ClientREST Pepito2 1002 #${ARGS}
+deploy:
+	asadmin deploy --force dist/$(NOM_WAR)
 
 
 #################################################################
@@ -36,5 +35,5 @@ run:
 #################################################################
 
 clean:
-	rm -R ./*/*.class
-	rm -R ./dist/*.jar
+	rm -R ./WEB-INF/classes/*
+	rm -R ./dist/*.war

@@ -15,20 +15,20 @@ LIB=.$(SEP)./dist/*$(SEP)$(SERVER)/lib/appserv-rt.jar$(SEP)$(SERVER)/modules/jav
 #################################################################
 
 TP=tp6
-EX=ex6
+EX=ex11
 NOM_JAR=client-$(TP)-$(EX).jar
 
 client: compile build run clean
 
 compile:
-	javac ../src-$(EX)-serveur/$(EX)/Contact.java -d . -cp "$(LIB)"
+	javac ../src-$(EX)-serveur/$(EX)/Contact.java -d . -cp "$(LIB)" 
 	javac $(EX)/*.java -cp "$(LIB)"
 
 build:
 	jar cvf dist/$(NOM_JAR) $(EX)/*.class
 
 run:
-	java -cp "$(LIB)" $(EX).ClientREST Pepito2 1002 #${ARGS}
+	java -cp "$(LIB)" $(EX).ClientREST Pepito
 
 
 #################################################################

@@ -1,4 +1,4 @@
-package ex6;
+package ex9;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
