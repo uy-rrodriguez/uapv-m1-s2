@@ -1,5 +1,5 @@
 
-all: clean build run-launcher
+all: build run-launcher
 
 build:
 	@echo "---------------- Build Ice ----------------"

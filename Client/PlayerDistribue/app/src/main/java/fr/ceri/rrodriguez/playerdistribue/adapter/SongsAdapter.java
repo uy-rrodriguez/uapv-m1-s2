@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
 
@@ -45,10 +46,14 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongViewHold
     private List<SongData> songsDataset;
     //private SongItemClickListener mClickListener;
 
+    // Progress bar
+    private ProgressBar bar;
+
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SongsAdapter(List<SongData> songsDataset) {
+    public SongsAdapter(List<SongData> songsDataset, ProgressBar bar) {
         this.songsDataset = songsDataset;
+        this.bar = bar;
     }
 
 
@@ -111,6 +116,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongViewHold
         SongData songData;
         TextView songName;
 
+
         public SongViewHolder(View itemView) {
             super(itemView);
             this.songName = (TextView) itemView.findViewById(R.id.song_name);
@@ -150,6 +156,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongViewHold
         private boolean ok;
         private String streamAddr;
         private ActivitySession session;
+        private TextView viewChansonActuelle;
 
         public WSPlayTask(SongData songData, View view) {
             super();
@@ -159,17 +166,24 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongViewHold
 
             this.ok = false;
             this.streamAddr = "";
-            this.session = null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            //bar.setVisibility(View.VISIBLE);
+            //this.session = null;
 
             // On charge la session
             PlayerActivity host = (PlayerActivity) this.view.getContext();
             this.session = host.getSession();
+            
+            // On obtient une référence au TextView de la chanson actuelle
+            RecyclerView recycler = (RecyclerView) this.view.getParent();
+            RelativeLayout fragment = (RelativeLayout) recycler.getParent();
+            this.viewChansonActuelle = (TextView) fragment.findViewById(R.id.playing_song_name);
+        }
 
+        @Override
+        protected void onPreExecute() {
+            bar.setVisibility(View.VISIBLE);
+
+            // Mise a jour de la vue
+            this.viewChansonActuelle.setText("En attente de flux streaming...");
 
             // SnackBar
             Snackbar snackbar = Snackbar.make(this.view, "Play " + this.songData.getNom(),
@@ -185,13 +199,13 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongViewHold
 
             try {
                 // Appel a play
-                String urlPart = "manuelle/play/" + this.songData.getId();
+                String urlPart = "manuelle/" + WSData.COM_PLAY + "/" + this.songData.getNom();
                 wsdata = WSUtil.callWS(urlPart);
 
                 if (! wsdata.isErreur()) {
 
                     // Appel pour recuperer l'adresse du streaming
-                    urlPart = "manuelle/stream_addr";
+                    urlPart = "manuelle/" + WSData.COM_STREAM_ADDR;
 
                     do {
                         wsdata = WSUtil.callWS(urlPart);
@@ -235,29 +249,26 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongViewHold
 
         @Override
         protected void onPostExecute(WSData wsdata) {
-            //bar.setVisibility(View.GONE);
+            bar.setVisibility(View.GONE);
 
             if (this.ok) {
                 Snackbar snackbar = Snackbar.make(this.view, "Adresse " + this.streamAddr,
                                                   Snackbar.LENGTH_LONG);
                 snackbar.show();
 
-
                 // Mise a jour de la vue
-                RecyclerView recycler = (RecyclerView) this.view.getParent();
-                RelativeLayout fragment = (RelativeLayout) recycler.getParent();
-                TextView viewChansonActuelle = (TextView) fragment.findViewById(R.id.playing_song_name);
-                viewChansonActuelle.setText(this.songData.getNom());
-
+                this.viewChansonActuelle.setText(this.songData.getNom());
 
                 // On change la chanson stockee dans le contexte
                 this.session.setChansonActuelle(this.songData.getNom());
-
             }
             else {
                 Snackbar snackbar = Snackbar.make(this.view, "Erreur pour jouer la chanson",
                                                   Snackbar.LENGTH_LONG);
                 snackbar.show();
+                
+                // Mise a jour de la vue
+                this.viewChansonActuelle.setText("");
             }
         }
 

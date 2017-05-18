@@ -21,4 +21,7 @@
     <string name="title_messages">Messages</string>
     <string name="title_friends">Mes amis</string>
     <string name="title_home">Accueil</string>
+    
+    <!-- Liste de phrases -->
+    <string name="dialog_cancel">Annuler</string>
 </resources>

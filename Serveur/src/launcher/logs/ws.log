@@ -3,23 +3,82 @@ make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
 python -m ws.ws
 http://0.0.0.0:30000/
 
-10.120.12.117:60718 - - [12/May/2017 17:49:13] "HTTP/1.1 GET /manuelle/to_list" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:27] "HTTP/1.1 GET /manuelle/to_list" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/play/1" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:31] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:31] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60748 - - [12/May/2017 17:50:31] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60777 - - [12/May/2017 17:51:29] "HTTP/1.1 GET /manuelle/play/3" - 200 OK
-10.120.12.117:60777 - - [12/May/2017 17:51:29] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60807 - - [12/May/2017 17:52:37] "HTTP/1.1 GET /manuelle/play/1" - 200 OK
-10.120.12.117:60807 - - [12/May/2017 17:52:37] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60833 - - [12/May/2017 17:53:41] "HTTP/1.1 GET /manuelle/play/8" - 200 OK
-10.120.12.117:60833 - - [12/May/2017 17:53:41] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
-10.120.12.117:60855 - - [12/May/2017 17:54:46] "HTTP/1.1 GET /manuelle/stop" - 200 OK
+{
+    commande = play
+    params = 
+    {
+        [0] = la chanson hey soul sister
+    }
+    erreur = True
+    msgErreur = La chanson 'lachansonheysoulsister' n'existe pas
+    retour = true
+}
+
+{
+    commande = play
+    params = 
+    {
+        [0] = hey soul sister
+    }
+    erreur = False
+    msgErreur = 
+    retour = true
+}
+
+{
+    commande = play
+    params = 
+    {
+        [0] = hey soul sister
+    }
+    erreur = False
+    msgErreur = 
+    retour = true
+}
+
+{
+    commande = 
+    params = 
+    {
+    }
+    erreur = True
+    msgErreur = Impossible de reconnaitre la commande : Android, Arrêtes Soul sister
+    retour = false
+}
+
+{
+    commande = stop
+    params = 
+    {
+        [0] = hey soul sister
+    }
+    erreur = False
+    msgErreur = 
+    retour = true
+}
+
+{
+    commande = play
+    params = 
+    {
+        [0] = bitter sweet
+    }
+    erreur = False
+    msgErreur = 
+    retour = true
+}
+
+10.120.12.117:56538 - - [18/May/2017 18:21:20] "HTTP/1.1 GET /phrase/Joue la chanson Hey soul sister" - 200 OK
+10.120.12.117:56545 - - [18/May/2017 18:21:36] "HTTP/1.1 GET /phrase/S'il te plait, Lis Hey soul sister" - 200 OK
+10.120.12.117:56545 - - [18/May/2017 18:21:36] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:56545 - - [18/May/2017 18:21:37] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:56545 - - [18/May/2017 18:21:37] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:56557 - - [18/May/2017 18:22:02] "HTTP/1.1 GET /manuelle/stop" - 200 OK
+10.120.12.117:56557 - - [18/May/2017 18:22:08] "HTTP/1.1 GET /phrase/Hey soul sister Jouer" - 200 OK
+10.120.12.117:56557 - - [18/May/2017 18:22:08] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:56573 - - [18/May/2017 18:22:36] "HTTP/1.1 GET /phrase/Android, Arrêtes Soul sister" - 200 OK
+10.120.12.117:56586 - - [18/May/2017 18:23:10] "HTTP/1.1 GET /phrase/Hey soul sister Arreter" - 200 OK
+10.120.12.117:56586 - - [18/May/2017 18:23:16] "HTTP/1.1 GET /manuelle/stop" - 200 OK
+10.120.12.117:56606 - - [18/May/2017 18:24:11] "HTTP/1.1 GET /phrase/Lire bitter sweet" - 200 OK
+10.120.12.117:56606 - - [18/May/2017 18:24:12] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+10.120.12.117:56616 - - [18/May/2017 18:24:40] "HTTP/1.1 GET /manuelle/stop" - 200 OK

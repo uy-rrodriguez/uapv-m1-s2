@@ -31,7 +31,7 @@ class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
                 if re.match("^.+\.mp3$", name):
                     cPath = os.path.join(root, name)
                     c = AppMP3Player.Chanson()
-                    c.nom = os.path.basename(cPath)
+                    c.nom = os.path.basename(cPath).replace(".mp3", "")
                     c.artiste = ""
                     c.categorie = ""
                     c.path = cPath

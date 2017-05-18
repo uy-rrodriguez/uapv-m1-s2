@@ -1,18 +1,18 @@
 make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
 ---------------- Run icebox ----------------
 icebox --Ice.Config=config/config.icebox
--- 05/12/17 17:48:25.978 icebox-IceStorm: TopicManager: loading topic "TopicChansons" from database. id: MP3_IceStorm/topic.TopicChansons subscribers: TopicChansons_Metaserveur endpoints: "tcp -h 10.120.12.117 -p 60333 -t 60000", "tcp -h 10.122.1.29 -p 60333 -t 60000", "tcp -h "2001:0:9d38:6abd:3470:1282:3dc6:27f2" -p 60333 -t 60000", "udp -h 10.120.12.117 -p 49811", "udp -h 10.122.1.29 -p 49811", "udp -h "2001:0:9d38:6abd:3470:1282:3dc6:27f2" -p 49811"
--- 05/12/17 17:48:26.015 icebox-IceStorm: Topic: TopicChansons recreate TopicChansons_Metaserveur
--- 05/12/17 17:48:26.015 icebox-IceStorm: TopicManager: loading topic "TopicCommandes" from database. id: MP3_IceStorm/topic.TopicCommandes subscribers: TopicCommandes_Miniserveur endpoints: "tcp -h 10.120.12.117 -p 60339 -t 60000", "tcp -h 10.122.1.29 -p 60339 -t 60000", "tcp -h "2001:0:9d38:6abd:3470:1282:3dc6:27f2" -p 60339 -t 60000", "udp -h 10.120.12.117 -p 49814", "udp -h 10.122.1.29 -p 49814", "udp -h "2001:0:9d38:6abd:3470:1282:3dc6:27f2" -p 49814"
--- 05/12/17 17:48:26.016 icebox-IceStorm: Topic: TopicCommandes recreate TopicCommandes_Miniserveur
--- 05/12/17 17:48:26.016 icebox-IceStorm: TopicManager: loading topic "TopicMiniserveurs" from database. id: MP3_IceStorm/topic.TopicMiniserveurs subscribers: TopicMiniserveurs_Metaserveur endpoints: "tcp -h 10.120.12.117 -p 60335 -t 60000", "tcp -h 10.122.1.29 -p 60335 -t 60000", "tcp -h "2001:0:9d38:6abd:3470:1282:3dc6:27f2" -p 60335 -t 60000", "udp -h 10.120.12.117 -p 49812", "udp -h 10.122.1.29 -p 49812", "udp -h "2001:0:9d38:6abd:3470:1282:3dc6:27f2" -p 49812"
--- 05/12/17 17:48:26.016 icebox-IceStorm: Topic: TopicMiniserveurs recreate TopicMiniserveurs_Metaserveur
--- 05/12/17 17:48:26.046 icebox-IceStorm: Topic: TopicChansons: subscribeAndGetPublisher: TopicChansons_Metaserveur
--- 05/12/17 17:48:26.069 icebox-IceStorm: Topic: TopicCommandes: subscribeAndGetPublisher: TopicCommandes_Miniserveur
--- 05/12/17 17:48:26.155 icebox-IceStorm: Topic: TopicChansons: unsubscribe: TopicChansons_Metaserveur
--- 05/12/17 17:48:26.232 icebox-IceStorm: Topic: TopicCommandes: unsubscribe: TopicCommandes_Miniserveur
--- 05/12/17 17:48:26.303 icebox-IceStorm: Topic: TopicChansons: subscribeAndGetPublisher: TopicChansons_Metaserveur
--- 05/12/17 17:48:26.369 icebox-IceStorm: Topic: TopicCommandes: subscribeAndGetPublisher: TopicCommandes_Miniserveur
--- 05/12/17 17:48:26.466 icebox-IceStorm: Topic: TopicMiniserveurs: subscribeAndGetPublisher: TopicMiniserveurs_Metaserveur
--- 05/12/17 17:48:26.467 icebox-IceStorm: Topic: TopicMiniserveurs: unsubscribe: TopicMiniserveurs_Metaserveur
--- 05/12/17 17:48:26.534 icebox-IceStorm: Topic: TopicMiniserveurs: subscribeAndGetPublisher: TopicMiniserveurs_Metaserveur
+-- 05/18/17 18:21:14.568 icebox-IceStorm: TopicManager: loading topic "TopicChansons" from database. id: MP3_IceStorm/topic.TopicChansons subscribers: TopicChansons_Metaserveur endpoints: "tcp -h 10.120.12.117 -p 56508 -t 60000", "tcp -h 192.168.0.16 -p 56508 -t 60000", "tcp -h "2001:0:9d38:6abd:3c96:fa85:3dc6:27f6" -p 56508 -t 60000", "udp -h 10.120.12.117 -p 57713", "udp -h 192.168.0.16 -p 57713", "udp -h "2001:0:9d38:6abd:3c96:fa85:3dc6:27f6" -p 57713"
+-- 05/18/17 18:21:14.569 icebox-IceStorm: Topic: TopicChansons recreate TopicChansons_Metaserveur
+-- 05/18/17 18:21:14.569 icebox-IceStorm: TopicManager: loading topic "TopicCommandes" from database. id: MP3_IceStorm/topic.TopicCommandes subscribers: TopicCommandes_Miniserveur endpoints: "tcp -h 10.120.12.117 -p 56512 -t 60000", "tcp -h 192.168.0.16 -p 56512 -t 60000", "tcp -h "2001:0:9d38:6abd:3c96:fa85:3dc6:27f6" -p 56512 -t 60000", "udp -h 10.120.12.117 -p 57716", "udp -h 192.168.0.16 -p 57716", "udp -h "2001:0:9d38:6abd:3c96:fa85:3dc6:27f6" -p 57716"
+-- 05/18/17 18:21:14.569 icebox-IceStorm: Topic: TopicCommandes recreate TopicCommandes_Miniserveur
+-- 05/18/17 18:21:14.570 icebox-IceStorm: TopicManager: loading topic "TopicMiniserveurs" from database. id: MP3_IceStorm/topic.TopicMiniserveurs subscribers: TopicMiniserveurs_Metaserveur endpoints: "tcp -h 10.120.12.117 -p 56511 -t 60000", "tcp -h 192.168.0.16 -p 56511 -t 60000", "tcp -h "2001:0:9d38:6abd:3c96:fa85:3dc6:27f6" -p 56511 -t 60000", "udp -h 10.120.12.117 -p 57715", "udp -h 192.168.0.16 -p 57715", "udp -h "2001:0:9d38:6abd:3c96:fa85:3dc6:27f6" -p 57715"
+-- 05/18/17 18:21:14.570 icebox-IceStorm: Topic: TopicMiniserveurs recreate TopicMiniserveurs_Metaserveur
+-- 05/18/17 18:21:14.910 icebox-IceStorm: Topic: TopicChansons: subscribeAndGetPublisher: TopicChansons_Metaserveur
+-- 05/18/17 18:21:14.911 icebox-IceStorm: Topic: TopicChansons: unsubscribe: TopicChansons_Metaserveur
+-- 05/18/17 18:21:14.936 icebox-IceStorm: Topic: TopicChansons: subscribeAndGetPublisher: TopicChansons_Metaserveur
+-- 05/18/17 18:21:14.985 icebox-IceStorm: Topic: TopicMiniserveurs: subscribeAndGetPublisher: TopicMiniserveurs_Metaserveur
+-- 05/18/17 18:21:14.985 icebox-IceStorm: Topic: TopicMiniserveurs: unsubscribe: TopicMiniserveurs_Metaserveur
+-- 05/18/17 18:21:15.010 icebox-IceStorm: Topic: TopicCommandes: subscribeAndGetPublisher: TopicCommandes_Miniserveur
+-- 05/18/17 18:21:15.010 icebox-IceStorm: Topic: TopicMiniserveurs: subscribeAndGetPublisher: TopicMiniserveurs_Metaserveur
+-- 05/18/17 18:21:15.034 icebox-IceStorm: Topic: TopicCommandes: unsubscribe: TopicCommandes_Miniserveur
+-- 05/18/17 18:21:15.060 icebox-IceStorm: Topic: TopicCommandes: subscribeAndGetPublisher: TopicCommandes_Miniserveur

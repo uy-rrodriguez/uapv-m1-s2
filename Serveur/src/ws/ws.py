@@ -18,6 +18,7 @@ from utils import *
 # Formats d'URLs acceptés
 urls = (
     "/vocale/(.*)",         "CommandeVocale",
+    "/phrase/(.*)",         "CommandePhrase",
     "/manuelle/(.*)/(.*)",  "CommandeManuelle",
     "/manuelle/(.*)",       "CommandeManuelle",
     "/(.*)",                "NotFound"
@@ -89,6 +90,47 @@ class CommandeVocale:
                 # Appel
                 c = ManagerProxy.proxy.commandeVocale(parole)
 
+                # Reponse
+                reponse = {}
+                reponse["commande"] = c.commande
+                reponse["erreur"] = c.erreur
+                reponse["msgErreur"] = c.msgErreur
+                reponse["retour"] = c.retour
+
+            else:
+                reponse["msgErreur"] = "Erreur de connection au serveur Manager"
+
+            return json.dumps(reponse)
+
+        except Exception, e:
+            print_exc_()
+
+            reponse = {"erreur" : True,
+                       "msgErreur" : "%s" % e,
+                       "commande" : "", "retour" : ""}
+            return json.dumps(reponse)
+
+
+# -- CommandePhrase --------------------------------------------- #
+
+'''
+    Traitement d'une commande vocale émulée avec des phrases depuis Android.
+    On va recevoir le string représentant la phrase prononcée par l'utilisateur.
+'''
+class CommandePhrase:
+    def GET(self, phrase):
+        web.header('Content-Type', 'application/json')
+
+        reponse = {"erreur" : True,
+                   "msgErreur" : "Erreur inconnue",
+                   "commande" : "", "retour" : ""}
+
+        try:
+            if (ManagerProxy.proxy and ManagerProxy.proxy != None):
+                # Appel
+                c = ManagerProxy.proxy.commandePhrase(phrase)
+                print c
+                
                 # Reponse
                 reponse = {}
                 reponse["commande"] = c.commande

@@ -1,18 +1,16 @@
 make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
 ---------------- Run manager ----------------
 python -m manager.manager
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 to_list 
+ManagerI->commandePhrase
+Parsing->parsingPhrase joue la chanson hey soul sister
+ManagerI->Commande reconnue : play
+Traitement->traiterCommande : 127.0.0.1 play la chanson hey soul sister
 ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 to_list 
+ManagerI->commandePhrase
+Parsing->parsingPhrase sil te plait lis hey soul sister
+ManagerI->Commande reconnue : play
+Traitement->traiterCommande : 127.0.0.1 play hey soul sister
 ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 play 1
-ManagerI->return
-
 ManagerI->commandeManuelle
 Traitement->traiterCommande : 127.0.0.1 stream_addr 
 ManagerI->return
@@ -26,53 +24,36 @@ Traitement->traiterCommande : 127.0.0.1 stream_addr
 ManagerI->return
 
 ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 stream_addr 
+Traitement->traiterCommande : 127.0.0.1 stop 
 ManagerI->return
 
+ManagerI->commandePhrase
+Parsing->parsingPhrase hey soul sister jouer
+ManagerI->Commande reconnue : play
+Traitement->traiterCommande : 127.0.0.1 play hey soul sister
+ManagerI->return
 ManagerI->commandeManuelle
 Traitement->traiterCommande : 127.0.0.1 stream_addr 
 ManagerI->return
 
+ManagerI->commandePhrase
+Parsing->parsingPhrase android arrtes soul sister
+ManagerI->Erreur de parsing : Impossible de reconnaitre la commande
+ManagerI->return
+ManagerI->commandePhrase
+Parsing->parsingPhrase hey soul sister arreter
+ManagerI->Commande reconnue : stop
+Traitement->traiterCommande : 127.0.0.1 stop hey soul sister
+ManagerI->return
 ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 stream_addr 
+Traitement->traiterCommande : 127.0.0.1 stop 
 ManagerI->return
 
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->commandePhrase
+Parsing->parsingPhrase lire bitter sweet
+ManagerI->Commande reconnue : play
+Traitement->traiterCommande : 127.0.0.1 play bitter sweet
 ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 stream_addr 
-ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 stream_addr 
-ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 stream_addr 
-ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 play 3
-ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 stream_addr 
-ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 play 1
-ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 stream_addr 
-ManagerI->return
-
-ManagerI->commandeManuelle
-Traitement->traiterCommande : 127.0.0.1 play 8
-ManagerI->return
-
 ManagerI->commandeManuelle
 Traitement->traiterCommande : 127.0.0.1 stream_addr 
 ManagerI->return

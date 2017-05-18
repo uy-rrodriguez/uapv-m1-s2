@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +20,14 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.media.MediaPlayer;
+import android.media.AudioManager;
 
 import fr.ceri.rrodriguez.playerdistribue.R;
 import fr.ceri.rrodriguez.playerdistribue.adapter.SongsAdapter;
 import fr.ceri.rrodriguez.playerdistribue.model.SongData;
+import fr.ceri.rrodriguez.playerdistribue.model.ActivitySession;
 
 // Communication avec le webservice
 import java.util.Arrays;
@@ -48,7 +53,7 @@ import android.speech.RecognizerIntent;
  * Created by Ricci on 27/04/2017.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDialogListener {
 
     // View principale
     View rootView;
@@ -58,7 +63,6 @@ public class HomeFragment extends Fragment {
 
     // Pour la liste de chansons
     private RecyclerView songsRecyclerView;
-    //private RecyclerView.Adapter songsAdapter;
     private SongsAdapter songsAdapter;
     private RecyclerView.LayoutManager songsLayoutManager;
 
@@ -72,9 +76,7 @@ public class HomeFragment extends Fragment {
     private ProgressBar bar;
 
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+    public HomeFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,9 @@ public class HomeFragment extends Fragment {
 
         // Inflate the layout for this fragment
 
+        
+        /* ********** Liste de chansons ********** */
+        
         // Pour afficher la liste de chansons
         songsRecyclerView = (RecyclerView) rootView.findViewById(R.id.songs_recycler_view);
 
@@ -108,10 +113,10 @@ public class HomeFragment extends Fragment {
         songsRecyclerView.setLayoutManager(songsLayoutManager);
 
         // specify an adapter
-        songsAdapter = new SongsAdapter(new ArrayList<SongData>());
+        songsAdapter = new SongsAdapter(new ArrayList<SongData>(), bar);
         songsRecyclerView.setAdapter(songsAdapter);
-
-
+        
+        
         // Barre avec le nom de la chanson actuelle
         // On recupere la chanson stockee dans le contexte
         PlayerActivity host = (PlayerActivity) this.getActivity();
@@ -125,24 +130,28 @@ public class HomeFragment extends Fragment {
 
 
         // Button FAB
-        /*
-        fab = (FloatingActionButton) rootView.findViewById(R.id.myFAB);
+        final HomeFragment instanceHomeFragment = this;
+        fab = (FloatingActionButton) rootView.findViewById(R.id.FAB_phrases);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // On crée une instance du popup
+                DialogFragment dialog = new PhrasesFragment(instanceHomeFragment);
+                dialog.show(getFragmentManager(), "PhrasesFragment");
+                
+                /*
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
                 intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Enter the ");
                 intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
                 startActivityForResult(intent, 100);
+                */
             }
         });
-        */
 
 
         // Je lance la tache qui va recuperer la liste de chansons
         new WSListerChansonsTask().execute();
-
 
         return rootView;
     }
@@ -187,7 +196,33 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+    
+    
+    /* **************************************************************************************** */
+    /*      INTERFACE LISTENER DU POPUP DE PHRASES                                              */
+    /* **************************************************************************************** */
 
+    @Override
+    public void onAnnulerClick(DialogFragment dialog) {
+        dialog.getDialog().cancel();
+        
+        Snackbar snackbar = Snackbar.make(rootView, "Annuler cliqué",
+                                          Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    @Override
+    public void onPhraseClick(String phrase, DialogFragment dialog) {
+        dialog.getDialog().dismiss();
+        /*
+        Snackbar snackbar = Snackbar.make(rootView, "Phrase cliquée : " + phrase,
+                                          Snackbar.LENGTH_LONG);
+        snackbar.show();
+        */
+        
+        // Je lance la tâche qui va communiquer avec le WS
+        new WSParsingTask(phrase, rootView).execute();
+    }
 
 
 
@@ -287,7 +322,7 @@ public class HomeFragment extends Fragment {
 
             try {
                 // Appel a stop
-                String urlPart = "manuelle/stop";
+                String urlPart = "manuelle/" + WSData.COM_STOP;
                 wsdata = WSUtil.callWS(urlPart);
 
                 if (! wsdata.isErreur()) {
@@ -340,6 +375,165 @@ public class HomeFragment extends Fragment {
                 Snackbar snackbar = Snackbar.make(this.view, "Erreur pour arreter la chanson",
                                                   Snackbar.LENGTH_LONG);
                 snackbar.show();
+            }
+        }
+
+    }
+    
+    
+    
+    /* ******************************************************************************* */
+    /*    Inner class : WSParsingTask, faire appel au WS.                              */
+    /* ******************************************************************************* */
+
+    public class WSParsingTask extends AsyncTask<Void, Void, WSData> {
+
+        private String phrase;
+        private View view;
+
+        private boolean ok;
+        private String streamAddr;
+        private ActivitySession session;
+        private TextView viewChansonActuelle;
+
+        public WSParsingTask(String phrase, View view) {
+            super();
+
+            this.phrase = phrase;
+            this.view = view;
+
+            this.ok = false;
+            this.streamAddr = "";
+
+            // On charge la session
+            PlayerActivity host = (PlayerActivity) this.view.getContext();
+            this.session = host.getSession();
+            
+            // On obtient une référence au TextView de la chanson actuelle
+            RelativeLayout fragment = (RelativeLayout) this.view;
+            this.viewChansonActuelle = (TextView) fragment.findViewById(R.id.playing_song_name);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            bar.setVisibility(View.VISIBLE);
+
+            // Mise a jour de la vue
+            this.viewChansonActuelle.setText("Traitement de la commande vocale...");
+
+            // SnackBar
+            //Snackbar snackbar = Snackbar.make(this.view, "Nous traitons votre commande vocale",
+            //                                  Snackbar.LENGTH_LONG);
+            //snackbar.show();
+        }
+
+        @Override
+        protected WSData doInBackground(Void... params) {
+
+            this.ok = false;
+            WSData wsdata = null;
+
+            try {
+                // Appel a play
+                String urlPart = "phrase/" + this.phrase;
+                wsdata = WSUtil.callWS(urlPart);
+
+                if (! wsdata.isErreur()) {
+                    
+                    // Commande PLAY
+                    if (wsdata.getCommande().equals(WSData.COM_PLAY)) {
+                        // Appel pour recuperer l'adresse du streaming
+                        urlPart = "manuelle/" + WSData.COM_STREAM_ADDR;
+
+                        do {
+                            wsdata = WSUtil.callWS(urlPart);
+                        }
+                        while (!wsdata.isErreur() && wsdata.getRetour().equals("false"));
+
+
+                        // Une fois que l'adresse a été récuperée
+                        if (! wsdata.isErreur()) {
+                            this.streamAddr = wsdata.parseRetourString();
+
+                            // Media Player
+                            this.session.setMediaPlayer(new MediaPlayer());
+
+                            MediaPlayer mediaPlayer = this.session.getMediaPlayer();
+                            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            mediaPlayer.setDataSource(this.streamAddr);
+                            mediaPlayer.setVolume(1, 1);
+                            mediaPlayer.prepare(); // might take long! (for buffering, etc)
+                            mediaPlayer.start();
+                        }
+                    }
+                }
+
+                if (wsdata.isErreur()) {
+                    throw new Exception(wsdata.getMsgErreur());
+                }
+                else {
+                    this.ok = true
+                }
+                
+            }
+            catch (Exception e) {
+                Log.e("PlayerActivity", e.getMessage(), e);
+            }
+
+            return wsdata;
+        }
+
+        @Override
+        protected void onPostExecute(WSData wsdata) {
+            bar.setVisibility(View.GONE);
+
+            if (this.ok) {
+                
+                // Commande STOP
+                if (wsdata.getCommande().equals(WSData.COM_STOP)) {
+                    this.viewChansonActuelle.setText("");
+                    this.session.setChansonActuelle("");
+
+                    // Media Player
+                    if (this.session.getMediaPlayer() != null) {
+                        MediaPlayer mediaPlayer = this.session.getMediaPlayer();
+                        if (mediaPlayer.isPlaying())
+                            mediaPlayer.stop();
+                    }
+
+                    // Snackbar
+                    Snackbar snackbar = Snackbar.make(this.view, "Stop chanson",
+                                                      Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+                
+                // Commande STREAM_ADDR
+                else if (wsdata.getCommande().equals(WSData.COM_STREAM_ADDR)) {
+                    Snackbar snackbar = Snackbar.make(this.view, "Adresse " + this.streamAddr,
+                                                  Snackbar.LENGTH_LONG);
+                    snackbar.show();
+
+                    // Mise a jour de la vue
+                    this.viewChansonActuelle.setText("Chanson en train de jouer...");
+
+                    // On change la chanson stockee dans le contexte
+                    this.session.setChansonActuelle("Chanson en train de jouer...");
+                }
+                
+                // Commande LIST
+                else if (wsdata.getCommande().equals(WSData.COM_LIST)) {
+                    Snackbar snackbar = Snackbar.make(this.view, "Liste de chansons actualisée",
+                                                  Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            }
+            else {
+                Snackbar snackbar = Snackbar.make(this.view, "Erreur : " + wsdata.getMsgErreur(),
+                                                  Snackbar.LENGTH_LONG);
+                snackbar.show();
+                
+                // Mise a jour de la vue
+                //this.viewChansonActuelle.setText("");
             }
         }
 

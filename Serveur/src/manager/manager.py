@@ -1,6 +1,6 @@
 # coding: utf8
 
-import sys, traceback, time
+import sys, traceback, time, json
 import Ice
 import AppMP3Player
 import config, reconnaissance, parsing, traitement
@@ -47,6 +47,43 @@ class ManagerI(AppMP3Player.Manager):
         commande = t.traiterCommande(self.getClientIP(current), commande)
 
         print_("ManagerI->return\n")
+        return commande
+
+
+    '''
+        Reception et traitement des commandes vocales émulées avec une liste de phrases du côté Android.
+    '''
+    def creerCommandeErreur(self, message):
+        c = AppMP3Player.Commande()
+        c.commande = ""
+        c.erreur = True
+        c.msgErreur = message
+        c.retour = json.dumps(False)
+        return c
+
+    def commandePhrase(self, phrase, current=None):
+        print_("ManagerI->commandePhrase")
+
+        # Parsing
+        p = parsing.Parsing()
+        commande = p.parsingPhrase(phrase)
+
+        if commande == parsing.ERR_COMMANDE_INCORRECTE:
+            print_("ManagerI->Erreur de parsing : Commande incorrecte")
+            commande = self.creerCommandeErreur("Commande incorrecte : " + phrase)
+            
+        elif commande == parsing.ERR_COMMANDE_NON_RECONNUE:
+            print_("ManagerI->Erreur de parsing : Impossible de reconnaitre la commande")
+            commande = self.creerCommandeErreur("Impossible de reconnaitre la commande : " + phrase)    
+            
+        else:
+            print_("ManagerI->Commande reconnue : " + commande.commande)
+        
+            # Traitement, on lui passe le Métaserveur
+            t = traitement.Traitement(self.metaserveur)
+            commande = t.traiterCommande(self.getClientIP(current), commande)
+
+        print_("ManagerI->return")
         return commande
 
 

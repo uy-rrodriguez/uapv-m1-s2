@@ -18,9 +18,10 @@
     <color name="colorSecondary">#ff5722</color>
     <color name="colorSecondaryDark">#c41c00</color>
     <color name="colorSecondaryLight">#ff8a50</color>
-    <color name="textColorSecondary">#000000</color>
+    <color name="textColorSecondary">#666666</color>
 
     <color name="windowBackground">#E1E2E1</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#00c853</color>
+    <!-- <color name="colorAccent">#00c853</color> -->
+    <color name="colorAccent">#ff5722</color>
 </resources>

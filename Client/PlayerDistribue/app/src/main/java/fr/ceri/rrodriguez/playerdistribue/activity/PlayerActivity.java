@@ -70,6 +70,10 @@ public class PlayerActivity extends AppCompatActivity
         else {
             session = new ActivitySession();
         }
+
+
+        // Affichage de la vue Accueil par défaut
+        displayView(0);
     }
 
 
@@ -89,16 +93,19 @@ public class PlayerActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            /*
             Snackbar snackbar = Snackbar
                     .make((DrawerLayout) findViewById(R.id.drawer_layout),
                     "Click Main Menu Settings",
                     Snackbar.LENGTH_LONG);
             snackbar.show();
+            */
 
             return true;
         }
 
         else if (id == R.id.action_refresh) {
+            /*
             new WSRequestTask().execute();
 
             Snackbar snackbar = Snackbar
@@ -106,6 +113,7 @@ public class PlayerActivity extends AppCompatActivity
                     "Click Main Menu Refresh",
                     Snackbar.LENGTH_LONG);
             snackbar.show();
+            */
 
             return true;
         }

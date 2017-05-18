@@ -12,6 +12,13 @@ import org.json.JSONObject;
 
 public class WSData {
 
+    public static final String COM_PLAY         = "play";
+    public static final String COM_STREAM_ADDR  = "stream_addr";
+    public static final String COM_PAUSE        = "pause";
+    public static final String COM_STOP         = "stop";
+    public static final String COM_LIST         = "to_list";
+    public static final String COM_SEARCH       = "search";
+
     private String commande;
     private String retour;
     private boolean erreur;

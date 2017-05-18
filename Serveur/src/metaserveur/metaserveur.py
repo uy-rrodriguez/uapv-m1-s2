@@ -1,6 +1,6 @@
 # coding: utf8
 
-import sys, traceback, time, json
+import sys, traceback, time, json, string
 import Ice, IceStorm
 import AppMP3Player
 import config
@@ -76,17 +76,43 @@ class MetaserveurI(AppMP3Player.Metaserveur):
 
     ''' ------------------------------------------------------------------------
         Chercher une chanson par le nom
+            1) Si on trouve une chanson avec le nom exacte, on retourne celle-là.
+            2) Sinon, on retourne celle dont son nom contient le string cherché.
+            3) Si plusieurs chansons contiennent le string cherché, on retourne
+                celle dont la différence entre les noms est minimale (pour cela
+                on regarde les longueurs des noms).
+            Pour simplifier la recherche par nom, tous les espaces et caractères
+            spéciaux sont supprimés avant de faire la comparaison.
         ------------------------------------------------------------------------
     '''
+    def nettoyer_nom(self, nom):
+        nom = str.lower(nom)
+        nomPropre = str()
+        for c in nom:
+            if c in string.ascii_lowercase or c in string.digits:
+                nomPropre += c;
+        return nomPropre
+
     def get_chanson_by_nom(self, nomChanson):
+        nomPropre = self.nettoyer_nom(nomChanson)
+        minDiff = None
+        plusProche = None
+        
         for c in self.chansons:
-            if c.nom == nomChanson:
+            cNomPropre = self.nettoyer_nom(c.nom)
+            if cNomPropre == nomPropre:
                 return c
-        return None
+            elif nomPropre in cNomPropre or cNomPropre in nomPropre:
+                diff = abs(len(cNomPropre) - len(nomPropre))
+                if minDiff == None or diff < minDiff:
+                    minDiff = diff
+                    plusProche = c
+                
+        return plusProche
 
 
     ''' ------------------------------------------------------------------------
-        Chercher uen chanson par le numero
+        Chercher une chanson par le numero
         ------------------------------------------------------------------------
     '''
     def get_chanson_by_number(self, indexChanson):
@@ -116,7 +142,7 @@ class MetaserveurI(AppMP3Player.Metaserveur):
 
     # ####################################################################################### #
     #                                                                                         #
-    #  Ci-dessous: Méthodes qui implementent l'intarface Ice du Métaserveur                   #
+    #  Ci-dessous: Méthodes qui implementent l'interface Ice du Métaserveur                   #
     #                                                                                         #
     # ####################################################################################### #
 
@@ -182,9 +208,9 @@ class MetaserveurI(AppMP3Player.Metaserveur):
     def play(self, *args):
         print_("MetaserveurI->play :", args[0])
 
-        c = self.get_chanson_by_number(int(args[0][0]))
+        c = self.get_chanson_by_nom(args[0][0])
         if c is None:
-            raise ValueError("La chanson '" + args[0][0] + "' n'existe pas")
+            raise ValueError("La chanson '" + self.nettoyer_nom(args[0][0]) + "' n'existe pas")
 
         self.publisherCommandes.jouerChanson(self.ipClientActuel, c)
 
