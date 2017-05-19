@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.ceri.rrodriguez.playerdistribue.activity.HomeFragment">
+
+    <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:indeterminateOnly="true"
+            android:indeterminateDrawable="@drawable/progress">
+    </ProgressBar>
+
+
+
+    <!-- A RecyclerView with some commonly used attributes -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/songs_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="52dp"
+        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+
+
+    <RelativeLayout
+        android:id="@+id/container_playing_song_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="2dp"
+        android:background="@color/windowBackground"
+        android:elevation="3dp">
+
+        <TextView
+            android:id="@+id/playing_song_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:layout_marginRight="48dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/btnStop"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:background="@color/colorPrimaryLight"
+            app:srcCompat="@drawable/ic_action_stop" />
+    </RelativeLayout>
+
+
+
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/FAB_phrases"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="68dp"
+            android:src="@drawable/ic_action_search"
+            app:elevation="4dp" />
+
+</RelativeLayout>

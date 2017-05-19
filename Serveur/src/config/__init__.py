@@ -30,11 +30,13 @@ PORT_WS                  = "30000"
 # Fichiers logs
 LOG_MINISERVEUR_DEMON     = "log/miniserveur_demon.log"
 
-# Configuration du démon qui va lire les chansons
-MINISERVEUR_SONGS_PATH = "miniserveur/musique"
+# Configuration du miniserveur
 #MINISERVEUR_VLC_OPTIONS = "sout=#rtp{access=udp,mux=ts,dst=<ip>,port=<port>}"
 MINISERVEUR_VLC_OPTIONS = "sout=#http{mux=ts,dst=:<port>/}"
 
 # Configuration du streaming
 STREAM_VLC_PORT = 1233
 STREAM_PROTOCOL = "http"
+
+# Configuration du Metaserveur
+META_PERIODE_DEMANDER_CHANSONS = 10 # On demande les chansons aux miniserveurs toutes les X secondes

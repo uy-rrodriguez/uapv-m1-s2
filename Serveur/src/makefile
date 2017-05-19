@@ -24,9 +24,13 @@ run-meta:
 	@echo "---------------- Run metaserveur ----------------"
 	python -m metaserveur.metaserveur
 
-run-mini:
-	@echo "---------------- Run miniserveur ----------------"
-	python -m miniserveur.miniserveur
+run-mini-1:
+	@echo "---------------- Run miniserveur 1 ----------------"
+	python -m miniserveur.miniserveur MINI_1 ./miniserveur/musique_1
+
+run-mini-2:
+	@echo "---------------- Run miniserveur 2 ----------------"
+	python -m miniserveur.miniserveur MINI_2 ./miniserveur/musique_2
 
 run-icebox:
 	@echo "---------------- Run icebox ----------------"

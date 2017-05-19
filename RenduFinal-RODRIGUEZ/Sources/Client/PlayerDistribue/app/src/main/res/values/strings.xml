@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Player Distribué</string>
+    <string name="action_refresh">Recharger liste</string>
+    <string name="action_settings">Configuration</string>
+    <string name="action_search">Chercher</string>
+    <string name="drawer_open">Ouvrir</string>
+    <string name="drawer_close">Fermer</string>
+
+    <string name="nav_item_home">Accueil</string>
+    <string name="nav_item_friends">Mes amis</string>
+    <string name="nav_item_notifications">Messages</string>
+
+    <!-- Menu de navigation a gauche  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_home</item>
+        <item>@string/nav_item_friends</item>
+        <item>@string/nav_item_notifications</item>
+    </string-array>
+
+    <string name="title_messages">Messages</string>
+    <string name="title_friends">Mes amis</string>
+    <string name="title_home">Accueil</string>
+    
+    <!-- Liste de phrases -->
+    <string name="dialog_cancel">Annuler</string>
+</resources>

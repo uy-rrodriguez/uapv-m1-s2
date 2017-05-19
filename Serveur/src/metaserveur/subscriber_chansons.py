@@ -19,9 +19,9 @@ class TopicChansonsManagerI(AppMP3Player.TopicChansonsManager):
         self.metaserveur = metaserveur
 
 
-    def listerChansons(self, chansons, current=None):
+    def listerChansons(self, miniserveur, chansons, current=None):
         #print_("SubscriberChansons->listerChansons")
-        self.metaserveur.set_chansons(chansons)
+        self.metaserveur.set_chansons(miniserveur, chansons)
 
 
     def adresseStreaming(self, ipClient, ip, port, current=None):

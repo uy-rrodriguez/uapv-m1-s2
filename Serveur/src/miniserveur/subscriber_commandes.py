@@ -16,17 +16,18 @@ from utils import *
 '''
 class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
 
-    def __init__(self, publisherTopicChansons, nomMini):
+    def __init__(self, publisherTopicChansons, nomMini, pathFichiers):
         self.nomMini = nomMini
+        self.pathFichiers = pathFichiers
         self.listePlayers = {}
         self.publisherTopicChansons = publisherTopicChansons
 
 
     def listerChansons(self, current=None):
-        #print_("SubscriberCommandes->listerChansons")
+        #print_("SubscriberCommandes (" + self.nomMini + ")->listerChansons")
 
         chansons = []
-        for root, dirs, files in os.walk(config.MINISERVEUR_SONGS_PATH):
+        for root, dirs, files in os.walk(self.pathFichiers):
             for name in files:
                 if re.match("^.+\.mp3$", name):
                     cPath = os.path.join(root, name)
@@ -44,10 +45,10 @@ class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
 
 
     def jouerChanson(self, ipClient, chanson, current=None):
-        print_("SubscriberCommandes->jouerChanson :", ipClient, chanson.nom, chanson.miniserveur)
+        print_("SubscriberCommandes (" + self.nomMini + ")->jouerChanson :", ipClient, chanson.nom, chanson.miniserveur)
 
         if (chanson.miniserveur != self.nomMini):
-            print_("SubscriberCommandes->Chanson demandee a", chanson.miniserveur, ". Je suis", self.nomMini)
+            print_("SubscriberCommandes (" + self.nomMini + ")->Chanson demandee a", chanson.miniserveur)
             return
 
         if (ipClient not in self.listePlayers.keys()):
@@ -66,33 +67,35 @@ class TopicCommandesManagerI(AppMP3Player.TopicCommandesManager):
 
 
     def pauseChanson(self, ipClient, current=None):
-        print_("SubscriberCommandes->pauseChanson :", ipClient)
+        print_("SubscriberCommandes (" + self.nomMini + ")->pauseChanson :", ipClient)
 
         if (ipClient in self.listePlayers.keys()):
             mp3player = self.listePlayers[ipClient]
             mp3player.stop()
             del self.listePlayers[ipClient]
         else:
-            raise RuntimeError("Le client n'est pas en train de jouer aucune chanson")
+            pass
+            #raise RuntimeError("Le client n'est pas en train de jouer aucune chanson")
 
 
     def arreterChanson(self, ipClient, current=None):
-        print_("SubscriberCommandes->arreterChanson :", ipClient)
+        print_("SubscriberCommandes (" + self.nomMini + ")->arreterChanson :", ipClient)
 
         if (ipClient in self.listePlayers.keys()):
             mp3player = self.listePlayers[ipClient]
             mp3player.stop()
             del self.listePlayers[ipClient]
         else:
-            raise RuntimeError("Le client n'est pas en train de jouer aucune chanson")
+            pass
+            #raise RuntimeError("Le client n'est pas en train de jouer aucune chanson")
 
 
 
 class SubscriberCommandes(icestormutils.Subscriber):
 
-    def __init__(self, ic, publisherTopicChansons, nomMini):
+    def __init__(self, ic, publisherTopicChansons, nomMini, pathFichiers):
         super(SubscriberCommandes, self).__init__(ic,
                                                   "TopicCommandes",
-                                                  "TopicCommandes_Miniserveur",
-                                                  TopicCommandesManagerI(publisherTopicChansons, nomMini))
+                                                  "TopicCommandes_Miniserveur_" + nomMini,
+                                                  TopicCommandesManagerI(publisherTopicChansons, nomMini, pathFichiers))
 

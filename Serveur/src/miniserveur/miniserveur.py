@@ -4,25 +4,11 @@ import sys, traceback, time, subprocess, random, string
 import Ice, IceStorm
 import AppMP3Player
 import config
-from publisher_mini import PublisherMiniserveurs
 from publisher_chansons import PublisherChansons
 from subscriber_commandes import SubscriberCommandes
 from utils import *
 
 #import CLI
-
-
-'''
-class Miniserveur:
-    def __init__(self, publisherMini, processDemon, subscriberCommandes):
-        self.publisherMini = publisherMini
-        self.processDemon = processDemon
-        self.subscriberCommandes = subscriberCommandes
-
-    def mainloop(self):
-        print self.processDemon.wait()
-'''
-
 
 def main(argv=None):
     if argv is None:
@@ -30,18 +16,19 @@ def main(argv=None):
 
     status = 0
     ic = None
-    processDemon = None
     nom = ""
+    path = "miniserveur"
 
     try:
         # Lors du lancement du Miniserveur, on genere un nom aleatoire
         ip = get_ip()
-        nom = ip + "_" + "".join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
-        print_("Miniserveur-> start", nom)
-
+        #nom = ip + "_" + "".join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+        nom = argv[1]
+        path = argv[2]
+        print_("Miniserveur-> start", nom, path)
 
         # Configuration Ice
-        props = Ice.createProperties(argv)
+        props = Ice.createProperties([])
         iniData = Ice.InitializationData()
         iniData.properties = props
         ic = Ice.initialize(iniData)
@@ -49,29 +36,21 @@ def main(argv=None):
 
         # Création du publisher pour envoyer les mises-à-jour des chansons
         #processDemon = subprocess.Popen("python -m miniserveur.demon " + nom)
-
+        
         # ==> NE PLUS ACTIVER LE DEMON. Le metaserveur se charge de demander la liste de chansons
-
-
-        # Création du publisher pour indiquer au Métaserveur le démarrage ou arrêt du miniserveur
-        publisherMiniserveurs = PublisherMiniserveurs(ic, nom)
 
         # Création du publisher pour indiquer au Métaserveur les mises-à-jour dans la liste de chansons
         publisherChansons = PublisherChansons(ic, nom)
 
         # Création du subscriber pour recevoir les commandes provenantes du Métaserveur
-        subscriberCommandes = SubscriberCommandes(ic, publisherChansons, nom)
+        subscriberCommandes = SubscriberCommandes(ic, publisherChansons, nom, path)
 
 
         # Client graphique (TODO)
         #client = CLI.App(serveur)
         #client.mainloop()
 
-        #miniserveur = Miniserveur(publisherMiniserveurs, None, subscriberCommandes)
-        #miniserveur.mainloop()
-
         #processDemon.wait()
-
         ic.waitForShutdown()
 
 
@@ -83,12 +62,12 @@ def main(argv=None):
         status = 1
 
 
-    if processDemon:
-        try:
-            processDemon.kill()
-        except:
-            print_exc_()
-            status = 1
+    #if processDemon:
+    #    try:
+    #        processDemon.kill()
+    #    except:
+    #        print_exc_()
+    #        status = 1
 
     # Clean up
     if ic:

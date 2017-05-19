@@ -1,0 +1,36 @@
+make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
+---------------- Run miniserveur 2 ----------------
+python -m miniserveur.miniserveur MINI_2 ./miniserveur/musique_2
+Miniserveur-> start MINI_2 ./miniserveur/musique_2
+icestormutils.Publisher : Publisher pour topic TopicChansons obtenu
+icestormutils.Subscriber : Subscriber existant
+icestormutils.Subscriber : Subscriber pour topic TopicCommandes obtenu
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 Train - Hey, soul sister MINI_1
+SubscriberCommandes (MINI_2)->Chanson demandee a MINI_1
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 I'm like a bird - Nelly Furtado MINI_1
+SubscriberCommandes (MINI_2)->Chanson demandee a MINI_1
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 The Eagles - Hotel California MINI_2
+Miniserver->Player->Streaming en cours...
+SubscriberCommandes (MINI_2)->arreterChanson : 127.0.0.1
+SubscriberCommandes (MINI_2)->arreterChanson : 127.0.0.1
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 Train - Hey, soul sister MINI_1
+SubscriberCommandes (MINI_2)->Chanson demandee a MINI_1
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 I'm like a bird - Nelly Furtado MINI_1
+SubscriberCommandes (MINI_2)->Chanson demandee a MINI_1
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 The Eagles - Hotel California MINI_2
+Miniserver->Player->Streaming en cours...
+SubscriberCommandes (MINI_2)->arreterChanson : 127.0.0.1
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 The Verve - Bitter Sweet Symphony MINI_2
+Miniserver->Player->Streaming en cours...
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 I'm like a bird - Nelly Furtado MINI_1
+SubscriberCommandes (MINI_2)->Chanson demandee a MINI_1
+SubscriberCommandes (MINI_2)->arreterChanson : 127.0.0.1
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 The Verve - Bitter Sweet Symphony MINI_2
+Miniserver->Player->Streaming en cours...
+SubscriberCommandes (MINI_2)->arreterChanson : 127.0.0.1
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 Train - Hey, soul sister MINI_1
+SubscriberCommandes (MINI_2)->Chanson demandee a MINI_1
+SubscriberCommandes (MINI_2)->jouerChanson : 127.0.0.1 The Verve - Bitter Sweet Symphony MINI_1
+SubscriberCommandes (MINI_2)->Chanson demandee a MINI_1
+SubscriberCommandes (MINI_2)->arreterChanson : 127.0.0.1
+Miniserveur-> end MINI_2

@@ -4,25 +4,89 @@ python -m metaserveur.metaserveur
 icestormutils.Publisher : Publisher pour topic TopicCommandes obtenu
 icestormutils.Subscriber : Subscriber existant
 icestormutils.Subscriber : Subscriber pour topic TopicChansons obtenu
-icestormutils.Subscriber : Subscriber existant
-icestormutils.Subscriber : Subscriber pour topic TopicMiniserveurs obtenu
+MetaserveurI->to_list
+MetaserveurI->play : Train - Hey, soul sister
+PublisherCommandes->jouerChanson :  127.0.0.1 Train - Hey, soul sister
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->play : I'm like a bird - Nelly Furtado
+PublisherCommandes->jouerChanson :  127.0.0.1 I'm like a bird - Nelly Furtado
+MetaserveurI->stream_addr
+MetaserveurI->play : The Eagles - Hotel California
+PublisherCommandes->jouerChanson :  127.0.0.1 The Eagles - Hotel California
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+MetaserveurI->stream_addr
+Metaserveur->stop
+PublisherCommandes->arreterChanson :  127.0.0.1
+Metaserveur->stop
+PublisherCommandes->arreterChanson :  127.0.0.1
+MetaserveurI->to_list
+MetaserveurI->play : Train - Hey, soul sister
+PublisherCommandes->jouerChanson :  127.0.0.1 Train - Hey, soul sister
+MetaserveurI->stream_addr
+MetaserveurI->play : I'm like a bird - Nelly Furtado
+PublisherCommandes->jouerChanson :  127.0.0.1 I'm like a bird - Nelly Furtado
+MetaserveurI->stream_addr
+MetaserveurI->play : The Eagles - Hotel California
+PublisherCommandes->jouerChanson :  127.0.0.1 The Eagles - Hotel California
+MetaserveurI->stream_addr
+Metaserveur->stop
+PublisherCommandes->arreterChanson :  127.0.0.1
+MetaserveurI->play : The Verve - Bitter Sweet Symphony
+PublisherCommandes->jouerChanson :  127.0.0.1 The Verve - Bitter Sweet Symphony
+MetaserveurI->stream_addr
+MetaserveurI->to_list
+MetaserveurI->play : im like a bird
+PublisherCommandes->jouerChanson :  127.0.0.1 I'm like a bird - Nelly Furtado
+MetaserveurI->stream_addr
+Metaserveur->stop
+PublisherCommandes->arreterChanson :  127.0.0.1
 MetaserveurI->play : la chanson hey soul sister
-MetaserveurI->play : hey soul sister
-PublisherCommandes->jouerChanson :  127.0.0.1 Train - Hey, soul sister
-MetaserveurI->stream_addr
-MetaserveurI->stream_addr
-MetaserveurI->stream_addr
-Metaserveur->stop
-PublisherCommandes->arreterChanson :  127.0.0.1
-MetaserveurI->play : hey soul sister
-PublisherCommandes->jouerChanson :  127.0.0.1 Train - Hey, soul sister
-MetaserveurI->stream_addr
-Metaserveur->stop
-PublisherCommandes->arreterChanson :  127.0.0.1
-Metaserveur->stop
-PublisherCommandes->arreterChanson :  127.0.0.1
-MetaserveurI->play : bitter sweet
+MetaserveurI->play : The Verve - Bitter Sweet Symphony
 PublisherCommandes->jouerChanson :  127.0.0.1 The Verve - Bitter Sweet Symphony
 MetaserveurI->stream_addr
 Metaserveur->stop
 PublisherCommandes->arreterChanson :  127.0.0.1
+MetaserveurI->play : hey soul sister
+PublisherCommandes->jouerChanson :  127.0.0.1 Train - Hey, soul sister
+MetaserveurI->stream_addr
+MetaserveurI->play : bitter sweet
+PublisherCommandes->jouerChanson :  127.0.0.1 The Verve - Bitter Sweet Symphony
+MetaserveurI->stream_addr
+MetaserveurI->to_list
+Metaserveur->stop
+PublisherCommandes->arreterChanson :  127.0.0.1
+Traceback (most recent call last):
+  File "G:\Dev\RepoGit\uapv-m1-s2\Serveur\src\metaserveur\metaserveur.py", line 333, in main
+Traceback (most recent call last):
+  File "G:\Dev\Python\Python27x86\lib\runpy.py", line 174, in _run_module_as_main
+    "__main__", fname, loader, pkg_name)
+  File "G:\Dev\Python\Python27x86\lib\runpy.py", line 72, in _run_code
+    exec code in run_globals
+  File "G:\Dev\RepoGit\uapv-m1-s2\Serveur\src\metaserveur\metaserveur.py", line 355, in <module>
+    sys.exit(main())
+  File "G:\Dev\RepoGit\uapv-m1-s2\Serveur\src\metaserveur\metaserveur.py", line 340, in main
+    print_exc_()
+  File "utils\__init__.py", line 17, in print_exc_
+    traceback.print_exc(file=sys.stdout)
+  File "G:\Dev\Python\Python27x86\lib\traceback.py", line 233, in print_exc
+    print_exception(etype, value, tb, limit, file)
+  File "G:\Dev\Python\Python27x86\lib\traceback.py", line 125, in print_exception
+    print_tb(tb, limit, file)
+  File "G:\Dev\Python\Python27x86\lib\traceback.py", line 69, in print_tb
+    line = linecache.getline(filename, lineno, f.f_globals)
+  File "G:\Dev\Python\Python27x86\lib\linecache.py", line 14, in getline
+    lines = getlines(filename, module_globals)
+  File "G:\Dev\Python\Python27x86\lib\linecache.py", line 41, in getlines
+    return updatecache(filename, module_globals)
+  File "G:\Dev\Python\Python27x86\lib\linecache.py", line 132, in updatecache
+    lines = fp.readlines()
+KeyboardInterrupt
+!! 05/19/17 17:25:07.689 error: communicator not destroyed during global destruction.

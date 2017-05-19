@@ -28,7 +28,7 @@ module AppMP3Player {
      *     - supprimer une chanson
      */
     interface TopicChansonsManager {
-        void listerChansons(ListeChansons chansons);
+        void listerChansons(string miniserveur, ListeChansons chansons);
         void adresseStreaming(string ipClient, string ip, int port);
         //void ajouterChanson(Chanson c);
         //void supprimerChanson(Chanson c);
@@ -48,17 +48,5 @@ module AppMP3Player {
         void jouerChanson(string ipClient, Chanson c);
         void pauseChanson(string ipClient);
         void arreterChanson(string ipClient);
-    };
-
-
-    /**
-     * Cette interface permet la notification du démarrage ou arrêt des miniserveurs.
-     * Les méthodes de l'interface sont les différents messages possibles. Pour l'instant :
-     *     - indiquer le démarrage d'un nouveau miniserveur
-     *     - indiquer l'arrêt d'un miniserveur existant
-     */
-    interface TopicMiniserveursManager {
-        void enregistrerServeur(string ip, string nom);
-        void supprimerServeur(string ip, string nom);
     };
 };

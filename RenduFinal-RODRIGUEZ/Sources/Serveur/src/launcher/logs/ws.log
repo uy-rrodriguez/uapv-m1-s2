@@ -1,0 +1,113 @@
+make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
+---------------- Run webservice ----------------
+python -m ws.ws
+http://0.0.0.0:30000/
+
+{
+    commande = play
+    params = 
+    {
+        [0] = im like a bird
+    }
+    erreur = False
+    msgErreur = 
+    retour = true
+}
+
+{
+    commande = stop
+    params = 
+    {
+        [0] = like a bird
+    }
+    erreur = False
+    msgErreur = 
+    retour = true
+}
+
+{
+    commande = play
+    params = 
+    {
+        [0] = la chanson hey soul sister
+    }
+    erreur = True
+    msgErreur = La chanson 'lachansonheysoulsister' n'existe pas
+    retour = true
+}
+
+{
+    commande = play
+    params = 
+    {
+        [0] = hey soul sister
+    }
+    erreur = False
+    msgErreur = 
+    retour = true
+}
+
+{
+    commande = play
+    params = 
+    {
+        [0] = bitter sweet
+    }
+    erreur = False
+    msgErreur = 
+    retour = true
+}
+
+{
+    commande = stop
+    params = 
+    {
+        [0] = nelly furtado
+    }
+    erreur = False
+    msgErreur = 
+    retour = true
+}
+
+192.168.0.16:61638 - - [19/May/2017 17:09:56] "HTTP/1.1 GET /manuelle/to_list" - 200 OK
+192.168.0.16:61651 - - [19/May/2017 17:10:24] "HTTP/1.1 GET /manuelle/play/Train - Hey, soul sister" - 200 OK
+192.168.0.16:61651 - - [19/May/2017 17:10:25] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61651 - - [19/May/2017 17:10:25] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61651 - - [19/May/2017 17:10:25] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61651 - - [19/May/2017 17:10:25] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61651 - - [19/May/2017 17:10:25] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61651 - - [19/May/2017 17:10:25] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61651 - - [19/May/2017 17:10:25] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61651 - - [19/May/2017 17:10:26] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61661 - - [19/May/2017 17:10:51] "HTTP/1.1 GET /manuelle/play/I'm like a bird - Nelly Furtado" - 200 OK
+192.168.0.16:61661 - - [19/May/2017 17:10:51] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61677 - - [19/May/2017 17:11:24] "HTTP/1.1 GET /manuelle/play/The Eagles - Hotel California" - 200 OK
+192.168.0.16:61677 - - [19/May/2017 17:11:24] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61677 - - [19/May/2017 17:11:25] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61677 - - [19/May/2017 17:11:25] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61693 - - [19/May/2017 17:12:02] "HTTP/1.1 GET /manuelle/stop" - 200 OK
+192.168.0.16:61693 - - [19/May/2017 17:12:07] "HTTP/1.1 GET /manuelle/stop" - 200 OK
+192.168.0.16:61811 - - [19/May/2017 17:17:23] "HTTP/1.1 GET /manuelle/to_list" - 200 OK
+192.168.0.16:61811 - - [19/May/2017 17:17:26] "HTTP/1.1 GET /manuelle/play/Train - Hey, soul sister" - 200 OK
+192.168.0.16:61811 - - [19/May/2017 17:17:26] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61823 - - [19/May/2017 17:17:46] "HTTP/1.1 GET /manuelle/play/I'm like a bird - Nelly Furtado" - 200 OK
+192.168.0.16:61823 - - [19/May/2017 17:17:46] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61833 - - [19/May/2017 17:18:10] "HTTP/1.1 GET /manuelle/play/The Eagles - Hotel California" - 200 OK
+192.168.0.16:61833 - - [19/May/2017 17:18:10] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61843 - - [19/May/2017 17:18:34] "HTTP/1.1 GET /manuelle/stop" - 200 OK
+192.168.0.16:61843 - - [19/May/2017 17:18:37] "HTTP/1.1 GET /manuelle/play/The Verve - Bitter Sweet Symphony" - 200 OK
+192.168.0.16:61843 - - [19/May/2017 17:18:38] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61866 - - [19/May/2017 17:19:19] "HTTP/1.1 GET /manuelle/to_list" - 200 OK
+192.168.0.16:61867 - - [19/May/2017 17:19:30] "HTTP/1.1 GET /phrase/Play I'm like a bird" - 200 OK
+192.168.0.16:61867 - - [19/May/2017 17:19:30] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61890 - - [19/May/2017 17:20:19] "HTTP/1.1 GET /phrase/arrete like a bird" - 200 OK
+192.168.0.16:61897 - - [19/May/2017 17:20:37] "HTTP/1.1 GET /phrase/Joue la chanson Hey soul sister" - 200 OK
+192.168.0.16:61904 - - [19/May/2017 17:21:16] "HTTP/1.1 GET /manuelle/play/The Verve - Bitter Sweet Symphony" - 200 OK
+192.168.0.16:61904 - - [19/May/2017 17:21:16] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61920 - - [19/May/2017 17:21:42] "HTTP/1.1 GET /manuelle/stop" - 200 OK
+192.168.0.16:61927 - - [19/May/2017 17:22:03] "HTTP/1.1 GET /phrase/Hey soul sister Jouer" - 200 OK
+192.168.0.16:61927 - - [19/May/2017 17:22:03] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61972 - - [19/May/2017 17:24:04] "HTTP/1.1 GET /phrase/Lire bitter sweet" - 200 OK
+192.168.0.16:61972 - - [19/May/2017 17:24:04] "HTTP/1.1 GET /manuelle/stream_addr" - 200 OK
+192.168.0.16:61990 - - [19/May/2017 17:24:31] "HTTP/1.1 GET /manuelle/to_list" - 200 OK
+192.168.0.16:61997 - - [19/May/2017 17:24:47] "HTTP/1.1 GET /phrase/Stop nelly furtado" - 200 OK

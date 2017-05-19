@@ -204,11 +204,13 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
 
     @Override
     public void onAnnulerClick(DialogFragment dialog) {
-        dialog.getDialog().cancel();
+        dialog.getDialog().dismiss();
         
+        /*
         Snackbar snackbar = Snackbar.make(rootView, "Annuler cliqué",
                                           Snackbar.LENGTH_LONG);
         snackbar.show();
+        */
     }
 
     @Override
@@ -277,13 +279,16 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
 
             // Traitement de la reponse
             List<SongData> listeChansons = new ArrayList<>();
-            int i = 0;
+            
+            if (wsdata != null) {
+                int i = 0;
 
-            for (Map<String, Object> o : wsdata.parseRetourListeJSON()) {
-                listeChansons.add(new SongData(i, (String) o.get("nom")));
-                i++;
+                for (Map<String, Object> o : wsdata.parseRetourListeJSON()) {
+                    listeChansons.add(new SongData(i, (String) o.get("nom")));
+                    i++;
+                }
             }
-
+            
             songsRecyclerView.removeAllViews();
             songsAdapter.setSongsDataset(listeChansons);
             songsAdapter.notifyDataSetChanged();
@@ -301,17 +306,29 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
 
         private View view;
         private boolean ok;
+        private ActivitySession session;
 
         public WSStopTask(View view) {
             super();
 
             this.view = view;
             this.ok = false;
+            
+            // On charge la session
+            PlayerActivity host = (PlayerActivity) this.view.getContext();
+            this.session = host.getSession();
         }
 
         @Override
         protected void onPreExecute() {
             //bar.setVisibility(View.VISIBLE);
+            
+            // Media Player
+            if (this.session.getMediaPlayer() != null) {
+                MediaPlayer mediaPlayer = this.session.getMediaPlayer();
+                if (mediaPlayer.isPlaying())
+                        mediaPlayer.stop();
+            }
         }
 
         @Override
@@ -353,17 +370,16 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
 
 
                 // On change la chanson stockee dans le contexte
-                PlayerActivity host = (PlayerActivity) this.view.getContext();
-                String nomChanson = host.getSession().getChansonActuelle();;
-                host.getSession().setChansonActuelle("");
+                String nomChanson = this.session.getChansonActuelle();
+                this.session.setChansonActuelle("");
 
 
                 // Media Player
-                if (host.getSession().getMediaPlayer() != null) {
-                    MediaPlayer mediaPlayer = host.getSession().getMediaPlayer();
-                    if (mediaPlayer.isPlaying())
-                            mediaPlayer.stop();
-                }
+                //if (host.getSession().getMediaPlayer() != null) {
+                //    MediaPlayer mediaPlayer = host.getSession().getMediaPlayer();
+                //    if (mediaPlayer.isPlaying())
+                //            mediaPlayer.stop();
+                //}
 
 
                 // Snackbar
@@ -391,7 +407,6 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
         private String phrase;
         private View view;
 
-        private boolean ok;
         private String streamAddr;
         private ActivitySession session;
         private TextView viewChansonActuelle;
@@ -402,7 +417,6 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
             this.phrase = phrase;
             this.view = view;
 
-            this.ok = false;
             this.streamAddr = "";
 
             // On charge la session
@@ -421,6 +435,13 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
             // Mise a jour de la vue
             this.viewChansonActuelle.setText("Traitement de la commande vocale...");
 
+            // Media Player
+            if (this.session.getMediaPlayer() != null) {
+                MediaPlayer mediaPlayer = this.session.getMediaPlayer();
+                if (mediaPlayer.isPlaying())
+                        mediaPlayer.stop();
+            }
+                
             // SnackBar
             //Snackbar snackbar = Snackbar.make(this.view, "Nous traitons votre commande vocale",
             //                                  Snackbar.LENGTH_LONG);
@@ -429,8 +450,7 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
 
         @Override
         protected WSData doInBackground(Void... params) {
-
-            this.ok = false;
+            
             WSData wsdata = null;
 
             try {
@@ -471,9 +491,6 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
                 if (wsdata.isErreur()) {
                     throw new Exception(wsdata.getMsgErreur());
                 }
-                else {
-                    this.ok = true
-                }
                 
             }
             catch (Exception e) {
@@ -487,7 +504,7 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
         protected void onPostExecute(WSData wsdata) {
             bar.setVisibility(View.GONE);
 
-            if (this.ok) {
+            if (wsdata != null && !wsdata.isErreur()) {
                 
                 // Commande STOP
                 if (wsdata.getCommande().equals(WSData.COM_STOP)) {
@@ -533,7 +550,8 @@ public class HomeFragment extends Fragment implements PhrasesFragment.PhrasesDia
                 snackbar.show();
                 
                 // Mise a jour de la vue
-                //this.viewChansonActuelle.setText("");
+                if (this.session.getChansonActuelle().isEmpty())
+                    this.viewChansonActuelle.setText("Erreur : " + wsdata.getMsgErreur());
             }
         }
 

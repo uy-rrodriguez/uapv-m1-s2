@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
@@ -48,7 +49,12 @@ public class WSUtil {
         final String url = URL_WS.replaceAll("<ip>", WSUtil.IP_WS) + urlPart;
         //final String url = URL_WS + urlPart;
 
-        RestTemplate restTemplate = new RestTemplate();
+        // Pour gerer le timeout
+        SimpleClientHttpRequestFactory s = new SimpleClientHttpRequestFactory();
+        s.setReadTimeout(30000);
+        s.setConnectTimeout(5000);
+    
+        RestTemplate restTemplate = new RestTemplate(s);
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
         HttpHeaders headers = new HttpHeaders();

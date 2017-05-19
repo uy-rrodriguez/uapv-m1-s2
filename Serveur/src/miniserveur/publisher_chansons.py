@@ -22,7 +22,7 @@ class PublisherChansons(icestormutils.Publisher):
     def listerChansons(self, chansons):
         try:
             #print_("PublisherChansons->listerChansons")
-            self.managerTopic.listerChansons(chansons)
+            self.managerTopic.listerChansons(self.nomMini, chansons)
 
         except:
             print_exc_()

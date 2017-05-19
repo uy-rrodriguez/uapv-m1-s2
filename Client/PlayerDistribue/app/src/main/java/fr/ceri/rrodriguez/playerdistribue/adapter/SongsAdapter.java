@@ -189,6 +189,13 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongViewHold
             Snackbar snackbar = Snackbar.make(this.view, "Play " + this.songData.getNom(),
                                               Snackbar.LENGTH_LONG);
             snackbar.show();
+            
+            // Media Player
+            if (this.session.getMediaPlayer() != null) {
+                MediaPlayer mediaPlayer = this.session.getMediaPlayer();
+                if (mediaPlayer.isPlaying())
+                        mediaPlayer.stop();
+            }
         }
 
         @Override

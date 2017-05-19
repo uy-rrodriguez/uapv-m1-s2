@@ -1,0 +1,177 @@
+make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
+---------------- Run manager ----------------
+python -m manager.manager
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 to_list 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play Train - Hey, soul sister
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play I'm like a bird - Nelly Furtado
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play The Eagles - Hotel California
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stop 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stop 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 to_list 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play Train - Hey, soul sister
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play I'm like a bird - Nelly Furtado
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play The Eagles - Hotel California
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stop 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play The Verve - Bitter Sweet Symphony
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 to_list 
+ManagerI->return
+
+ManagerI->commandePhrase
+Parsing->parsingPhrase play im like a bird
+ManagerI->Commande reconnue : play
+Traitement->traiterCommande : 127.0.0.1 play im like a bird
+ManagerI->return
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandePhrase
+Parsing->parsingPhrase arrete like a bird
+ManagerI->Commande reconnue : stop
+Traitement->traiterCommande : 127.0.0.1 stop like a bird
+ManagerI->return
+ManagerI->commandePhrase
+Parsing->parsingPhrase joue la chanson hey soul sister
+ManagerI->Commande reconnue : play
+Traitement->traiterCommande : 127.0.0.1 play la chanson hey soul sister
+ManagerI->return
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 play The Verve - Bitter Sweet Symphony
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stop 
+ManagerI->return
+
+ManagerI->commandePhrase
+Parsing->parsingPhrase hey soul sister jouer
+ManagerI->Commande reconnue : play
+Traitement->traiterCommande : 127.0.0.1 play hey soul sister
+ManagerI->return
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandePhrase
+Parsing->parsingPhrase lire bitter sweet
+ManagerI->Commande reconnue : play
+Traitement->traiterCommande : 127.0.0.1 play bitter sweet
+ManagerI->return
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 stream_addr 
+ManagerI->return
+
+ManagerI->commandeManuelle
+Traitement->traiterCommande : 127.0.0.1 to_list 
+ManagerI->return
+
+ManagerI->commandePhrase
+Parsing->parsingPhrase stop nelly furtado
+ManagerI->Commande reconnue : stop
+Traitement->traiterCommande : 127.0.0.1 stop nelly furtado
+ManagerI->return

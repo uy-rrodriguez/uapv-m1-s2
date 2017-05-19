@@ -26,8 +26,8 @@ def main(argv=None):
         logger = Logger()
 
         # Modules dans l'order de lancement qu'il faut
-        modules = ["icebox", "meta", "mini", "manager", "ws"]
-        #modules = ["icebox", "meta", "mini", "manager"]
+        modules = ["icebox", "meta", "mini-1", "mini-2", "manager", "ws"]
+        #modules = ["icebox", "meta", "mini-1", "manager"]
 
         # Lancement de chaque processus a travers la configuration dans le makefile
         for module in modules:

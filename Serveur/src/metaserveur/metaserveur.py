@@ -7,7 +7,6 @@ import config
 from publisher_commandes import PublisherCommandes
 from publisher_commandes import PublisherTwoWayCommandes
 from subscriber_chansons import SubscriberChansons
-from subscriber_mini import SubscriberMiniserveurs
 from utils import *
 
 
@@ -20,19 +19,17 @@ class MetaserveurI(AppMP3Player.Metaserveur):
 
     def __init__(self):
         # Liste globale de chansons
-        self.chansons = []
+        # La structure correspondra a un dictionnaire ayant comme cles les noms des chansons et
+        # et comme valeur une liste avec les objets Chanson
+        self.chansons = {}
 
         # Dictionnaire avec la derniere adresse de streaming par client
         self.dictStreaming = {}
 
-
-    #def set_proxies(self, publisherCommandes, subscriberChansons, subscriberMini, publisherTwoWayCommandes):
-    def set_proxies(self, publisherCommandes, subscriberChansons, subscriberMini):
+        
+    def set_proxies(self, publisherCommandes, subscriberChansons):
         self.publisherCommandes = publisherCommandes
         self.subscriberChansons = subscriberChansons
-        self.subscriberMini = subscriberMini
-
-        #self.publisherTwoWayCommandes = publisherTwoWayCommandes
 
 
 
@@ -52,28 +49,59 @@ class MetaserveurI(AppMP3Player.Metaserveur):
 
 
     ''' ------------------------------------------------------------------------
-        Set la liste de chansons
+        Set la liste de chansons pour un miniserveur
+            ATTENTION: on ne gere pas le multithreading, le liste de chansons peut
+            donc etre accedee pendant qu'on la modifie.
         ------------------------------------------------------------------------
     '''
-    def set_chansons(self, chansons):
-        self.chansons = chansons
+    def set_chansons(self, miniserveur, chansons):
+        # D'abord, on supprime toutes les chansons du miniserveur
+        self.remove_chansons(miniserveur)
+        # Puis on ajoute les chansons
+        for c in chansons:
+            if c.nom in self.chansons:
+                self.chansons[c.nom].append(c)
+            else:
+                self.chansons[c.nom] = [c]
 
 
     ''' ------------------------------------------------------------------------
         Supprimer toutes les chansons d'un miniserveur
         ------------------------------------------------------------------------
     '''
-    def remove_chansons(self, nomMiniserveur):
-        #suppr = []
-        for c in self.chansons:
-            if (c.miniserveur == nomMiniserveur):
-                #suppr.append(c)
-                self.chansons.remove(c)
+    def remove_chansons(self, miniserveur):
+        suppr = []
+        cSuppr = []
+        for nom, liste in self.chansons.iteritems():
+            for c in liste:
+                if c.miniserveur == miniserveur:
+                    liste.remove(c)
+            if len(liste) == 0:
+                suppr.append(nom)
+        
+        # Suppression de listes vides
+        for nom in suppr:
+            del self.chansons[nom]
 
-        #for c in suppr:
-        #    self.chansons.remove(c)
 
-
+    ''' ------------------------------------------------------------------------
+        La structure de chansons contient un dictionnaire avec une liste par
+        chaque nom de chanson. Avant de retourner une chanson de la liste, on
+        va deplaer cet element a la fin. Comme ca, si jamais on a plusieurs
+        miniserveurs, on peut faire en sorte de gerer la charge, en renvoyant
+        au client des chansons appartenant a des miniserveurs differents chaque
+        fois.
+        
+        On retourne le premier element de la liste avant le "shift".
+        ------------------------------------------------------------------------
+    '''
+    def get_premier_puis_shift(self, liste):
+        c = liste[0]
+        if len(liste) > 1:
+            liste = liste[1:]
+        liste.append(c)
+        return c
+    
     ''' ------------------------------------------------------------------------
         Chercher une chanson par le nom
             1) Si on trouve une chanson avec le nom exacte, on retourne celle-là.
@@ -93,50 +121,46 @@ class MetaserveurI(AppMP3Player.Metaserveur):
                 nomPropre += c;
         return nomPropre
 
-    def get_chanson_by_nom(self, nomChanson):
-        nomPropre = self.nettoyer_nom(nomChanson)
+    def get_chanson_by_nom(self, nomCherche):
+        nomCherchePropre = self.nettoyer_nom(nomCherche)
         minDiff = None
         plusProche = None
         
-        for c in self.chansons:
-            cNomPropre = self.nettoyer_nom(c.nom)
-            if cNomPropre == nomPropre:
-                return c
-            elif nomPropre in cNomPropre or cNomPropre in nomPropre:
-                diff = abs(len(cNomPropre) - len(nomPropre))
+        for nom, liste in self.chansons.iteritems():
+            nomPropre = self.nettoyer_nom(nom)
+            
+            if nomPropre == nomCherchePropre:
+                # Shift des chansons
+                return self.get_premier_puis_shift(liste)
+                
+            elif nomCherchePropre in nomPropre or nomPropre in nomCherchePropre:
+                diff = abs(len(nomCherchePropre) - len(nomPropre))
                 if minDiff == None or diff < minDiff:
                     minDiff = diff
-                    plusProche = c
+                    plusProche = self.get_premier_puis_shift(liste)
                 
         return plusProche
 
 
     ''' ------------------------------------------------------------------------
-        Chercher une chanson par le numero
-        ------------------------------------------------------------------------
-    '''
-    def get_chanson_by_number(self, indexChanson):
-        if len(self.chansons) > indexChanson:
-            return self.chansons[indexChanson]
-        return None
-
-
-    ''' ------------------------------------------------------------------------
-        Transofmrer la liste de chansons dans un dictionnaire Python
+        Transfomrer la liste de chansons dans un dictionnaire Python
         ------------------------------------------------------------------------
     '''
     def get_chansons_dict(self):
-        # Conversion de Chanson a dict Python
-        chansonsDict = []
-        for c in self.chansons:
-            chansonsDict.append({
-                    "nom"         : c.nom,
-                    "artiste"     : c.artiste,
-                    "categorie"   : c.categorie,
-                    "path"        : c.path,
-                    "miniserveur" : str(c.miniserveur)
-                })
-        return chansonsDict
+        try:
+            # Conversion de Chanson a dict Python
+            chansonsDict = []
+            for nom, liste in self.chansons.iteritems():
+                c = liste[0]
+                chansonsDict.append({
+                        "nom"         : c.nom,
+                        "artiste"     : c.artiste,
+                        "categorie"   : c.categorie
+                    })
+            return chansonsDict
+        except Exception as e:
+            print_exc_()
+            raise e
 
 
 
@@ -227,6 +251,9 @@ class MetaserveurI(AppMP3Player.Metaserveur):
     '''
     def stream_addr(self, *args):
         print_("MetaserveurI->stream_addr")
+        if self.ipClientActuel not in self.dictStreaming:
+            return False
+            
         dataStream = self.dictStreaming[self.ipClientActuel]
 
         if dataStream["ip"] == None:
@@ -288,20 +315,13 @@ def main():
         # Création du publisher qui enverra les commandes aux miniserveurs
         publisherCommandes = PublisherCommandes(ic, meta)
 
-        # Création du publisher two way qui enverra la commande playChanson
-        #publisherTwoWayCommandes = PublisherTwoWayCommandes(ic, meta)
-
         # Création du souscripteur au TopicChansons pour recevoir les mises-a-jour
         # des listes de chansons existantes dans les miniserveurs
         subscriberChansons = SubscriberChansons(ic, meta)
 
-        # Création du souscripteur au TopicMiniserveurs
-        subscriberMini = SubscriberMiniserveurs(ic)
-
 
         # On assigne à l'instance du Métaserveur tous les publishers et subscribers
-        #meta.set_proxies(publisherCommandes, subscriberChansons, subscriberMini, publisherTwoWayCommandes)
-        meta.set_proxies(publisherCommandes, subscriberChansons, subscriberMini)
+        meta.set_proxies(publisherCommandes, subscriberChansons)
 
 
         # Finalement on reste à l'écoute de messages entrant
@@ -310,7 +330,7 @@ def main():
         # Boucle qui va demander la liste de chansons toutes les X secondes
         while True:
             publisherCommandes.listerChansons()
-            time.sleep(10)
+            time.sleep(config.META_PERIODE_DEMANDER_CHANSONS)
 
 
     except (KeyboardInterrupt, SystemExit):

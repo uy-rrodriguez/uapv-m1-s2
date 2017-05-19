@@ -1,0 +1,23 @@
+make[1]: se ingresa al directorio `G:/Dev/RepoGit/uapv-m1-s2/Serveur/src'
+---------------- Run icebox ----------------
+icebox --Ice.Config=config/config.icebox
+-- 05/19/17 17:09:44.664 icebox-IceStorm: TopicManager: loading topic "TopicChansons" from database. id: MP3_IceStorm/topic.TopicChansons subscribers: TopicChansons_Metaserveur endpoints: "tcp -h 192.168.0.16 -p 61154 -t 60000", "tcp -h "2001:0:9d38:6abd:1876:3b62:b18a:42" -p 61154 -t 60000", "udp -h 192.168.0.16 -p 63367", "udp -h "2001:0:9d38:6abd:1876:3b62:b18a:42" -p 63367"
+-- 05/19/17 17:09:44.664 icebox-IceStorm: Topic: TopicChansons recreate TopicChansons_Metaserveur
+-- 05/19/17 17:09:44.665 icebox-IceStorm: TopicManager: loading topic "TopicCommandes" from database. id: MP3_IceStorm/topic.TopicCommandes subscribers: TopicCommandes_Miniserveur_MINI_1 endpoints: "tcp -h 192.168.0.16 -p 61160 -t 60000", "tcp -h "2001:0:9d38:6abd:1876:3b62:b18a:42" -p 61160 -t 60000", "udp -h 192.168.0.16 -p 63371", "udp -h "2001:0:9d38:6abd:1876:3b62:b18a:42" -p 63371",TopicCommandes_Miniserveur_MINI_2 endpoints: "tcp -h 192.168.0.16 -p 61161 -t 60000", "tcp -h "2001:0:9d38:6abd:1876:3b62:b18a:42" -p 61161 -t 60000", "udp -h 192.168.0.16 -p 63370", "udp -h "2001:0:9d38:6abd:1876:3b62:b18a:42" -p 63370"
+-- 05/19/17 17:09:44.665 icebox-IceStorm: Topic: TopicCommandes recreate TopicCommandes_Miniserveur_MINI_1
+-- 05/19/17 17:09:44.665 icebox-IceStorm: Topic: TopicCommandes recreate TopicCommandes_Miniserveur_MINI_2
+-- 05/19/17 17:09:44.665 icebox-IceStorm: TopicManager: loading topic "TopicMiniserveurs" from database. id: MP3_IceStorm/topic.TopicMiniserveurs subscribers: TopicMiniserveurs_Metaserveur endpoints: "tcp -h 10.120.12.117 -p 56530 -t 60000", "tcp -h 192.168.0.16 -p 56530 -t 60000", "tcp -h "2001:0:9d38:6abd:3c96:fa85:3dc6:27f6" -p 56530 -t 60000", "udp -h 10.120.12.117 -p 51525", "udp -h 192.168.0.16 -p 51525", "udp -h "2001:0:9d38:6abd:3c96:fa85:3dc6:27f6" -p 51525"
+-- 05/19/17 17:09:44.665 icebox-IceStorm: Topic: TopicMiniserveurs recreate TopicMiniserveurs_Metaserveur
+-- 05/19/17 17:09:45.383 icebox-IceStorm: Topic: TopicChansons: subscribeAndGetPublisher: TopicChansons_Metaserveur
+-- 05/19/17 17:09:45.383 icebox-IceStorm: Topic: TopicChansons: unsubscribe: TopicChansons_Metaserveur
+-- 05/19/17 17:09:45.448 icebox-IceStorm: Topic: TopicChansons: subscribeAndGetPublisher: TopicChansons_Metaserveur
+-- 05/19/17 17:09:45.772 icebox-IceStorm: Topic: TopicCommandes: subscribeAndGetPublisher: TopicCommandes_Miniserveur_MINI_2
+-- 05/19/17 17:09:45.773 icebox-IceStorm: Topic: TopicCommandes: unsubscribe: TopicCommandes_Miniserveur_MINI_2
+-- 05/19/17 17:09:45.803 icebox-IceStorm: Topic: TopicCommandes: subscribeAndGetPublisher: TopicCommandes_Miniserveur_MINI_1
+-- 05/19/17 17:09:45.803 icebox-IceStorm: Topic: TopicCommandes: subscribeAndGetPublisher: TopicCommandes_Miniserveur_MINI_2
+-- 05/19/17 17:09:45.827 icebox-IceStorm: Topic: TopicCommandes: unsubscribe: TopicCommandes_Miniserveur_MINI_1
+-- 05/19/17 17:09:45.844 icebox-IceStorm: Topic: TopicCommandes: subscribeAndGetPublisher: TopicCommandes_Miniserveur_MINI_1
+-- 05/19/17 17:09:49.516 icebox-IceStorm: Subscriber: TopicCommandes_Miniserveur_MINI_1 subscriber errored out: Network.cpp:2728: Ice::ConnectionRefusedException:
+   connection refused: El equipo remoto rechaz¢ la conexi¢n de red. retry: 0/0
+-- 05/19/17 17:09:49.519 icebox-IceStorm: Subscriber: TopicCommandes_Miniserveur_MINI_2 subscriber errored out: Network.cpp:2728: Ice::ConnectionRefusedException:
+   connection refused: El equipo remoto rechaz¢ la conexi¢n de red. retry: 0/0

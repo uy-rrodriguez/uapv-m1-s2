@@ -35,13 +35,13 @@ class Player:
     # Jouer !
     self.player.play()
 
-    print_("PLAYING")
+    print_("Miniserver->Player->Streaming en cours...")
 
 
   def stop(self):
-    # Baisser le volume
-    #player.audio_set_volume(50)
-
     # Arreter la musique en cours
     self.player.stop()
+    
+    # Baisser le volume
+    #player.audio_set_volume(50)
 
